@@ -5,11 +5,11 @@
 [![Platform](https://img.shields.io/cocoapods/p/UZPlayer.svg?style=flat)](http://cocoapods.org/pods/UZPlayer)
 ![Swift](https://img.shields.io/badge/%20in-swift%205.0-orange.svg)
 
-UZPlayer is a framework to connect to Uiza system
+UZPlayer is a framework allows you to play video with fully customizable controls.
 
 ## Compatibility
 
-UZPlayer requires Swift 4.0+ and iOS 8+
+UZPlayer requires Swift 4.2+ and iOS 9+
 
 ## Installation
 
