@@ -31,7 +31,8 @@ $ pod install
 ## Usage
 
 ``` swift
-let playerViewController = UZPlayerViewController()
+let playerViewController = UZPlayerViewController()		
+playerViewController.player.controlView.theme = UZTheme1()
 playerViewController.player.loadVideo(url: VIDEO_URL)
 present(playerViewController, animated: true, completion: nil)
 ```
@@ -47,7 +48,7 @@ present(playerViewController, animated: true, completion: nil)
 ## Change Player Themes
 ``` swift
 let playerViewController = UZPlayerViewController()
-playerViewController.player.theme = UZTheme1()
+playerViewController.player.controlView.theme = UZTheme1()
 ```
 
 UizaPlayer currently has 7 built-in themes:
