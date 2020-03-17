@@ -53,19 +53,19 @@ playerViewController.player.controlView.theme = UZTheme1()
 
 UizaPlayer currently has 7 built-in themes:
 
-[UZTheme1](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme1.jpg)
+[UZTheme1](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme1.jpg)
 
-[UZTheme2](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme2.jpg)
+[UZTheme2](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme2.jpg)
 
-[UZTheme3](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme3.jpg)
+[UZTheme3](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme3.jpg)
 
-[UZTheme4](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme4.jpg)
+[UZTheme4](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme4.jpg)
 
-[UZTheme5](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme5.jpg)
+[UZTheme5](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme5.jpg)
 
-[UZTheme6](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme6.jpg)
+[UZTheme6](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme6.jpg)
 
-[UZTheme7](https://github.com/uizaio/uiza-sdk-player-ios/blob/master/themes/theme7.jpg)
+[UZTheme7](https://github.com/uizaio/uiza-ios-player-sdk/blob/master/themes/theme7.jpg)
 
 ## Create CustomTheme
 
