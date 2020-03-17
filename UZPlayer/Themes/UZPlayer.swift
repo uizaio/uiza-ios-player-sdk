@@ -281,7 +281,7 @@ open class UZPlayer: UIView {
 	*/
 	open func loadVideo(url: URL, subtitleURLS: [URL]? = nil, isLive: Bool = false) {
 		let linkPlay = UZVideoLinkPlay(definition: "", url: url)
-		let item = UZVideoItem(name: nil, thumbnailURL: nil, isLive: isLive, linkPlay: linkPlay, subtitleURLs: subtitleURLS)
+		let item = UZVideoItem(name: "", thumbnailURL: nil, isLive: isLive, linkPlay: linkPlay, subtitleURLs: subtitleURLS)
 		loadVideo(item)
 	}
 	
@@ -312,7 +312,7 @@ open class UZPlayer: UIView {
 			UZVisualizeSavedInformation.shared.host = host
 		}
 		
-		let resource = UZPlayerResource(name: video.name, definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL)
+		let resource = UZPlayerResource(name: video.name ?? "", definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive)
 		setResource(resource: resource)
 		
 		if video.isLive {

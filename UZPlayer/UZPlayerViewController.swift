@@ -250,4 +250,8 @@ extension UZPlayerController: NKModalViewControllerProtocol {
 		return UIViewController.topPresented()
 	}
 	
+	func shouldAllowDragToDismiss(for modalViewController: NKModalViewController!) -> Bool {
+		return false
+	}
+	
 }

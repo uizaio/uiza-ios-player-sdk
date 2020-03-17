@@ -9,12 +9,17 @@ PODS:
   - Sentry (4.5.0):
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
+  - UZPlayer (1.0):
+    - FrameLayoutKit
+    - NKModalViewManager
+    - Sentry
 
 DEPENDENCIES:
   - FrameLayoutKit
   - NHNetworkTime
   - NKModalViewManager
   - Sentry
+  - UZPlayer (from `../UZPlayer`)
 
 SPEC REPOS:
   trunk:
@@ -24,13 +29,18 @@ SPEC REPOS:
     - NKModalViewManager
     - Sentry
 
+EXTERNAL SOURCES:
+  UZPlayer:
+    :path: "../UZPlayer"
+
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   FrameLayoutKit: d184e034ba28e20dc4d7dd1832dbf47e7a5b339e
   NHNetworkTime: b140ee21770aed41e7b8fd43647bce6349ad10f2
   NKModalViewManager: aa52c0abdc2633b1ed3464baeb65dabfa9785dc3
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
+  UZPlayer: f24fe835c6f4bfd32270fd788cd65290fbb721b1
 
-PODFILE CHECKSUM: df54a8aeb57122e78d5b50097f8b87248b97a62f
+PODFILE CHECKSUM: 5c678d7b593eaad9ef9d45c3ee47ca211534d68d
 
 COCOAPODS: 1.9.1

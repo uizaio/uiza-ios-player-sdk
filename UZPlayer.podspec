@@ -15,7 +15,6 @@ Pod::Spec.new do |s|
     s.requires_arc  = true
     s.swift_version = '4.2'
     
-    s.ios.dependency "SwiftyJSON"
     s.ios.dependency "NKModalViewManager"
     s.ios.dependency "FrameLayoutKit"
     s.ios.dependency "Sentry"

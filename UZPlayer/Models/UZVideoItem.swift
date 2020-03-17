@@ -62,13 +62,9 @@ extension UZVideoLinkPlay: Equatable {
 Class chứa các thông tin về video item
 */
 public struct UZVideoItem {
-	/** Tựa đề chính */
-	public var name: String! = ""
-	/** Link ảnh thumbnail */
+	public var name: String?
 	public var thumbnailURL: URL?
-	/** `true` nếu là video đang trực tiếp */
 	public var isLive: Bool = false
-	
 	public var linkPlay: UZVideoLinkPlay?
 	public var subtitleURLs: [URL]?
 	

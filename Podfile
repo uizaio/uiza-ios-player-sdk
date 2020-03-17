@@ -11,3 +11,11 @@ target 'UZPlayer' do
   pod 'NHNetworkTime'
 
 end
+
+target 'UZPlayerExample' do
+	platform :ios, '9.0'
+	use_frameworks!
+	
+	pod 'UZPlayer', :path => '../UZPlayer'
+	
+end
