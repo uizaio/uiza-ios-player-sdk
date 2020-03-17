@@ -273,10 +273,22 @@ open class UZPlayer: UIView {
 	// MARK: -
 	
 	/**
+	Play a video with given URL
+	
+	- parameter url: URL of linkplay
+	- parameter subtitleURLs: URLs of subtitle if any
+	- parameter isLive: set `true` if it is a live video
+	*/
+	open func loadVideo(url: URL, subtitleURLS: [URL]? = nil, isLive: Bool = false) {
+		let linkPlay = UZVideoLinkPlay(definition: "", url: url)
+		let item = UZVideoItem(name: nil, thumbnailURL: nil, isLive: isLive, linkPlay: linkPlay, subtitleURLs: subtitleURLS)
+		loadVideo(item)
+	}
+	
+	/**
 	Play an `UZVideoItem`
 	
 	- parameter video: UZVideoItem
-	- parameter completionBlock: callback block with `[UZVideoLinkPlay]` or Error
 	*/
 	open func loadVideo(_ video: UZVideoItem) {
 		if currentVideo != nil {
