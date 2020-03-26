@@ -158,7 +158,54 @@ extension UZPlayer {
     }
 }
 
-// MARK: - Livestream
+extension UZPlayer {
+	
+	func showMessage(_ message: String) {
+		controlView.showMessage(message)
+	}
+	
+	func hideMessage() {
+		controlView.hideMessage()
+	}
+	
+	func updateUI(_ isFullScreen: Bool) {
+		controlView.updateUI(isFullScreen)
+	}
+	
+	public func getCurrentLatency() -> TimeInterval {
+		guard let currentVideo = currentVideo, currentVideo.isLive else { return 0 }
+		guard let currentItem = avPlayer?.currentItem else { return 0 }
+		guard let seekableRange = currentItem.seekableTimeRanges.last as? CMTimeRange else { return 0 }
+		
+		let livePosition = CMTimeGetSeconds(seekableRange.start) + CMTimeGetSeconds(seekableRange.duration)
+		let currentPosition = CMTimeGetSeconds(currentItem.currentTime())
+		return livePosition - currentPosition
+	}
+	
+	func updateVisualizeInformation(visible: Bool) {
+		visualizeInformationView?.isHidden = !visible
+		visualizeInformationView?.closeButton.isHidden = !visible
+	}
+	
+	func tryNextDefinition() {
+		if currentDefinition >= resource.definitions.count - 1 {
+			return
+		}
+		
+		currentDefinition += 1
+		switchVideoDefinition(resource.definitions[currentDefinition])
+	}
+	
+	open func nextVideo() {
+		currentVideoIndex += 1
+	}
+	
+	open func previousVideo() {
+		currentVideoIndex -= 1
+	}
+}
+
+// MARK: - Live Video
 
 extension UZPlayer {
 
@@ -202,52 +249,6 @@ extension UZPlayer {
         seek(to: livePosition, completion: { [weak self] in
             self?.playerLayer?.play()
         })
-    }
-}
-
-extension UZPlayer {
-    func showMessage(_ message: String) {
-        controlView.showMessage(message)
-    }
-    
-    func hideMessage() {
-        controlView.hideMessage()
-    }
-
-    func updateUI(_ isFullScreen: Bool) {
-        controlView.updateUI(isFullScreen)
-    }
-
-    public func getCurrentLatency() -> TimeInterval {
-        guard let currentVideo = currentVideo, currentVideo.isLive else { return 0 }
-        guard let currentItem = avPlayer?.currentItem else { return 0 }
-        guard let seekableRange = currentItem.seekableTimeRanges.last as? CMTimeRange else { return 0 }
-        
-        let livePosition = CMTimeGetSeconds(seekableRange.start) + CMTimeGetSeconds(seekableRange.duration)
-        let currentPosition = CMTimeGetSeconds(currentItem.currentTime())
-        return livePosition - currentPosition
-    }
-
-    func updateVisualizeInformation(visible: Bool) {
-        visualizeInformationView?.isHidden = !visible
-        visualizeInformationView?.closeButton.isHidden = !visible
-    }
-    
-    func tryNextDefinition() {
-        if currentDefinition >= resource.definitions.count - 1 {
-            return
-        }
-        
-        currentDefinition += 1
-        switchVideoDefinition(resource.definitions[currentDefinition])
-    }
-
-    open func nextVideo() {
-        currentVideoIndex += 1
-    }
-
-    open func previousVideo() {
-        currentVideoIndex -= 1
     }
 }
 

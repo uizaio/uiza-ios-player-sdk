@@ -8,26 +8,25 @@
 
 import UIKit
 import AVKit
-//import SwiftIcons
 import FrameLayoutKit
-import NVActivityIndicatorView
 
 open class UZTheme2: UZPlayerTheme {
-	public weak var controlView: UZPlayerControlView? = nil
+	public var id = "UZTheme2"
+	public weak var controlView: UZPlayerControlView?
 	
 	let topGradientLayer = CAGradientLayer()
 	let bottomGradientLayer = CAGradientLayer()
 	
-	internal var topFrameLayout 	: DoubleFrameLayout?
-	internal var bottomFrameLayout 	: StackFrameLayout?
-	internal var mainFrameLayout 	: StackFrameLayout?
+	let topFrameLayout = DoubleFrameLayout(axis: .horizontal)
+	let bottomFrameLayout = StackFrameLayout(axis: .horizontal, distribution: . left)
+	let mainFrameLayout = StackFrameLayout(axis: .vertical, distribution: . top)
 	
-	internal var iconColor = UIColor.white
-	internal var iconSize = CGSize(width: 24, height: 24)
-	internal var skipIconSize = CGSize(width: 32, height: 32)
-	internal var centerIconSize = CGSize(width: 92, height: 92)
-	internal var seekThumbSize = CGSize(width: 24, height: 24)
-	internal var buttonMinSize = CGSize(width: 32, height: 32)
+	var iconColor = UIColor.white
+	var iconSize = CGSize(width: 24, height: 24)
+	var skipIconSize = CGSize(width: 32, height: 32)
+	var centerIconSize = CGSize(width: 92, height: 92)
+	var seekThumbSize = CGSize(width: 24, height: 24)
+	var buttonMinSize = CGSize(width: 32, height: 32)
 	
 	public convenience init(iconSize: CGSize = CGSize(width: 24, height: 24), centerIconSize: CGSize = CGSize(width: 92, height: 92), seekThumbSize: CGSize = CGSize(width: 24, height: 24), iconColor: UIColor = .white) {
 		self.init()
@@ -132,8 +131,10 @@ open class UZTheme2: UZPlayerTheme {
 	func setupLayout() {
 		guard let controlView = controlView else { return }
 		
-		let controlFrameLayout = StackFrameLayout(direction: .horizontal, views: [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.ccButton, controlView.settingsButton, controlView.volumeButton])
-		controlFrameLayout.addSubview(controlView.castingButton)
+		let controlFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.pipButton, controlView.castingButton,
+                                                                             controlView.playlistButton, controlView.ccButton,
+                                                                             controlView.settingsButton, controlView.volumeButton])
+        controlFrameLayout.addSubview(controlView.castingButton)
 		controlFrameLayout.addSubview(controlView.pipButton)
 		controlFrameLayout.addSubview(controlView.playlistButton)
 		controlFrameLayout.addSubview(controlView.ccButton)
@@ -147,59 +148,60 @@ open class UZTheme2: UZPlayerTheme {
 			frameLayout.minSize = buttonMinSize
 		}
 		
-		let topLeftFrameLayout = DoubleFrameLayout(direction: .horizontal, views: [controlView.backButton, controlView.titleLabel])
+		let topLeftFrameLayout = DoubleFrameLayout(axis: .horizontal, views: [controlView.backButton, controlView.titleLabel])
 		topLeftFrameLayout.spacing = 10
 		topLeftFrameLayout.isUserInteractionEnabled = true
 		topLeftFrameLayout.addSubview(controlView.backButton)
 		topLeftFrameLayout.addSubview(controlView.titleLabel)
 		topLeftFrameLayout.leftFrameLayout.minSize = buttonMinSize
 		
-		topFrameLayout = DoubleFrameLayout(direction: .horizontal)
-		topFrameLayout!.leftFrameLayout.targetView = topLeftFrameLayout
-		topFrameLayout!.rightFrameLayout.targetView = controlFrameLayout
-		topFrameLayout!.leftFrameLayout.contentAlignment = (.center, .left)
-		topFrameLayout!.rightFrameLayout.contentAlignment = (.center, .right)
-		topFrameLayout!.spacing = 5
-		topFrameLayout!.addSubview(topLeftFrameLayout)
-		topFrameLayout!.addSubview(controlFrameLayout)
-		topFrameLayout!.isUserInteractionEnabled = true
-		topFrameLayout!.layoutAlignment = .right
-		topFrameLayout!.edgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 10)
-//		topFrameLayout!.showFrameDebug = true
+		topFrameLayout.leftFrameLayout.targetView = topLeftFrameLayout
+		topFrameLayout.rightFrameLayout.targetView = controlFrameLayout
+		topFrameLayout.leftFrameLayout.contentAlignment = (.center, .left)
+		topFrameLayout.rightFrameLayout.contentAlignment = (.center, .right)
+		topFrameLayout.spacing = 5
+		topFrameLayout.addSubview(topLeftFrameLayout)
+		topFrameLayout.addSubview(controlFrameLayout)
+		topFrameLayout.isUserInteractionEnabled = true
+		topFrameLayout.distribution = .right
+		topFrameLayout.edgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 10)
+//		topFrameLayout.showFrameDebug = true
 		
-		let bottomLeftFrameLayout = StackFrameLayout(direction: .horizontal, views: [controlView.currentTimeLabel])
-		let bottomRightFrameLayout = StackFrameLayout(direction: .horizontal, views: [controlView.remainTimeLabel, controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton])
+		let bottomLeftFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.currentTimeLabel])
+		let bottomRightFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.remainTimeLabel, controlView.backwardButton,
+                                                                                 controlView.forwardButton, controlView.fullscreenButton])
 		bottomRightFrameLayout.spacing = 10
 		for frameLayout in bottomRightFrameLayout.frameLayouts {
 			frameLayout.minSize = buttonMinSize
 		}
 		
-		bottomFrameLayout = StackFrameLayout(direction: .horizontal, alignment: . left, views: [bottomLeftFrameLayout, controlView.timeSlider, bottomRightFrameLayout])
-		bottomFrameLayout!.frameLayout(at: 1)?.isFlexible = true
-		bottomFrameLayout!.addSubview(controlView.currentTimeLabel)
-		bottomFrameLayout!.addSubview(controlView.remainTimeLabel)
-		bottomFrameLayout!.addSubview(controlView.backwardButton)
-		bottomFrameLayout!.addSubview(controlView.forwardButton)
-		bottomFrameLayout!.addSubview(controlView.fullscreenButton)
-		bottomFrameLayout!.addSubview(controlView.timeSlider)
-		bottomFrameLayout!.spacing = 10
-		bottomFrameLayout!.isUserInteractionEnabled = true
-		bottomFrameLayout!.edgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+		bottomFrameLayout.append(views: [bottomLeftFrameLayout, controlView.timeSlider, bottomRightFrameLayout])
+		bottomFrameLayout.frameLayout(at: 1)?.isFlexible = true
+		bottomFrameLayout.addSubview(controlView.currentTimeLabel)
+		bottomFrameLayout.addSubview(controlView.remainTimeLabel)
+		bottomFrameLayout.addSubview(controlView.backwardButton)
+		bottomFrameLayout.addSubview(controlView.forwardButton)
+		bottomFrameLayout.addSubview(controlView.fullscreenButton)
+		bottomFrameLayout.addSubview(controlView.timeSlider)
+		bottomFrameLayout.spacing = 10
+		bottomFrameLayout.isUserInteractionEnabled = true
+		bottomFrameLayout.edgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 		
-		let centerFrameLayout = StackFrameLayout(direction: .horizontal, alignment: .center, views: [controlView.previousButton, controlView.playpauseCenterButton, controlView.nextButton])
+		let centerFrameLayout = StackFrameLayout(axis: .horizontal, distribution: .center,
+                                                 views: [controlView.previousButton, controlView.playpauseCenterButton, controlView.nextButton])
 		centerFrameLayout.spacing = 40
 		centerFrameLayout.isUserInteractionEnabled = true
 		centerFrameLayout.addSubview(controlView.previousButton)
 		centerFrameLayout.addSubview(controlView.nextButton)
 		centerFrameLayout.addSubview(controlView.playpauseCenterButton)
 		
-		mainFrameLayout = StackFrameLayout(direction: .vertical, alignment: . top, views: [topFrameLayout!, centerFrameLayout, bottomFrameLayout!])
-		mainFrameLayout!.frameLayout(at: 1)?.configurationBlock = { layout in
+		mainFrameLayout.append(views: [topFrameLayout, centerFrameLayout, bottomFrameLayout])
+		mainFrameLayout.frameLayout(at: 1)?.configurationBlock = { layout in
 			layout.isFlexible = true
 			layout.ignoreHiddenView = false
 			layout.contentAlignment = (.center, .center)
 		}
-		mainFrameLayout!.ignoreHiddenView = false
+		mainFrameLayout.ignoreHiddenView = false
 		bottomRightFrameLayout.ignoreHiddenView = true
 		
 		topGradientLayer.colors = [UIColor(white: 0.0, alpha: 0.8).cgColor, UIColor(white: 0.0, alpha: 0.0).cgColor]
@@ -207,9 +209,9 @@ open class UZTheme2: UZPlayerTheme {
 		controlView.containerView.layer.addSublayer(topGradientLayer)
 		controlView.containerView.layer.addSublayer(bottomGradientLayer)
 		
-		controlView.containerView.addSubview(mainFrameLayout!)
-		controlView.containerView.addSubview(topFrameLayout!)
-		controlView.containerView.addSubview(bottomFrameLayout!)
+		controlView.containerView.addSubview(mainFrameLayout)
+		controlView.containerView.addSubview(topFrameLayout)
+		controlView.containerView.addSubview(bottomFrameLayout)
 		controlView.containerView.addSubview(centerFrameLayout)
 		
 		controlView.addSubview(controlView.enlapseTimeLabel)
@@ -217,13 +219,13 @@ open class UZTheme2: UZPlayerTheme {
 	}
 	
 	open func layoutControls(rect: CGRect) {
-		mainFrameLayout?.frame = rect
-		mainFrameLayout?.layoutIfNeeded()
+		mainFrameLayout.frame = rect
+		mainFrameLayout.layoutIfNeeded()
 		
 		CATransaction.begin()
 		CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-		topGradientLayer.frame = topFrameLayout!.frame
-		bottomGradientLayer.frame = bottomFrameLayout!.frame
+		topGradientLayer.frame = topFrameLayout.frame
+		bottomGradientLayer.frame = bottomFrameLayout.frame
 		CATransaction.commit()
 		
 		if let controlView = controlView {
@@ -253,15 +255,14 @@ open class UZTheme2: UZPlayerTheme {
 	}
 	
 	open func showLoader() {
-		if let controlView = controlView {
-			if controlView.loadingIndicatorView == nil {
-				controlView.loadingIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 30, height: 30), type: NVActivityIndicatorType.ballScaleMultiple, color: .white, padding: 0)
-				controlView.addSubview(controlView.loadingIndicatorView!)
-			}
-			
-			controlView.loadingIndicatorView?.isHidden = false
-			controlView.loadingIndicatorView?.startAnimating()
+		guard let controlView = controlView else { return }
+		if controlView.loadingIndicatorView == nil {
+			controlView.loadingIndicatorView = UIActivityIndicatorView(style: .white)
+			controlView.addSubview(controlView.loadingIndicatorView!)
 		}
+		
+		controlView.loadingIndicatorView?.isHidden = false
+		controlView.loadingIndicatorView?.startAnimating()
 	}
 	
 	open func hideLoader() {
@@ -277,7 +278,7 @@ open class UZTheme2: UZPlayerTheme {
 //		controlView?.backwardButton.isHidden = !isEmptyPlaylist
 	}
 	
-	public func alignLogo() {
+	open func alignLogo() {
 		// align logo manually here if needed
 	}
 	

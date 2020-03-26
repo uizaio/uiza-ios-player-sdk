@@ -3,7 +3,7 @@
 //  UZPlayerExample
 //
 //  Created by Nam Kennic on 3/17/20.
-//  Copyright © 2020 Nam Kennic. All rights reserved.
+//  Copyright © 2020 Uiza. All rights reserved.
 //
 
 import UIKit
