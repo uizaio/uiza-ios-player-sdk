@@ -66,7 +66,7 @@ class UZMediaOptionSelectionViewController: UIViewController {
 		
 		frameLayout.targetView = collectionViewController.view
 		frameLayout.minSize = CGSize(width: 0, height: 100)
-		frameLayout.edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+		frameLayout.padding(top: 10, left: 20, bottom: 10, right: 20)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

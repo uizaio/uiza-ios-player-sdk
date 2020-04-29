@@ -143,7 +143,7 @@ open class UZTheme2: UZPlayerTheme {
 		controlFrameLayout.isUserInteractionEnabled = true
 		controlFrameLayout.isIntrinsicSizeEnabled = true
 		controlFrameLayout.spacing = 10
-//		controlFrameLayout.showFrameDebug = true
+//		controlFrameLayout.debug = true
 		for frameLayout in controlFrameLayout.frameLayouts {
 			frameLayout.minSize = buttonMinSize
 		}
@@ -157,15 +157,15 @@ open class UZTheme2: UZPlayerTheme {
 		
 		topFrameLayout.leftFrameLayout.targetView = topLeftFrameLayout
 		topFrameLayout.rightFrameLayout.targetView = controlFrameLayout
-		topFrameLayout.leftFrameLayout.contentAlignment = (.center, .left)
-		topFrameLayout.rightFrameLayout.contentAlignment = (.center, .right)
+		topFrameLayout.leftFrameLayout.alignment = (.center, .left)
+		topFrameLayout.rightFrameLayout.alignment = (.center, .right)
 		topFrameLayout.spacing = 5
 		topFrameLayout.addSubview(topLeftFrameLayout)
 		topFrameLayout.addSubview(controlFrameLayout)
 		topFrameLayout.isUserInteractionEnabled = true
 		topFrameLayout.distribution = .right
-		topFrameLayout.edgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 10)
-//		topFrameLayout.showFrameDebug = true
+		topFrameLayout.padding(top: 5, left: 10, bottom: 0, right: 10)
+//		topFrameLayout.debug = true
 		
 		let bottomLeftFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.currentTimeLabel])
 		let bottomRightFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.remainTimeLabel, controlView.backwardButton,
@@ -175,7 +175,7 @@ open class UZTheme2: UZPlayerTheme {
 			frameLayout.minSize = buttonMinSize
 		}
 		
-		bottomFrameLayout.append(views: [bottomLeftFrameLayout, controlView.timeSlider, bottomRightFrameLayout])
+		bottomFrameLayout.append([bottomLeftFrameLayout, controlView.timeSlider, bottomRightFrameLayout])
 		bottomFrameLayout.frameLayout(at: 1)?.isFlexible = true
 		bottomFrameLayout.addSubview(controlView.currentTimeLabel)
 		bottomFrameLayout.addSubview(controlView.remainTimeLabel)
@@ -184,8 +184,8 @@ open class UZTheme2: UZPlayerTheme {
 		bottomFrameLayout.addSubview(controlView.fullscreenButton)
 		bottomFrameLayout.addSubview(controlView.timeSlider)
 		bottomFrameLayout.spacing = 10
+		bottomFrameLayout.padding(top: 0, left: 10, bottom: 0, right: 10)
 		bottomFrameLayout.isUserInteractionEnabled = true
-		bottomFrameLayout.edgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 		
 		let centerFrameLayout = StackFrameLayout(axis: .horizontal, distribution: .center,
                                                  views: [controlView.previousButton, controlView.playpauseCenterButton, controlView.nextButton])
@@ -195,11 +195,11 @@ open class UZTheme2: UZPlayerTheme {
 		centerFrameLayout.addSubview(controlView.nextButton)
 		centerFrameLayout.addSubview(controlView.playpauseCenterButton)
 		
-		mainFrameLayout.append(views: [topFrameLayout, centerFrameLayout, bottomFrameLayout])
-		mainFrameLayout.frameLayout(at: 1)?.configurationBlock = { layout in
-			layout.isFlexible = true
-			layout.ignoreHiddenView = false
-			layout.contentAlignment = (.center, .center)
+		mainFrameLayout.append([topFrameLayout, centerFrameLayout, bottomFrameLayout])
+		mainFrameLayout.frameLayout(at: 1)?.with {
+			$0.flexible()
+			$0.ignoreHiddenView = false
+			$0.alignment = (.center, .center)
 		}
 		mainFrameLayout.ignoreHiddenView = false
 		bottomRightFrameLayout.ignoreHiddenView = true

@@ -73,18 +73,18 @@ class UZVisualizeInformationView: UIView {
         addSubview(latencyLabel)
 		
 		let entityFrameLayout = StackFrameLayout(axis: .horizontal, distribution: .left)
-		entityFrameLayout.append(view: entityLabel).isFlexible = true
-		entityFrameLayout.append(view: closeButton).edgeInsets = UIEdgeInsets(top: -10, left: 10, bottom: 0, right: -10)
+		entityFrameLayout.add(entityLabel).isFlexible = true
+		entityFrameLayout.add(closeButton).padding(top: -10, left: 10, bottom: 0, right: -10)
 		entityFrameLayout.spacing = 5
 		
-		mainFrameLayout.append(frameLayout: entityFrameLayout)
-		mainFrameLayout.append(view: sdkLabel)
-		mainFrameLayout.append(view: volumeLabel)
-		mainFrameLayout.append(view: qualityLabel)
-		mainFrameLayout.append(view: hostLabel)
-		mainFrameLayout.append(view: osInfoLabel)
-		mainFrameLayout.append(view: latencyLabel)
-		mainFrameLayout.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		mainFrameLayout.add(entityFrameLayout)
+		mainFrameLayout.add(sdkLabel)
+		mainFrameLayout.add(volumeLabel)
+		mainFrameLayout.add(qualityLabel)
+		mainFrameLayout.add(hostLabel)
+		mainFrameLayout.add(osInfoLabel)
+		mainFrameLayout.add(latencyLabel)
+		mainFrameLayout.padding(top: 10, left: 10, bottom: 10, right: 10)
 		mainFrameLayout.backgroundColor = UIColor.black.withAlphaComponent(0.6)
 		
 		isUserInteractionEnabled = false

@@ -134,7 +134,7 @@ open class UZTheme5: UZPlayerTheme {
 		controlFrameLayout.isUserInteractionEnabled = true
 		controlFrameLayout.isIntrinsicSizeEnabled = true
 		controlFrameLayout.spacing = 10
-//		controlFrameLayout.showFrameDebug = true
+//		controlFrameLayout.debug = true
 		for frameLayout in controlFrameLayout.frameLayouts {
 			frameLayout.minSize = buttonMinSize
 		}
@@ -148,15 +148,15 @@ open class UZTheme5: UZPlayerTheme {
 		
 		topFrameLayout.leftFrameLayout.targetView = topLeftFrameLayout
 		topFrameLayout.rightFrameLayout.targetView = controlFrameLayout
-		topFrameLayout.leftFrameLayout.contentAlignment = (.center, .left)
-		topFrameLayout.rightFrameLayout.contentAlignment = (.center, .right)
+		topFrameLayout.leftFrameLayout.alignment = (.center, .left)
+		topFrameLayout.rightFrameLayout.alignment = (.center, .right)
 		topFrameLayout.spacing = 5
 		topFrameLayout.addSubview(topLeftFrameLayout)
 		topFrameLayout.addSubview(controlFrameLayout)
 		topFrameLayout.isUserInteractionEnabled = true
 		topFrameLayout.distribution = .right
-		topFrameLayout.edgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 10)
-//		topFrameLayout.showFrameDebug = true
+		topFrameLayout.padding(top: 5, left: 10, bottom: 0, right: 10)
+//		topFrameLayout.debug = true
 		
 		let bottomLeftFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.playpauseButton])
 		let bottomRightFrameLayout = StackFrameLayout(axis: .horizontal, views: [controlView.currentTimeLabel, controlView.totalTimeLabel,
@@ -172,7 +172,7 @@ open class UZTheme5: UZPlayerTheme {
 			frameLayout.minSize = buttonMinSize
 		}
 		
-		bottomFrameLayout.append(views: [bottomLeftFrameLayout, controlView.timeSlider, bottomRightFrameLayout])
+		bottomFrameLayout.append([bottomLeftFrameLayout, controlView.timeSlider, bottomRightFrameLayout])
 		bottomFrameLayout.frameLayout(at: 1)?.isFlexible = true
 		bottomFrameLayout.addSubview(controlView.currentTimeLabel)
 		bottomFrameLayout.addSubview(controlView.totalTimeLabel)
@@ -185,7 +185,7 @@ open class UZTheme5: UZPlayerTheme {
 		bottomFrameLayout.spacing = 10
 		bottomFrameLayout.distribution = .left
 		bottomFrameLayout.isUserInteractionEnabled = true
-		bottomFrameLayout.edgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+		bottomFrameLayout.padding(top: 0, left: 10, bottom: 0, right: 10)
 		
 //		bottomFrameLayout.backgroundColor = UIColor(white: 0.0, alpha: 0.8)
 		
@@ -198,11 +198,9 @@ open class UZTheme5: UZPlayerTheme {
 		centerFrameLayout.addSubview(controlView.playpauseCenterButton)
 		
 		mainFrameLayout.distribution = .top
-		mainFrameLayout.append(view: topFrameLayout)
-		mainFrameLayout.append(view: centerFrameLayout).configurationBlock = { layout in
-			layout.isFlexible = true
-		}
-		mainFrameLayout.append(view: bottomFrameLayout)
+		mainFrameLayout.add(topFrameLayout)
+		mainFrameLayout.add(centerFrameLayout).flexible()
+		mainFrameLayout.add(bottomFrameLayout)
 		
 		topGradientLayer.colors = [UIColor(white: 0.0, alpha: 0.8).cgColor, UIColor(white: 0.0, alpha: 0.0).cgColor]
 		bottomGradientLayer.colors = [UIColor(white: 0.0, alpha: 0.0).cgColor, UIColor(white: 0.0, alpha: 0.8).cgColor]

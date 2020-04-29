@@ -190,10 +190,10 @@ open class UZButton: UIButton {
 	/** Text Alignment */
 	open var textAlignemnt: (NKContentVerticalAlignment, NKContentHorizontalAlignment) {
 		get {
-			return labelFrame.contentAlignment
+			return labelFrame.alignment
 		}
 		set {
-			labelFrame.contentAlignment = newValue
+			labelFrame.alignment = newValue
 			setNeedsLayout()
 		}
 	}
@@ -358,13 +358,13 @@ open class UZButton: UIButton {
 		layer.addSublayer(gradientLayer)
 		
 		frameLayout.isIntrinsicSizeEnabled = true
-		frameLayout.frameLayout1.contentAlignment = (.center, .center)
-		frameLayout.frameLayout2.contentAlignment = (.center, .center)
+		frameLayout.frameLayout1.alignment = (.center, .center)
+		frameLayout.frameLayout2.alignment = (.center, .center)
 		
-		imageFrame.contentAlignment = (.center, .center)
+		imageFrame.alignment = (.center, .center)
 		imageFrame.targetView = imageView
 		
-		labelFrame.contentAlignment = (.fill, .fill)
+		labelFrame.alignment = (.fill, .fill)
 		labelFrame.targetView = titleLabel
 		
 		updateLayoutAlignment()

@@ -186,7 +186,7 @@ class UZTitleCollectionViewHeader: UICollectionReusableView {
         
         frameLayout = FrameLayout(targetView: label)
         frameLayout.addSubview(label)
-        frameLayout.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
+        frameLayout.padding(top: 10, left: 10, bottom: 0, right: 0)
         self.addSubview(frameLayout)
     }
     

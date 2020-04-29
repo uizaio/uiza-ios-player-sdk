@@ -45,7 +45,7 @@ internal class UZVideoQualitySettingsViewController: UIViewController {
 		
 		frameLayout = DoubleFrameLayout(axis: .vertical, views: [titleLabel, collectionViewController.view])
 		frameLayout.bottomFrameLayout.minSize = CGSize(width: 0, height: 100)
-		frameLayout.edgeInsets = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+		frameLayout.padding(top: 20, left: 10, bottom: 10, right: 10)
 		frameLayout.spacing = 20
 	}
 	
