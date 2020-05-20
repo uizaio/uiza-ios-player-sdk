@@ -27,7 +27,6 @@ open class UZAPIConnector: NSObject {
 //		URLSession.shared.dataTask(with: request).resume()
 		
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
-			DLog("error = \(String(describing: error))")
 			guard let data = data,                            // is there data
 				let response = response as? HTTPURLResponse,  // is there HTTP response
 				(200 ..< 300) ~= response.statusCode,         // is statusCode 2XX
@@ -47,11 +46,17 @@ open class UZAPIConnector: NSObject {
 	
 	public func post(url: URL, params: Parameters) {
 		var request = URLRequest(url: url)
-		request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpMethod = "POST"
-		request.httpBody = params.percentEncoded()
+//		request.httpBody = params.percentEncoded()
+		
+		do {
+			request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+		} catch let error {
+			DLog(error.localizedDescription)
+		}
+
 //		DLog("\(params)")
-//		URLSession.shared.dataTask(with: request).resume()
 		
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
 			guard let data = data,
