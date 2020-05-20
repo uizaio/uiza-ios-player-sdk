@@ -41,6 +41,8 @@ open class UZPlayerViewController: UIViewController {
 	}
 	
 	open func setFullscreen(fullscreen: Bool, completion:(() -> Void)? = nil) {
+		UZLogger.shared.log(event: "fullscreenchange")
+		
 		if fullscreen {
 			if !isFullscreen {
 				if fullscreenPresentationMode == .modal {

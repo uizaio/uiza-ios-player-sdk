@@ -214,6 +214,20 @@ extension UZPlayer {
             liveViewTimer!.invalidate()
             liveViewTimer = nil
         }
+		
+		if let currentVideo = currentVideo, currentVideo.isLive {
+			UZLiveServices().loadViews(video: currentVideo) { [weak self] (view, _) in
+				guard let `self` = self else { return }
+				
+				let changed = view != self.controlView.liveBadgeView.views
+				if changed {
+					self.controlView.liveBadgeView.views = view
+					self.controlView.setNeedsLayout()
+				}
+				
+				self.liveViewTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.loadLiveViews), userInfo: nil, repeats: false)
+			}
+		}
     }
 
     open func loadLiveStatus(after interval: TimeInterval = 0) {
@@ -405,7 +419,7 @@ extension UZPlayer {
             if playThroughEventLog[5] == false || playThroughEventLog[5] == nil {
                 playThroughEventLog[5] = true
                 
-                UZLogger.shared.log(event: "view", video: currentVideo, params: ["play_through": "0"], completionBlock: nil)
+                UZLogger.shared.log(event: "view", params: ["play_through": "0"])
             }
         } else if totalTime > 0 {
             let playthrough: Float = roundf(Float(currentTime) / Float(totalTime) * 100)
@@ -414,7 +428,7 @@ extension UZPlayer {
                 if playThroughEventLog[playthrough] == false || playThroughEventLog[playthrough] == nil {
                     playThroughEventLog[playthrough] = true
                     
-                    UZLogger.shared.log(event: "play_through", video: currentVideo, params: ["play_through": playthrough], completionBlock: nil)
+                    UZLogger.shared.log(event: "play_through", params: ["play_through": playthrough])
                 }
             }
         }

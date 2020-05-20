@@ -64,13 +64,37 @@ Class chứa các thông tin về video item
 public struct UZVideoItem {
 	public var name: String?
 	public var thumbnailURL: URL?
-	public var isLive: Bool = false
-	public var linkPlay: UZVideoLinkPlay?
+	public var linkPlay: UZVideoLinkPlay? {
+		didSet {
+			guard let url = linkPlay?.url else { return }
+			guard let cmParam = url.params()["cm"] as? String else { return }
+			guard let dictionary = cmParam.base64Decoded.toDictionary() else { return }
+			
+			appId = dictionary["app_id"] as? String
+			entityId = dictionary["entity_id"] as? String
+			entitySource = dictionary["entity_source"] as? String
+			isLive = entitySource?.lowercased() == "live"
+		}
+	}
 	public var subtitleURLs: [URL]?
+	
+	public fileprivate(set) var appId: String?
+	public fileprivate(set) var entityId: String?
+	public fileprivate(set) var entitySource: String?
+	public fileprivate(set) var isLive: Bool = false
 	
 	/** Object description */
 	public var description: String {
 		return "[\(name ?? "")] url:\(linkPlay?.url.absoluteString ?? "")"
+	}
+	
+	public init(name: String?, thumbnailURL: URL?, linkPlay: UZVideoLinkPlay, subtitleURLs: [URL]? = nil) {
+		self.name = name
+		self.thumbnailURL = thumbnailURL
+		self.subtitleURLs = subtitleURLs
+		defer {
+			self.linkPlay = linkPlay
+		}
 	}
 	
 }

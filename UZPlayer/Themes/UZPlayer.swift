@@ -150,7 +150,11 @@ open class UZPlayer: UIView {
 		}
 	}
 	
-	public internal(set) var currentLinkPlay: UZVideoLinkPlay?
+	public internal(set) var currentLinkPlay: UZVideoLinkPlay? {
+		didSet {
+			UZLogger.shared.currentLinkPlay = currentLinkPlay?.url
+		}
+	}
 	
 	public var themeConfig: UZPlayerConfig? = nil {
 		didSet {
@@ -258,6 +262,8 @@ open class UZPlayer: UIView {
 		#if DEBUG
 		print("[UizaPlayer \(PLAYER_VERSION)] initialized")
 		#endif
+		
+		UZLogger.shared.log(event: "playerready")
 	}
 	
 	public required init?(coder aDecoder: NSCoder) {
@@ -277,11 +283,10 @@ open class UZPlayer: UIView {
 	
 	- parameter url: URL of linkplay
 	- parameter subtitleURLs: URLs of subtitle if any
-	- parameter isLive: set `true` if it is a live video
 	*/
-	open func loadVideo(url: URL, subtitleURLS: [URL]? = nil, isLive: Bool = false) {
+	open func loadVideo(url: URL, subtitleURLS: [URL]? = nil) {
 		let linkPlay = UZVideoLinkPlay(definition: "", url: url)
-		let item = UZVideoItem(name: "", thumbnailURL: nil, isLive: isLive, linkPlay: linkPlay, subtitleURLs: subtitleURLS)
+		let item = UZVideoItem(name: "", thumbnailURL: nil, linkPlay: linkPlay, subtitleURLs: subtitleURLS)
 		loadVideo(item)
 	}
 	
@@ -291,6 +296,7 @@ open class UZPlayer: UIView {
 	- parameter video: UZVideoItem
 	*/
 	open func loadVideo(_ video: UZVideoItem) {
+		UZLogger.shared.log(event: "loadstart")
 		if currentVideo != nil {
 			stop()
 			preparePlayer()
@@ -356,7 +362,7 @@ open class UZPlayer: UIView {
 		if currentPosition == 0 && !isPauseByUser {
 			if playThroughEventLog[0] == false || playThroughEventLog[0] == nil {
 				playThroughEventLog[0] = true
-				UZLogger.shared.log(event: "video_starts", video: currentVideo, completionBlock: nil)
+				UZLogger.shared.log(event: "viewstart")
 				
                 // select default subtitle
                 if subtitles.isEmpty {
@@ -405,7 +411,7 @@ open class UZPlayer: UIView {
 	Seek to 0.0 and replay the video
 	*/
 	open func replay() {
-		UZLogger.shared.log(event: "replay", video: currentVideo, completionBlock: nil)
+		UZLogger.shared.log(event: "replay")
 		
 		playThroughEventLog = [:]
 		isPlayToTheEnd = false
@@ -420,6 +426,7 @@ open class UZPlayer: UIView {
 	Pause
 	*/
 	open func pause() {
+		UZLogger.shared.log(event: "pause")
 		playerLayer?.pause()
 	}
 	
@@ -429,11 +436,13 @@ open class UZPlayer: UIView {
 	- parameter to: target time
 	*/
 	open func seek(to interval: TimeInterval, completion: (() -> Void)? = nil) {
+		UZLogger.shared.log(event: "seeking")
 		seekCount += 1
 		self.currentPosition = interval
 		controlView.hideEndScreen()
 		
 		playerLayer?.seek(to: interval, completion: {
+			UZLogger.shared.log(event: "seeked")
 			completion?()
 		})
 		

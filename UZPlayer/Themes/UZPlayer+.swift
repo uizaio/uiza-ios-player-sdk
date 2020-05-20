@@ -516,15 +516,18 @@ extension UZPlayer: UZPlayerLayerViewDelegate {
             }
             
         case .buffering:
+			UZLogger.shared.log(event: "rebufferstart")
             if currentVideo?.isLive ?? false {
                 loadLiveStatus(after: 1)
             }
             bufferingCount += 1
             
         case .bufferFinished:
+			UZLogger.shared.log(event: "rebufferend")
             playIfApplicable()
             
         case .playedToTheEnd:
+			UZLogger.shared.log(event: "viewended")
             isPlayToTheEnd = true
             
             if !isReplaying {
@@ -543,6 +546,7 @@ extension UZPlayer: UZPlayerLayerViewDelegate {
             nextVideo()
             
         case .error:
+			UZLogger.shared.log(event: "error")
             if autoTryNextDefinitionIfError {
                 tryNextDefinition()
             }

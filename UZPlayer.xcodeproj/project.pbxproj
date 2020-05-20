@@ -96,6 +96,10 @@
 		230BA8AB247502A6009C09B1 /* UZTheme6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD921C241D066D001B7A48 /* UZTheme6.swift */; };
 		230BA8AC24750554009C09B1 /* UZTheme7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9218241D066D001B7A48 /* UZTheme7.swift */; };
 		230BA8AD24750554009C09B1 /* UZTheme7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9218241D066D001B7A48 /* UZTheme7.swift */; };
+		237ABECC2475352F00B270FF /* UZLiveServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237ABECB2475352F00B270FF /* UZLiveServices.swift */; };
+		237ABECD2475352F00B270FF /* UZLiveServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237ABECB2475352F00B270FF /* UZLiveServices.swift */; };
+		237ABECF247536CA00B270FF /* UZAPIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237ABECE247536CA00B270FF /* UZAPIConnector.swift */; };
+		237ABED0247536CA00B270FF /* UZAPIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237ABECE247536CA00B270FF /* UZAPIConnector.swift */; };
 		63FD9185241D03FA001B7A48 /* UZPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63FD9183241D03FA001B7A48 /* UZPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63FD924A241D066E001B7A48 /* UZCastingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD920A241D066D001B7A48 /* UZCastingManager.swift */; };
 		63FD924B241D066E001B7A48 /* UZVideoQualitySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD920B241D066D001B7A48 /* UZVideoQualitySettingsViewController.swift */; };
@@ -184,6 +188,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		237ABECB2475352F00B270FF /* UZLiveServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZLiveServices.swift; sourceTree = "<group>"; };
+		237ABECE247536CA00B270FF /* UZAPIConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZAPIConnector.swift; sourceTree = "<group>"; };
 		476C9AF34D933783280476F6 /* Pods-UZPlayerExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayerExample.release.xcconfig"; path = "Target Support Files/Pods-UZPlayerExample/Pods-UZPlayerExample.release.xcconfig"; sourceTree = "<group>"; };
 		5EDAD4638FF3E17A8184CFE1 /* Pods-UZPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayer.debug.xcconfig"; path = "Target Support Files/Pods-UZPlayer/Pods-UZPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 		63FD9180241D03FA001B7A48 /* UZPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UZPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -399,7 +405,9 @@
 				63FD9227241D066D001B7A48 /* TweenKit */,
 				63FD923F241D066D001B7A48 /* SwiftIcons.swift */,
 				63FD92B3241D0CF3001B7A48 /* UZSentry.swift */,
+				237ABECE247536CA00B270FF /* UZAPIConnector.swift */,
 				63FD92B5241D0DAD001B7A48 /* UZLogger.swift */,
+				237ABECB2475352F00B270FF /* UZLiveServices.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -748,6 +756,7 @@
 				63FD9293241D0890001B7A48 /* AVAsset+Selection.swift in Sources */,
 				63FD927A241D066E001B7A48 /* Tweenable.swift in Sources */,
 				63FD926F241D066E001B7A48 /* RepeatAction.swift in Sources */,
+				237ABECC2475352F00B270FF /* UZLiveServices.swift in Sources */,
 				63FD925F241D066E001B7A48 /* UZEndscreenView.swift in Sources */,
 				63FD924C241D066E001B7A48 /* UZVisualizeInformationView.swift in Sources */,
 				63FD9252241D066E001B7A48 /* UZCastButton.swift in Sources */,
@@ -783,6 +792,7 @@
 				63FD9281241D066E001B7A48 /* UZVisualizeInfo.swift in Sources */,
 				230BA8A52474FC12009C09B1 /* UZTheme3.swift in Sources */,
 				63FD9288241D0722001B7A48 /* UZPlayerConfig.swift in Sources */,
+				237ABECF247536CA00B270FF /* UZAPIConnector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,11 +827,13 @@
 				230BA8662474F03B009C09B1 /* UZVideoItem.swift in Sources */,
 				230BA8582474F036009C09B1 /* UZPlayer++.swift in Sources */,
 				230BA8AC24750554009C09B1 /* UZTheme7.swift in Sources */,
+				237ABED0247536CA00B270FF /* UZAPIConnector.swift in Sources */,
 				230BA8712474F043009C09B1 /* DelayAction.swift in Sources */,
 				230BA8892474F04B009C09B1 /* UZVisualizeInformationView.swift in Sources */,
 				230BA8832474F047009C09B1 /* AVAudioSession+Airplay.swift in Sources */,
 				230BA8642474F036009C09B1 /* UZVideoQualitySettingsViewController.swift in Sources */,
 				230BA87D2474F043009C09B1 /* ArcAction.swift in Sources */,
+				237ABECD2475352F00B270FF /* UZLiveServices.swift in Sources */,
 				230BA8562474F036009C09B1 /* UZPlayer.swift in Sources */,
 				230BA8622474F036009C09B1 /* UZPlayerLayerView.swift in Sources */,
 				230BA88C2474F04B009C09B1 /* UZButton.swift in Sources */,
