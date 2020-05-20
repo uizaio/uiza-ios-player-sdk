@@ -8,14 +8,20 @@
 
 import UIKit
 import FrameLayoutKit
+#if canImport(NVActivityIndicatorView)
+import NVActivityIndicatorView
+#endif
 
-public typealias UZButtonAnimationCompletionBlock = ((_ sender: UZButton) -> Void)
+public extension UIControl.State {
+	static let hovered = UIControl.State(rawValue: 1 << 18)
+}
 
-public enum UZButtonLoadingIndicatorAlignment: String {
+public enum UZButtonLoadingIndicatorAlignment {
 	case left
 	case center
 	case right
 	case atImage
+	case atPosition(position: CGPoint)
 }
 
 public enum UZButtonImageAlignment {
@@ -23,13 +29,12 @@ public enum UZButtonImageAlignment {
 	case right
 	case top
 	case bottom
-	case leftEdge
-	case rightEdge
-	case topEdge
-	case bottomEdge
+	case leftEdge(spacing: CGFloat)
+	case rightEdge(spacing: CGFloat)
+	case topEdge(spacing: CGFloat)
+	case bottomEdge(spacing: CGFloat)
 }
 
-// swiftlint:disable all
 open class UZButton: UIButton {
 	
 	/** Set/Get title of the button */
@@ -46,11 +51,11 @@ open class UZButton: UIButton {
 	/** Space between image and text */
 	open var spacing: CGFloat {
 		get {
-			return frameLayout.spacing
+			return contentFrameLayout.spacing
 		}
 		set {
-			frameLayout.spacing = newValue
-			frameLayout.setNeedsLayout()
+			contentFrameLayout.spacing = newValue
+			contentFrameLayout.setNeedsLayout()
 			setNeedsLayout()
 		}
 	}
@@ -58,11 +63,11 @@ open class UZButton: UIButton {
 	/** Minimum size of imageView, set zero to width or height to disable */
 	open var imageMinSize: CGSize {
 		get {
-			return imageFrame.minSize
+			return imageFrameLayout.minSize
 		}
 		set {
-			imageFrame.minSize = newValue
-			frameLayout.setNeedsLayout()
+			imageFrameLayout.minSize = newValue
+			contentFrameLayout.setNeedsLayout()
 			setNeedsLayout()
 		}
 	}
@@ -70,11 +75,11 @@ open class UZButton: UIButton {
 	/** Maximum size of imageView, set zero to width or height to disable */
 	open var imageMaxSize: CGSize {
 		get {
-			return imageFrame.maxSize
+			return imageFrameLayout.maxSize
 		}
 		set {
-			imageFrame.maxSize = newValue
-			frameLayout.setNeedsLayout()
+			imageFrameLayout.maxSize = newValue
+			contentFrameLayout.setNeedsLayout()
 			setNeedsLayout()
 		}
 	}
@@ -82,11 +87,11 @@ open class UZButton: UIButton {
 	/** Fixed size of imageView, set zero to width or height to disable */
 	open var imageFixSize: CGSize {
 		get {
-			return imageFrame.fixSize
+			return imageFrameLayout.fixSize
 		}
 		set {
-			imageFrame.fixSize = newValue
-			frameLayout.setNeedsLayout()
+			imageFrameLayout.fixSize = newValue
+			contentFrameLayout.setNeedsLayout()
 			setNeedsLayout()
 		}
 	}
@@ -168,10 +173,11 @@ open class UZButton: UIButton {
 	/** Text Horizontal Alignment */
 	open var textHorizontalAlignment: NKContentHorizontalAlignment {
 		get {
-			return labelFrame.contentHorizontalAlignment
+			return labelFrame.horizontalAlignment
 		}
 		set {
-			labelFrame.contentHorizontalAlignment = newValue
+			resetLabelAlignment()
+			labelFrame.horizontalAlignment = newValue
 			setNeedsLayout()
 		}
 	}
@@ -179,20 +185,22 @@ open class UZButton: UIButton {
 	/** Text Vertical Alignment */
 	open var textVerticalAlignment: NKContentVerticalAlignment {
 		get {
-			return labelFrame.contentVerticalAlignment
+			return labelFrame.verticalAlignment
 		}
 		set {
-			labelFrame.contentVerticalAlignment = newValue
+			resetLabelAlignment()
+			labelFrame.verticalAlignment = newValue
 			setNeedsLayout()
 		}
 	}
 	
 	/** Text Alignment */
-	open var textAlignemnt: (NKContentVerticalAlignment, NKContentHorizontalAlignment) {
+	open var textAlignment: (NKContentVerticalAlignment, NKContentHorizontalAlignment) {
 		get {
 			return labelFrame.alignment
 		}
 		set {
+			resetLabelAlignment()
 			labelFrame.alignment = newValue
 			setNeedsLayout()
 		}
@@ -200,10 +208,10 @@ open class UZButton: UIButton {
 	
 	override open var contentEdgeInsets: UIEdgeInsets {
 		get {
-			return frameLayout.edgeInsets
+			return contentFrameLayout.edgeInsets
 		}
 		set {
-			frameLayout.edgeInsets = newValue
+			contentFrameLayout.edgeInsets = newValue
 			setNeedsLayout()
 		}
 	}
@@ -222,109 +230,90 @@ open class UZButton: UIButton {
 	/** Set loading state. Tap interaction will be disabled while loading */
 	open var isLoading: Bool = false {
 		didSet {
-			if isLoading != oldValue {
-				if isLoading {
-					isEnabled = false
-					showLoadingView()
-					
-					if transitionToCircleWhenLoading {
-						titleLabel?.alpha = 0.0
-						imageView?.alpha = 0.0
-						transition(toCircle: true)
-					}
-					else {
-						if hideImageWhileLoading {
-							imageView?.alpha = 0.0
-						}
-						
-						if hideTitleWhileLoading {
-							titleLabel?.alpha = 0.0
-						}
-					}
+			guard isLoading != oldValue else { return }
+			isEnabled = !isLoading
+			
+			if isLoading {
+				showLoadingView()
+				
+				if hideImageWhileLoading {
+					imageView?.alpha = 0.0
 				}
-				else {
-					isEnabled = true
-					hideLoadingView()
-					
-					if transitionToCircleWhenLoading {
-						titleLabel?.alpha = 1.0
-						imageView?.alpha = 1.0
-						transition(toCircle: false)
-					}
-					else {
-						if hideImageWhileLoading {
-							imageView?.alpha = 1.0
-						}
-						
-						if hideTitleWhileLoading {
-							titleLabel?.alpha = 1.0
-						}
-					}
+				
+				if hideTitleWhileLoading {
+					titleLabel?.alpha = 0.0
+				}
+			}
+			else {
+				hideLoadingView()
+				
+				if hideImageWhileLoading {
+					imageView?.alpha = 1.0
+				}
+				
+				if hideTitleWhileLoading {
+					titleLabel?.alpha = 1.0
 				}
 			}
 		}
 	}
+	/// `true` is mous cursor is hovering
+	public fileprivate(set) var isHovering = false
 	/** imageView will be hidden when `isLoading` is true */
-	open var hideImageWhileLoading: Bool = false
+	open var hideImageWhileLoading = false
 	/** titleLabel will be hidden when `isLoading` is true */
-	open var hideTitleWhileLoading: Bool = true
-	/** Button will animated to circle shape when set `isLoading = true`*/
-	open var transitionToCircleWhenLoading: Bool = false
-	/// Loading indicator style
+	open var hideTitleWhileLoading = true
+	#if canImport(NVActivityIndicatorView)
+	/** Style of loading indicator */
+	open var loadingIndicatorStyle: NVActivityIndicatorType = .ballPulse
+	#else
 	open var loadingIndicatorStyle: UIActivityIndicatorView.Style = .white
+	#endif
+	/** Scale ratio of loading indicator, based on the minimum value of button width or height */
+	open var loadingIndicatorScaleRatio: CGFloat = 0.7
 	/** Color of loading indicator, if `nil`, it will use titleColor of normal state */
 	open var loadingIndicatorColor: UIColor? = nil
 	/** Alignment for loading indicator */
 	open var loadingIndicatorAlignment: UZButtonLoadingIndicatorAlignment = .center
-	/** `FrameLayout` that layout imageView */
-	open var imageFrameLayout: FrameLayout! {
-		get {
-			return imageFrame
-		}
-	}
-	/** `FrameLayout` that layout textLabel */
-	open var labelFrameLayout: FrameLayout! {
-		get {
-			return labelFrame
-		}
-	}
-	/** DoubleFrameLayout that layout the content */
-	open var contentFrameLayout: DoubleFrameLayout! {
-		get {
-			return frameLayout
-		}
-	}
 	
 	/** The background view of the button */
 	open var backgroundView: UIView? = nil {
 		didSet {
 			oldValue?.layer.removeFromSuperlayer()
-			
-			if let view = backgroundView {
-				view.isUserInteractionEnabled = false
-				view.layer.masksToBounds = true
-				layer.insertSublayer(view.layer, at: 0)
-				setNeedsLayout()
-			}
+			guard let view = backgroundView else { return }
+			view.isUserInteractionEnabled = false
+			view.layer.masksToBounds = true
+			layer.insertSublayer(view.layer, at: 0)
+			setNeedsLayout()
 		}
 	}
+	/** `FrameLayout` that layout imageView */
+	public let imageFrameLayout		= FrameLayout()
+	/** `FrameLayout` that handles textLabel */
+	public let labelFrameLayout		= FrameLayout()
+	/** `FrameLayout` that handles contents */
+	public let contentFrameLayout 	= DoubleFrameLayout(axis: .horizontal)
 	
-	open var animationationDidEnd: UZButtonAnimationCompletionBlock? = nil
-	
+	#if canImport(NVActivityIndicatorView)
+	fileprivate var loadingView 	: NVActivityIndicatorView? = nil
+	#else
 	fileprivate var loadingView 	: UIActivityIndicatorView? = nil
+	#endif
 	fileprivate let shadowLayer 	= CAShapeLayer()
 	fileprivate let backgroundLayer = CAShapeLayer()
 	fileprivate let flashLayer 		= CAShapeLayer()
 	fileprivate let gradientLayer	= CAGradientLayer()
-	fileprivate let imageFrame 		= FrameLayout()
-	fileprivate let labelFrame 		= FrameLayout()
-	fileprivate let frameLayout 	= DoubleFrameLayout(axis: .horizontal)
 	
 	fileprivate var bgColorDict			: [String : UIColor] = [:]
 	fileprivate var borderColorDict		: [String : UIColor] = [:]
 	fileprivate var shadowColorDict		: [String : UIColor] = [:]
 	fileprivate var gradientColorDict	: [String : [UIColor]] = [:]
 	fileprivate var borderSizeDict		: [String : CGFloat] = [:]
+	fileprivate var titleFontDict		: [String : UIFont] = [:]
+	
+	fileprivate var labelFrame: FrameLayout {
+		return contentFrameLayout.leftFrameLayout.targetView == labelFrameLayout ? contentFrameLayout.leftFrameLayout : contentFrameLayout.rightFrameLayout
+	}
 	
 	// MARK: -
 	
@@ -347,7 +336,15 @@ open class UZButton: UIButton {
 	
 	public init() {
 		super.init(frame: .zero)
-		
+		setupUI()
+	}
+	
+	required public init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		setupUI()
+	}
+	
+	open func setupUI() {
 		flashLayer.opacity = 0
 		flashLayer.fillColor = flashColor.cgColor
 		contentEdgeInsets = .zero
@@ -357,34 +354,59 @@ open class UZButton: UIButton {
 		layer.addSublayer(flashLayer)
 		layer.addSublayer(gradientLayer)
 		
-		frameLayout.isIntrinsicSizeEnabled = true
-		frameLayout.frameLayout1.alignment = (.center, .center)
-		frameLayout.frameLayout2.alignment = (.center, .center)
+		contentFrameLayout.isIntrinsicSizeEnabled = true
+		contentFrameLayout.frameLayout1.alignment = (.center, .center)
+		contentFrameLayout.frameLayout2.alignment = (.center, .center)
 		
-		imageFrame.alignment = (.center, .center)
-		imageFrame.targetView = imageView
+		imageFrameLayout.alignment = (.fit, .fit)
+		imageFrameLayout.targetView = imageView
 		
-		labelFrame.alignment = (.fill, .fill)
-		labelFrame.targetView = titleLabel
+		labelFrameLayout.alignment = (.fill, .fill)
+		labelFrameLayout.targetView = titleLabel
 		
 		updateLayoutAlignment()
+		addSubview(labelFrameLayout)
+		addSubview(imageFrameLayout)
+		addSubview(contentFrameLayout)
 		
-		addSubview(imageFrame)
-		addSubview(labelFrame)
-		addSubview(frameLayout)
+		if #available(iOS 13.4, *) {
+			enablePointerInteraction()
+		}
+		else if #available(iOS 13.0, *) {
+			enableHoverGesture()
+		}
 	}
 	
-	required public init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
+	@available(iOS 13.0, *)
+	open func enableHoverGesture() {
+		let hoverGesture = UIHoverGestureRecognizer(target: self, action: #selector(onHovered))
+		addGestureRecognizer(hoverGesture)
+	}
+	
+	open override func setNeedsLayout() {
+		super.setNeedsLayout()
+		
+		contentFrameLayout.setNeedsLayout()
+		imageFrameLayout.setNeedsLayout()
+		labelFrameLayout.setNeedsLayout()
 	}
 	
 	override open func sizeThatFits(_ size: CGSize) -> CGSize {
-		var result = frameLayout.sizeThatFits(size)
+		let lastOverlapped = contentFrameLayout.isOverlapped
+		if lastOverlapped {
+			resetLabelAlignment()
+		}
+		
+		var result = contentFrameLayout.sizeThatFits(size)
 		
 		result.width  += extendSize.width
 		result.height += extendSize.height
 		result.width  = min(result.width, size.width)
 		result.height = min(result.height, size.height)
+		
+		if lastOverlapped {
+			makeTitleRealCenter()
+		}
 		
 		return result
 	}
@@ -397,12 +419,13 @@ open class UZButton: UIButton {
 	override open func draw(_ rect: CGRect) {
 		super.draw(rect)
 		
+		let currentState = isHovering ? [state, .hovered] : state
 		let backgroundFrame = bounds
-		let fillColor 		= backgroundColor(for: state)
-		let strokeColor 	= borderColor(for: state)
-		let strokeSize		= borderSize(for: state)
+		let fillColor 		= backgroundColor(for: currentState) ?? backgroundColor(for: state) ?? backgroundColor(for: .normal)
+		let strokeColor 	= borderColor(for: currentState)
+		let strokeSize		= borderSize(for: currentState)
 		let roundedPath 	= UIBezierPath(roundedRect: backgroundFrame, cornerRadius: cornerRadius)
-		let path			= transitionToCircleWhenLoading && isLoading ? backgroundLayer.path : roundedPath.cgPath
+		let path			= isLoading ? backgroundLayer.path : roundedPath.cgPath
 		
 		backgroundLayer.path			= path
 		backgroundLayer.fillColor		= fillColor?.cgColor
@@ -413,7 +436,7 @@ open class UZButton: UIButton {
 		flashLayer.path 				= path
 		flashLayer.fillColor 			= flashColor.cgColor
 		
-		if let shadowColor = shadowColor(for: state) {
+		if let shadowColor = shadowColor(for: currentState) {
 			shadowLayer.isHidden 		= false
 			shadowLayer.path 			= path
 			shadowLayer.shadowPath 		= path
@@ -427,19 +450,24 @@ open class UZButton: UIButton {
 			shadowLayer.isHidden = true
 		}
 		
-		if let gradientColors = gradientColor(for: state) {
+		if let gradientColors = gradientColor(for: currentState) {
 			var colors: [CGColor] = []
 			for color in gradientColors {
 				colors.append(color.cgColor)
 			}
 			
 			gradientLayer.isHidden = false
+			gradientLayer.cornerRadius = cornerRadius
 			gradientLayer.shadowPath = path
 			gradientLayer.colors = colors
 		}
 		else {
 			gradientLayer.isHidden = true
 			gradientLayer.colors = nil
+		}
+		
+		if let titleFont = titleFont(for: currentState) {
+			titleLabel?.font = titleFont
 		}
 		
 		if underlineTitleDisabled {
@@ -457,10 +485,10 @@ open class UZButton: UIButton {
 		backgroundLayer.frame = bounds
 		flashLayer.frame = bounds
 		gradientLayer.frame = bounds
-		frameLayout.frame = bounds
+		contentFrameLayout.frame = bounds
 		
-		frameLayout.setNeedsLayout()
-		frameLayout.layoutIfNeeded()
+		contentFrameLayout.setNeedsLayout()
+		contentFrameLayout.layoutIfNeeded()
 		
 		if let imageView = imageView {
 			#if swift(>=4.2)
@@ -473,10 +501,11 @@ open class UZButton: UIButton {
 		if let loadingView = loadingView {
 			var point = CGPoint(x: 0, y: viewSize.height / 2)
 			switch (loadingIndicatorAlignment) {
-			case .left: 	point.x = loadingView.frame.size.width/2 + 5 + contentFrameLayout.edgeInsets.left
-			case .center: 	point.x = viewSize.width/2
-			case .right: 	point.x = viewSize.width - (loadingView.frame.size.width/2) - 5 -  contentFrameLayout.edgeInsets.right
-			case .atImage:	point = imageView?.center ?? point
+				case .left: 	point.x = loadingView.frame.size.width/2 + 5 + contentFrameLayout.edgeInsets.left
+				case .center: 	point.x = viewSize.width/2
+				case .right: 	point.x = viewSize.width - (loadingView.frame.size.width/2) - 5 -  contentFrameLayout.edgeInsets.right
+				case .atImage:	point = imageView?.center ?? point
+				case .atPosition(let position): point = position
 			}
 			
 			loadingView.center = point
@@ -497,75 +526,112 @@ open class UZButton: UIButton {
 		backgroundView?.frame = bounds
 	}
 	
+	open override func didMoveToWindow() {
+		super.didMoveToWindow()
+		guard window != nil else { return }
+		setNeedsLayout()
+	}
+	
+	open override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		guard window != nil else { return }
+		setNeedsLayout()
+	}
+	
 	fileprivate func updateLayoutAlignment() {
+		resetLabelAlignment()
+		
 		switch imageAlignment {
-		case .left:
-			frameLayout.axis = .horizontal
-			frameLayout.distribution = .center
+			case .left:
+				contentFrameLayout.axis = .horizontal
+				contentFrameLayout.distribution = .center
+				
+				contentFrameLayout.leftFrameLayout.targetView = imageFrameLayout
+				contentFrameLayout.rightFrameLayout.targetView = labelFrameLayout
+				break
 			
-			frameLayout.leftFrameLayout.targetView = imageFrame
-			frameLayout.rightFrameLayout.targetView = labelFrame
-			break
+			case .leftEdge(let spacing):
+				contentFrameLayout.axis = .horizontal
+				contentFrameLayout.distribution = .left
+				
+				imageFrameLayout.padding(top: 0, left: spacing, bottom: 0, right: 0)
+				contentFrameLayout.leftFrameLayout.targetView = imageFrameLayout
+				contentFrameLayout.rightFrameLayout.targetView = labelFrameLayout
+				makeTitleRealCenter()
+				break
 			
-		case .leftEdge:
-			frameLayout.axis = .horizontal
-			frameLayout.distribution = .left
+			case .right:
+				contentFrameLayout.axis = .horizontal
+				contentFrameLayout.distribution = .center
+				
+				contentFrameLayout.leftFrameLayout.targetView = labelFrameLayout
+				contentFrameLayout.rightFrameLayout.targetView = imageFrameLayout
+				break
 			
-			frameLayout.leftFrameLayout.targetView = imageFrame
-			frameLayout.rightFrameLayout.targetView = labelFrame
-			break
+			case .rightEdge(let spacing):
+				contentFrameLayout.axis = .horizontal
+				contentFrameLayout.distribution = .right
+				
+				imageFrameLayout.padding(top: 0, left: 0, bottom: 0, right: spacing)
+				contentFrameLayout.leftFrameLayout.targetView = labelFrameLayout
+				contentFrameLayout.rightFrameLayout.targetView = imageFrameLayout
+				makeTitleRealCenter()
+				break
 			
-		case .right:
-			frameLayout.axis = .horizontal
-			frameLayout.distribution = .center
+			case .top:
+				contentFrameLayout.axis = .vertical
+				contentFrameLayout.distribution = .center
+				
+				contentFrameLayout.topFrameLayout.targetView = imageFrameLayout
+				contentFrameLayout.bottomFrameLayout.targetView = labelFrameLayout
+				break
 			
-			frameLayout.leftFrameLayout.targetView = labelFrame
-			frameLayout.rightFrameLayout.targetView = imageFrame
-			break
+			case .topEdge(let spacing):
+				contentFrameLayout.axis = .vertical
+				contentFrameLayout.distribution = .top
+				
+				imageFrameLayout.padding(top: spacing, left: 0, bottom: 0, right: 0)
+				contentFrameLayout.topFrameLayout.targetView = imageFrameLayout
+				contentFrameLayout.bottomFrameLayout.targetView = labelFrameLayout
+				break
 			
-		case .rightEdge:
-			frameLayout.axis = .horizontal
-			frameLayout.distribution = .right
+			case .bottom:
+				contentFrameLayout.axis = .vertical
+				contentFrameLayout.distribution = .center
+				
+				contentFrameLayout.topFrameLayout.targetView = labelFrameLayout
+				contentFrameLayout.bottomFrameLayout.targetView = imageFrameLayout
+				break
 			
-			frameLayout.leftFrameLayout.targetView = labelFrame
-			frameLayout.rightFrameLayout.targetView = imageFrame
-			break
-			
-		case .top:
-			frameLayout.axis = .vertical
-			frameLayout.distribution = .center
-			
-			frameLayout.topFrameLayout.targetView = imageFrame
-			frameLayout.bottomFrameLayout.targetView = labelFrame
-			break
-			
-		case .topEdge:
-			frameLayout.axis = .vertical
-			frameLayout.distribution = .top
-			
-			frameLayout.topFrameLayout.targetView = imageFrame
-			frameLayout.bottomFrameLayout.targetView = labelFrame
-			break
-			
-		case .bottom:
-			frameLayout.axis = .vertical
-			frameLayout.distribution = .center
-			
-			frameLayout.topFrameLayout.targetView = labelFrame
-			frameLayout.bottomFrameLayout.targetView = imageFrame
-			break
-			
-		case .bottomEdge:
-			frameLayout.axis = .vertical
-			frameLayout.distribution = .bottom
-			
-			frameLayout.topFrameLayout.targetView = labelFrame
-			frameLayout.bottomFrameLayout.targetView = imageFrame
-			break
+			case .bottomEdge(let spacing):
+				contentFrameLayout.axis = .vertical
+				contentFrameLayout.distribution = .bottom
+				
+				imageFrameLayout.padding(top: 0, left: 0, bottom: spacing, right: 0)
+				contentFrameLayout.topFrameLayout.targetView = labelFrameLayout
+				contentFrameLayout.bottomFrameLayout.targetView = imageFrameLayout
+				break
 		}
 		
 		setNeedsDisplay()
 		setNeedsLayout()
+	}
+	
+	fileprivate func makeTitleRealCenter() {
+		switch imageAlignment {
+			case .leftEdge(_), .rightEdge:
+				contentFrameLayout.isOverlapped = true
+				labelFrameLayout.isIntrinsicSizeEnabled = false
+				labelFrameLayout.alignment = (.center, .center)
+			
+			default: break
+		}
+	}
+	
+	fileprivate func resetLabelAlignment() {
+		contentFrameLayout.isOverlapped = false
+		labelFrameLayout.isIntrinsicSizeEnabled = true
+		labelFrameLayout.alignment = (.fill, .fill)
 	}
 	
 	// MARK: -
@@ -593,17 +659,25 @@ open class UZButton: UIButton {
 	
 	override open var isHighlighted: Bool {
 		didSet {
-			if super.isHighlighted != oldValue {
-				setNeedsDisplay()
-				
-//				if isHighlighted {
-//					if #available(iOS 10, *) {
-//						let generator = UIImpactFeedbackGenerator(style: .light)
-//						generator.prepare()
-//						generator.impactOccurred()
-//					}
-//				}
-			}
+			guard isHighlighted != oldValue else { return }
+			setNeedsDisplay()
+			
+			//			if isHighlighted {
+			//				if #available(iOS 10, *) {
+			//					let generator = UIImpactFeedbackGenerator(style: .light)
+			//					generator.prepare()
+			//					generator.impactOccurred()
+			//				}
+			//			}
+		}
+	}
+	
+	@available(iOS 13.0, *)
+	@objc func onHovered(_ gesture: UIHoverGestureRecognizer) {
+		let gestureState = gesture.state
+		if gestureState == .began || gestureState == .ended || gestureState == .cancelled {
+			isHovering = gestureState == .began
+			setNeedsDisplay()
 		}
 	}
 	
@@ -611,6 +685,8 @@ open class UZButton: UIButton {
 	// MARK: -
 	
 	open func startFlashing(flashDuration: TimeInterval = 0.5, intensity: Float = 0.85, repeatCount: Int = 10) {
+		flashLayer.removeAnimation(forKey: "flashAnimation")
+		
 		let flash = CABasicAnimation(keyPath: "opacity")
 		flash.fromValue = 0.0
 		flash.toValue = intensity
@@ -624,22 +700,38 @@ open class UZButton: UIButton {
 		flashLayer.removeAnimation(forKey: "flashAnimation")
 	}
 	
+	@available (iOS 13.4, *)
+	open func enablePointerInteraction(insets: CGFloat = -5) {
+		isPointerInteractionEnabled = true
+		pointerStyleProvider = { (button, effect, shape) in
+			let frame = button.frame.insetBy(dx: insets, dy: insets)
+			let buttonShape = UIPointerShape.roundedRect(frame, radius: self.cornerRadius)
+			return UIPointerStyle(effect: effect, shape: buttonShape)
+		}
+	}
+	
+	// MARK: -
+	
 	override open func setTitle(_ title: String?, for state: UIControl.State) {
 		super.setTitle(title, for: state)
-		
-		if self.state == state {
-			titleLabel?.text = title
-			setNeedsLayout()
-		}
+		guard self.state == state else { return }
+		titleLabel?.text = title
+		setNeedsLayout()
+	}
+	
+	open func setTitleFont(_ font: UIFont?, for state: UIControl.State) {
+		let key = titleFontKey(for: state)
+		titleFontDict[key] = font
+		guard self.state == state else { return }
+		titleLabel?.font = font
+		setNeedsLayout()
 	}
 	
 	override open func setImage(_ image: UIImage?, for state: UIControl.State) {
 		super.setImage(image, for: state)
-		
-		if self.state == state {
-			imageView?.image = image
-			setNeedsLayout()
-		}
+		guard self.state == state else { return }
+		imageView?.image = image
+		setNeedsLayout()
 	}
 	
 	open func setBackgroundColor(_ color: UIColor?, for state: UIControl.State) {
@@ -723,6 +815,11 @@ open class UZButton: UIButton {
 		return borderSizeDict[key] ?? 0
 	}
 	
+	open func titleFont(for state: UIControl.State) -> UIFont? {
+		let key = titleFontKey(for: state)
+		return titleFontDict[key]
+	}
+	
 	// MARK: -
 	
 	fileprivate func backgroundColorKey(for state: UIControl.State) -> String {
@@ -745,102 +842,36 @@ open class UZButton: UIButton {
 		return "bs\(state.rawValue)"
 	}
 	
+	fileprivate func titleFontKey(for state: UIControl.State) -> String {
+		return "tf\(state.rawValue)"
+	}
+	
 	// MARK: -
 	
 	fileprivate func showLoadingView() {
-		if loadingView == nil {
-			loadingView = UIActivityIndicatorView(style: loadingIndicatorStyle)
-			loadingView!.startAnimating()
-			addSubview(loadingView!)
-			setNeedsLayout()
-		}
+		guard loadingView == nil else { return }
 		
-		if let color = loadingIndicatorColor {
-			loadingView?.tintColor = color
-		}
+		let viewSize = bounds.size
+		let minSize = min(viewSize.width, viewSize.height) * loadingIndicatorScaleRatio
+		let indicatorSize = CGSize(width: minSize, height: minSize)
+		let loadingFrame = CGRect(x: 0, y: 0, width: indicatorSize.width, height: indicatorSize.height)
+		let color = loadingIndicatorColor ?? titleColor(for: .normal)
+		
+		#if canImport(NVActivityIndicatorView)
+		loadingView = NVActivityIndicatorView(frame: loadingFrame, type: loadingIndicatorStyle, color: color, padding: 0)
+		#else
+		loadingView = UIActivityIndicatorView(style: loadingIndicatorStyle)
+		#endif
+		
+		loadingView!.startAnimating()
+		addSubview(loadingView!)
+		setNeedsLayout()
 	}
 	
 	fileprivate func hideLoadingView() {
 		loadingView?.stopAnimating()
 		loadingView?.removeFromSuperview()
 		loadingView = nil
-	}
-	
-	fileprivate func transition(toCircle: Bool) {
-		backgroundLayer.removeAllAnimations()
-		shadowLayer.removeAllAnimations()
-		
-		let animation = CABasicAnimation(keyPath: "bounds.size.width")
-		
-		if toCircle {
-			animation.fromValue = frame.width
-			animation.toValue = frame.height
-			animation.duration = 0.1
-			#if swift(>=4.2)
-			animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-			#else
-			animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-			#endif
-			backgroundLayer.masksToBounds = true
-			backgroundLayer.cornerRadius = cornerRadius
-		}
-		else {
-			animation.fromValue = frame.height
-			animation.toValue = frame.width
-			animation.duration = 0.15
-			#if swift(>=4.2)
-			animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-			#else
-			animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-			#endif
-			
-			setNeedsLayout()
-			setNeedsDisplay()
-		}
-		
-		#if swift(>=4.2)
-		animation.fillMode = CAMediaTimingFillMode.forwards
-		#else
-		animation.fillMode = kCAFillModeForwards
-		#endif
-		animation.isRemovedOnCompletion = false
-		
-		backgroundLayer.add(animation, forKey: animation.keyPath)
-		shadowLayer.add(animation, forKey: animation.keyPath)
-		gradientLayer.add(animation, forKey: animation.keyPath)
-		flashLayer.add(animation, forKey: animation.keyPath)
-	}
-	
-	open func expandFullscreen(duration:Double = 0.3, completionBlock:UZButtonAnimationCompletionBlock? = nil) {
-		animationationDidEnd = completionBlock
-		hideLoadingView()
-		
-		if window != nil {
-			let targetFrame = convert(bounds, to: window!)
-			window!.addSubview(self)
-			frame = targetFrame
-		}
-		
-		isEnabled = true // back to normal color
-		isUserInteractionEnabled = false
-		titleLabel?.alpha = 0.0
-		imageView?.alpha = 0.0
-		
-		let animation = CABasicAnimation(keyPath: "transform.scale")
-		animation.fromValue = 1.0
-		animation.toValue = 26.0
-		animation.duration = duration
-		animation.delegate = self
-		#if swift(>=4.2)
-		animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-		animation.fillMode = CAMediaTimingFillMode.forwards
-		#else
-		animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-		animation.fillMode = kCAFillModeForwards
-		#endif
-		animation.isRemovedOnCompletion = false
-		
-		backgroundLayer.add(animation, forKey: animation.keyPath)
 	}
 	
 	fileprivate func removeLabelUnderline() {
@@ -860,15 +891,6 @@ open class UZButton: UIButton {
 	
 }
 
-extension UZButton: CAAnimationDelegate {
-	
-	open func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-		if flag {
-			animationationDidEnd?(self)
-		}
-	}
-	
-}
 
 // MARK: -
 
@@ -901,9 +923,11 @@ fileprivate extension UIColor {
 /**
 Supports:
 let button = UZButton()
-button.titles[[.normal, .highlighted]] = ""
+button.titles[.normal] = ""
+button.titleColors[[.normal, .highlighted]] = .black
+button.backgroundColors[[.normal, .highlighted]] = .white
 */
-class UIControlStateValue<T> {
+public class UIControlStateValue<T> {
 	private let getter: (UIControl.State) -> T?
 	private let setter: (T?, UIControl.State) -> Void
 	
@@ -916,7 +940,7 @@ class UIControlStateValue<T> {
 		self.setter = setter
 	}
 	
-	subscript(state: UIControl.State) -> T? {
+	public subscript(state: UIControl.State) -> T? {
 		get {
 			return getter(state)
 		}
@@ -926,7 +950,7 @@ class UIControlStateValue<T> {
 	}
 }
 
-extension UZButton {
+public extension UZButton {
 	
 	var titles: UIControlStateValue<String> {
 		return UIControlStateValue<String>.init(getter: self.title(for:), setter: self.setTitle(_:for:))
@@ -936,19 +960,31 @@ extension UZButton {
 		return UIControlStateValue<UIColor>(getter: self.titleColor(for:), setter: self.setTitleColor(_:for:))
 	}
 	
+	var titleFonts: UIControlStateValue<UIFont> {
+		return UIControlStateValue<UIFont>(getter: self.titleFont(for:), setter: self.setTitleFont(_:for:))
+	}
+	
+	var images: UIControlStateValue<UIImage> {
+		return UIControlStateValue<UIImage>.init(getter: self.image, setter: self.setImage(_:for:))
+	}
+	
 	var backgroundColors: UIControlStateValue<UIColor> {
 		return UIControlStateValue<UIColor>.init(getter: self.backgroundColor(for:), setter: self.setBackgroundColor(_:for:))
 	}
 	
-	var  borderColors: UIControlStateValue<UIColor> {
+	var borderColors: UIControlStateValue<UIColor> {
 		return UIControlStateValue<UIColor>(getter: self.borderColor(for:), setter: self.setBorderColor(_:for:))
 	}
 	
-	var  shadowColors: UIControlStateValue<UIColor> {
+	var borderSizes: UIControlStateValue<CGFloat> {
+		return UIControlStateValue<CGFloat>(getter: self.borderSize(for:), setter: self.setBorderSize(_:for:))
+	}
+	
+	var shadowColors: UIControlStateValue<UIColor> {
 		return UIControlStateValue<UIColor>(getter: self.shadowColor(for:), setter: self.setShadowColor(_:for:))
 	}
 	
-	var  gradientColors: UIControlStateValue<[UIColor]> {
+	var gradientColors: UIControlStateValue<[UIColor]> {
 		return UIControlStateValue<[UIColor]>(getter: self.gradientColor(for:), setter: self.setGradientColor(_:for:))
 	}
 	

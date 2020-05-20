@@ -99,12 +99,6 @@ open class UZPlayerControlView: UIView {
 		}
 	}
 	
-	open lazy var allButtons: [UIButton]! = {
-		return [backButton, helpButton, ccButton, relateButton, playlistButton, settingsButton, fullscreenButton,
-                playpauseCenterButton, playpauseButton, forwardButton, backwardButton, nextButton,
-                previousButton, volumeButton, pipButton, castingButton]
-	}()
-	
 	var playerLastState: UZPlayerState = .notSetURL
 	var messageLabel: UILabel?
 	
@@ -152,6 +146,20 @@ open class UZPlayerControlView: UIView {
 	}
 	
 	fileprivate var timer: Timer?
+	
+	open lazy var allButtons: [UIButton] = {
+		return [backButton, helpButton, ccButton, relateButton, playlistButton, settingsButton, fullscreenButton,
+				playpauseCenterButton, playpauseButton, forwardButton, backwardButton, nextButton,
+				previousButton, volumeButton, pipButton, castingButton, logoButton]
+	}()
+	
+	open lazy var allLabels: [UILabel] = {
+		return [titleLabel, currentTimeLabel, totalTimeLabel, remainTimeLabel]
+	}()
+	
+	lazy var allControlViews: [UIView] = {
+		return allButtons + allLabels + [airplayButton, liveBadgeView, timeSlider]
+	}()
 	
 	// MARK: -
 	

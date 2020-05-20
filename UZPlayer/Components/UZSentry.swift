@@ -12,20 +12,14 @@ import Sentry
 class UZSentry {
 	
 	class func activate() {
-		do {
-			Client.shared = try Client(dsn: "https://2fb4e767fc474b7189554bce88c628c8@sentry.io/1453018")
-			try Client.shared?.startCrashHandler()
-			Client.shared?.environment = "GA"
-		} catch let error {
-			DLog("\(error)")
-		}
+		SentrySDK.start(options: ["dsn" : "https://2fb4e767fc474b7189554bce88c628c8@sentry.io/1453018", "environment" : "GA"])
 	}
 	
 	class func sendError(error: Error?) {
 		let event = Event(level: .error)
 		event.message = error?.localizedDescription ?? "Error"
 		event.extra = ["ios": true]
-		Client.shared?.send(event: event)
+		SentrySDK.capture(event: event)
 	}
 	
 	class func sendData(data: [String: String]?) {
@@ -41,14 +35,14 @@ class UZSentry {
         let event = Event(level: .info)
         event.message = message
         event.extra = ["ios": true]
-        Client.shared?.send(event: event)
+		SentrySDK.capture(event: event)
     }
 	
 	class func sendNSError(error: NSError) {
 		let event = Event(level: .error)
 		event.message = error.localizedDescription
 		event.extra = ["ios": true]
-		Client.shared?.send(event: event)
+		SentrySDK.capture(event: event)
 	}
 	
 }
