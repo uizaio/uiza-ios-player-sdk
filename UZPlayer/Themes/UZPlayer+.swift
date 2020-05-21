@@ -517,9 +517,6 @@ extension UZPlayer: UZPlayerLayerViewDelegate {
             
         case .buffering:
 			UZLogger.shared.log(event: "rebufferstart")
-            if currentVideo?.isLive ?? false {
-                loadLiveStatus(after: 1)
-            }
             bufferingCount += 1
             
         case .bufferFinished:
@@ -536,10 +533,6 @@ extension UZPlayer: UZPlayerLayerViewDelegate {
                 }
             }
             
-            if currentVideo?.isLive ?? false {
-                loadLiveStatus(after: 1)
-            }
-            
             #if canImport(GoogleInteractiveMediaAds)
             adsLoader?.contentComplete()
             #endif
@@ -549,10 +542,6 @@ extension UZPlayer: UZPlayerLayerViewDelegate {
 			UZLogger.shared.log(event: "error")
             if autoTryNextDefinitionIfError {
                 tryNextDefinition()
-            }
-            
-            if currentVideo?.isLive ?? false {
-                loadLiveStatus(after: 1)
             }
             
         default:

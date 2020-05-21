@@ -230,21 +230,23 @@ extension UZPlayer {
 		}
     }
 
-    open func loadLiveStatus(after interval: TimeInterval = 0) {
+    open func sendWatchingLiveEvent(after interval: TimeInterval = 0) {
         if interval > 0 {
-            if loadLiveStatusTimer != nil {
-                loadLiveStatusTimer!.invalidate()
-                loadLiveStatusTimer = nil
+            if sendWatchingLiveEventTimer != nil {
+                sendWatchingLiveEventTimer!.invalidate()
+                sendWatchingLiveEventTimer = nil
             }
             
-            loadLiveStatusTimer = Timer.scheduledTimer(timeInterval: interval, target: self,
-                                                       selector: #selector(onLoadLiveStatusTimer), userInfo: nil, repeats: false)
+            sendWatchingLiveEventTimer = Timer.scheduledTimer(timeInterval: interval, target: self,
+                                                       selector: #selector(onsendWatchingLiveEventTimer), userInfo: nil, repeats: false)
             return
         }
+		
+		UZLogger.shared.log(event: "watching")
     }
 
-    @objc func onLoadLiveStatusTimer() {
-        loadLiveStatus()
+    @objc func onsendWatchingLiveEventTimer() {
+        sendWatchingLiveEvent()
     }
     
     open func showLiveEndedMessage() {

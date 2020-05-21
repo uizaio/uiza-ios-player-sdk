@@ -177,7 +177,7 @@ open class UZPlayer: UIView {
     // log event
     var playThroughEventLog: [Float: Bool] = [:]
     let logPercent: [Float] = [25, 50, 75, 100]
-    var loadLiveStatusTimer: Timer?
+    var sendWatchingLiveEventTimer: Timer?
 	
 	open var customControlView: UZPlayerControlView? {
 		didSet {
@@ -324,7 +324,7 @@ open class UZPlayer: UIView {
 		if video.isLive {
 			controlView.liveStartDate = nil
 			loadLiveViews()
-			loadLiveStatus()
+			sendWatchingLiveEvent()
 		}
 	}
 	
@@ -377,6 +377,10 @@ open class UZPlayer: UIView {
 //				selectAudio(index: -1) // select default audio track
 			}
 		}
+		
+		if currentVideo?.isLive ?? false {
+			sendWatchingLiveEvent(after: 5)
+		}
 	}
 	
 	/**
@@ -391,9 +395,9 @@ open class UZPlayer: UIView {
 			liveViewTimer = nil
 		}
 		
-		if loadLiveStatusTimer != nil {
-			loadLiveStatusTimer!.invalidate()
-			loadLiveStatusTimer = nil
+		if sendWatchingLiveEventTimer != nil {
+			sendWatchingLiveEventTimer!.invalidate()
+			sendWatchingLiveEventTimer = nil
 		}
 		
 		controlView.liveStartDate = nil
@@ -428,6 +432,11 @@ open class UZPlayer: UIView {
 	open func pause() {
 		UZLogger.shared.log(event: "pause")
 		playerLayer?.pause()
+		
+		if sendWatchingLiveEventTimer != nil {
+			sendWatchingLiveEventTimer!.invalidate()
+			sendWatchingLiveEventTimer = nil
+		}
 	}
 	
 	/**

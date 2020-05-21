@@ -171,7 +171,7 @@ open class UZTheme3: UZPlayerTheme {
 			$0.padding(top: 0, left: 20, bottom: 20, right: 20)
 		}
 		
-		frameLayout.padding(top: 0, left: 10, bottom: 0, right: 10)
+		frameLayout.padding(top: 10, left: 10, bottom: 0, right: 10)
 		controlView.containerView.addSubview(frameLayout)
 	}
 	

@@ -35,29 +35,29 @@ open class UZLogger: UZAPIConnector {
 	public var entitySource: String? = nil
 	public var appId: String? = nil
 	
+	let dateFormatter = DateFormatter()
+	
 	/// Singleton instance
 	static public let shared = UZLogger()
-	private override init() {}
+	private override init() {
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+	}
 	
 	open func log(event: String, params: Parameters? = nil) {
-		let logParams: Parameters = ["entity_id": entityId ?? "",
-									   "entity_source" : entitySource ?? "",
-									   "app_id" : appId ?? ""]
+		let uuid = UIDevice.current.identifierForVendor?.uuidString ?? ""
+		let timestamp: String = dateFormatter.string(from: Date())
 		
-		let modelId: String = UIDevice.current.hardwareModel()
-		let modelName: String = UIDevice.current.hardwareName()
-		let macAddress: String = UIDevice.current.identifierForVendor?.uuidString ?? ""
-		let timestamp: String = "" // Date().toString(format: .isoDateTimeMilliSec)
-		// Date().toString(format: .custom("yyyy-MM-dd'T'HH:mm:ss.SSSZ")) // 2018-03-15T14:19:04.637Z
+		let logParams: Parameters = ["data" : ["entity_id": entityId ?? "",
+											   "entity_source" : entitySource ?? "",
+											   "event_type": event,
+											   "viewer_user_id" : uuid,
+											   "timestamp": timestamp,
+											   "app_id" : appId ?? ""]]
 		
-//		print("timestamp: \(timestamp)")
-		let defaultParams: Parameters! = ["event_type": event,
-										  "timestamp": timestamp,
-										  "modelId": modelId,
-										  "modelName": modelName,
-										  "macAddress": macAddress,
-										  "uuid": macAddress,
-										  "player_version": PLAYER_VERSION]
+		let defaultParams: Parameters! = ["type": "io.uiza.\(event)",
+										  "time": timestamp,
+										  "source" : "UZData/IOSSDK/\(PLAYER_VERSION)",
+										  "specversion" : "1.0"]
 		
 		var finalParams: Parameters! = defaultParams
 		finalParams.appendFrom(logParams)
@@ -68,12 +68,6 @@ open class UZLogger: UZAPIConnector {
 		
 		guard let url = URL(string: Self.logAPIEndpoint) else { return }
 		post(url: url, params: finalParams)
-	}
-	
-	open func logLiveCCU(streamName: String, host: String) {
-	}
-	
-	open func trackingCategory(entityId: String, category: String) {
 	}
 	
 }

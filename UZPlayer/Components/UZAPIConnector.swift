@@ -46,6 +46,7 @@ open class UZAPIConnector: NSObject {
 	
 	public func post(url: URL, params: Parameters) {
 		var request = URLRequest(url: url)
+		request.setValue("application/cloudevents-batch+json", forHTTPHeaderField: "Content-Type")
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpMethod = "POST"
 //		request.httpBody = params.percentEncoded()
@@ -115,6 +116,7 @@ extension URLRequest {
 		}
 		return command.joined(separator: " \\\n\t")
 	}
+	
 	init?(curlString: String) {
 		return nil
 	}

@@ -160,7 +160,7 @@ open class UZTheme2: UZPlayerTheme {
 			$0 + [controlView.remainTimeLabel, controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton]
 			$0.spacing = 10
 		}
-		frameLayout.padding(top: 0, left: 10, bottom: 0, right: 10)
+		frameLayout.padding(top: 10, left: 10, bottom: 0, right: 10)
 		controlView.containerView.addSubview(frameLayout)
 	}
 	
