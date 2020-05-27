@@ -59,7 +59,9 @@ open class UZAPIConnector: NSObject {
 
 //		DLog("\(params)")
 		#if DEBUG
-		print("📍 cURL:\n \(request.curlString)\n")
+		if UZPLayerSDK.showRestfulInfo {
+			print("📍 cURL:\n \(request.curlString)\n")
+		}
 		#endif
 		
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
