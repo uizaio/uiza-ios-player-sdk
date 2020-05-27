@@ -194,7 +194,7 @@ open class UZTheme7: UZPlayerTheme {
 		
 		if let controlView = controlView {
 			let viewSize = rect.size
-			controlView.timeSlider.frame = CGRect(x: 0, y: viewSize.height - (bottomFrame.size.height ?? viewSize.height) - 8, width: viewSize.width, height: 16)
+			controlView.timeSlider.frame = CGRect(x: 0, y: viewSize.height - bottomFrame.size.height - 8, width: viewSize.width, height: 16)
 		}
 		
 		guard let controlView = controlView else { return }

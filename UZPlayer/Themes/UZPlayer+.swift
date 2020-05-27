@@ -362,7 +362,7 @@ extension UZPlayer: UZPlayerControlViewDelegate {
                 previousVideo()
                 
             case .fullscreen:
-                fullscreenBlock?(isFullScreen)
+                fullscreenBlock?(nil)
                 
             case .volume:
                 if let avPlayer = avPlayer {

@@ -23,8 +23,16 @@ open class UZAPIConnector: NSObject {
 		var request = URLRequest(url: urlComponents.url!)
 //		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpMethod = "GET"
+		request.cachePolicy = .reloadIgnoringLocalCacheData
+		request.timeoutInterval = 30
 //		DLog("\(params)")
 //		URLSession.shared.dataTask(with: request).resume()
+		
+		#if DEBUG
+		if UZPlayerSDK.showRestfulInfo {
+			print("📍 cURL:\n \(request.curlString)\n")
+		}
+		#endif
 		
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
 			guard let data = data,                            // is there data
@@ -49,6 +57,8 @@ open class UZAPIConnector: NSObject {
 		request.setValue("application/cloudevents-batch+json", forHTTPHeaderField: "Content-Type")
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpMethod = "POST"
+		request.cachePolicy = .reloadIgnoringLocalCacheData
+		request.timeoutInterval = 30
 //		request.httpBody = params.percentEncoded()
 		
 		do {

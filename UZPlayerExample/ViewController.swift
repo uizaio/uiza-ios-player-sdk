@@ -13,7 +13,10 @@ class ViewController: UIViewController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		
 		UZPlayerSDK.initWith(enviroment: .development)
+		UZPlayerSDK.showRestfulInfo = true
+		
 		askForURL()
 	}
 	
@@ -50,6 +53,22 @@ class ViewController: UIViewController {
 		floatingPlayerViewController.onDismiss = { [weak self] in
 			self?.askForURL()
 		}
+	}
+	
+	override open var prefersStatusBarHidden: Bool {
+		return true
+	}
+	
+	override open var shouldAutorotate: Bool {
+		return false
+	}
+	
+	override open var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+		return UIDevice.current.userInterfaceIdiom == .phone ? .portrait : UIApplication.shared.statusBarOrientation
+	}
+	
+	override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all
 	}
 	
 }

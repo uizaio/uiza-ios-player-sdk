@@ -371,7 +371,7 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 	}
 	
 	open func floatingHandlerDidDismiss() {
-		dismiss(animated: true, completion: nil)
+		dismiss(animated: true, completion: onDismiss)
 	}
 
 //	func forceDeviceRotate(to orientation: UIInterfaceOrientation, animated: Bool) {
@@ -408,7 +408,7 @@ open class UZPlayerContainerViewController: UIViewController {
 	}
 	
 	override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		return .all
+		return UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all
 	}
 	
 }

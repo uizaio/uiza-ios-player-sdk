@@ -32,8 +32,8 @@ open class UZPlayerViewController: UIViewController {
 	
 	open var isFullscreen: Bool {
 		get {
-			return NKFullscreenManager.sharedInstance().fullscreenViewControllerThatContains(playerController) != nil ||
-                NKModalViewManager.sharedInstance().modalViewControllerThatContains(playerController) != nil
+			return 	NKFullscreenManager.sharedInstance().fullscreenViewControllerThatContains(playerController) != nil ||
+					NKModalViewManager.sharedInstance().modalViewControllerThatContains(playerController) != nil
 		}
 		set {
 			setFullscreen(fullscreen: newValue)
@@ -92,7 +92,7 @@ open class UZPlayerViewController: UIViewController {
 		
 		playerController.player.fullscreenBlock = { [weak self] (fullscreen) in
 			guard let `self` = self else { return }
-			self.isFullscreen = !self.isFullscreen
+			self.isFullscreen = fullscreen ?? !self.isFullscreen
 		}
 		
 		view.addSubview(player)
@@ -107,12 +107,11 @@ open class UZPlayerViewController: UIViewController {
 	override open func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		
-		if playerController.player.superview == view {
-			playerController.player.frame = view.bounds
-			playerController.player.setNeedsLayout()
-			playerController.player.controlView.setNeedsLayout()
-			playerController.player.controlView.layoutIfNeeded()
-		}
+		guard playerController.player.superview == view else { return }
+		playerController.player.frame = view.bounds
+		playerController.player.setNeedsLayout()
+		playerController.player.controlView.setNeedsLayout()
+		playerController.player.controlView.layoutIfNeeded()
 	}
 	
 	// MARK: -
@@ -121,12 +120,7 @@ open class UZPlayerViewController: UIViewController {
 		guard autoFullscreenWhenRotateDevice else { return }
 		
 		DispatchQueue.main.asyncAfter(deadline: .now() + autoFullscreenDelay) {
-			let orientation = UIDevice.current.orientation
-			if orientation.isLandscape {
-				self.setFullscreen(fullscreen: true)
-			} else if orientation.isPortrait {
-				self.setFullscreen(fullscreen: false)
-			}
+			self.setFullscreen(fullscreen: UIDevice.current.orientation.isLandscape)
 		}
 	}
 	
