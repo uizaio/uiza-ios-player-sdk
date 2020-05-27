@@ -179,7 +179,7 @@ open class UZTheme6: UZPlayerTheme {
 		
 		CATransaction.begin()
 		CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-		topGradientLayer.frame = frameLayout.firstFrameLayout?.frame ?? .zero
+		topGradientLayer.frame = frameLayout.firstFrameLayout?.frame.inset(by: UIEdgeInsets(top: -frameLayout.edgeInsets.top, left: -frameLayout.edgeInsets.left, bottom: -frameLayout.edgeInsets.bottom, right: -frameLayout.edgeInsets.right)) ?? .zero
 		CATransaction.commit()
 		
 		blurView.frame = frameLayout.lastFrameLayout?.frame ?? .zero
