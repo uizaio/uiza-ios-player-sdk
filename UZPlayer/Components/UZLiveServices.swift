@@ -20,7 +20,8 @@ public class UZLiveServices: UZAPIConnector {
 		}
 		guard let urlPath = path, let url = URL(string: urlPath) else { return }
 		
-		let params: Parameters = ["entity_id": video.entityId ?? "", "app_id" : video.appId ?? ""]
+		let params: Parameters = ["entity_id": video.entityId ?? "",
+								  "app_id": video.appId ?? ""]
 		get(url: url, params: params) { (data, error) in
 			let views = data?.value(forKey: "views") as? Int
 			DispatchQueue.main.async {
