@@ -48,7 +48,7 @@ open class UZLogger: UZAPIConnector {
 		let timestamp: String = dateFormatter.string(from: Date())
 		
 		let logParams: Parameters = ["data" : ["entity_id": entityId ?? "",
-											   "entity_source" : entitySource ?? "",
+											   "entity_source": entitySource ?? "",
 											   "event_type": event,
 											   "viewer_user_id" : uuid,
 											   "timestamp": timestamp,
