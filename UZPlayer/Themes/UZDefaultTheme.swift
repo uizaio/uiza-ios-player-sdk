@@ -22,7 +22,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 	open var iconColor = UIColor.white
 	open var iconSize = CGSize(width: 24, height: 24)
 	open var skipIconSize = CGSize(width: 32, height: 32)
-	open var centerIconSize = CGSize(width: 48, height:48)
+	open var centerIconSize = CGSize(width: 32, height: 32)
 	open var seekThumbSize = CGSize(width: 24, height: 24)
 	open var buttonMinSize = CGSize(width: 32, height: 32)
 	
