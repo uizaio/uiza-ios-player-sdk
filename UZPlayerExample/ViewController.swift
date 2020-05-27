@@ -21,11 +21,30 @@ class ViewController: UIViewController {
 //
 //		player.controlView.theme = UZDefaultTheme()
 //		player.loadVideo(UZVideoItem(name: nil, thumbnailURL: nil, linkPlay: UZVideoLinkPlay(definition: "", url: url), subtitleURLs: nil))
-		presentFloatingPlayer()
+		askForURL()
 	}
 	
-	func presentFloatingPlayer() {
-		guard let url = URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") else { return }
+	func askForURL() {
+		let prefilled = UserDefaults.standard.string(forKey: "last_url") ?? "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+		
+		let alertController = UIAlertController(title: "", message: "Please enter URL", preferredStyle: .alert)
+		alertController.addTextField { (textField) in
+			textField.font = UIFont(name: "Avenir", size: 14)
+			textField.keyboardType = .URL
+			textField.text = prefilled
+		}
+		alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
+			if let string = alertController.textFields?.first?.text, !string.isEmpty {
+				UserDefaults.standard.set(string, forKey: "last_url")
+				self?.presentFloatingPlayer(urlPath: string)
+			}
+			alertController.dismiss(animated: true, completion: nil)
+		}))
+		present(alertController, animated: true, completion: nil)
+	}
+	
+	func presentFloatingPlayer(urlPath: String) {
+		guard let url = URL(string: urlPath) else { return }
 		let floatingPlayerViewController = UZFloatingPlayerViewController()
 		floatingPlayerViewController.present(with: UZVideoItem(name: nil, thumbnailURL: nil, linkPlay: UZVideoLinkPlay(definition: "", url: url), subtitleURLs: nil), playlist: nil).player.controlView.theme = UZDefaultTheme()
 	}
