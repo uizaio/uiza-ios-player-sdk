@@ -36,7 +36,7 @@ open class NKFloatingViewHandler: NSObject {
 	open weak var delegate: NKFloatingViewHandlerProtocol?
 	open var swipeLeftToDismiss = true
 	open var swipeRightToDismiss = true
-	open var allowsCornerDocking = false
+	open var allowsCornerDocking = true
 	open var isEnabled: Bool = true {
 		didSet {
 			tapGesture.isEnabled = isEnabled

@@ -159,7 +159,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]
+			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton]
 			$0.spacing = 10
 		}
 		frameLayout + HStackLayout {
