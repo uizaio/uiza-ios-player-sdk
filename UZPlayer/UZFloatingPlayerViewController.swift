@@ -206,12 +206,13 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 		floatingHandler?.delegate = nil
 		floatingHandler = nil
 		
-		playerWindow?.rootViewController = nil
-		playerWindow = nil
-		lastKeyWindow?.makeKeyAndVisible()
-		
 		delegate?.floatingPlayerDidDismiss(self)
-		super.dismiss(animated: flag, completion: completion)
+		super.dismiss(animated: flag) { [weak self] in
+			self?.playerWindow?.rootViewController = nil
+			self?.playerWindow = nil
+			self?.lastKeyWindow?.makeKeyAndVisible()
+			completion?()
+		}
 	}
 	
 	// MARK: -

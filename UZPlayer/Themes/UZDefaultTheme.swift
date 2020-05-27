@@ -99,8 +99,9 @@ open class UZDefaultTheme: UZPlayerTheme {
 		
 		controlView.liveBadgeView.viewBadge.images[.normal] = UIImage(named: "ic_view", in: imageBundle, compatibleWith: nil)
 		controlView.liveBadgeView.viewBadge.titleFonts[.normal] = UIFont(name: "Avenir", size: 9)
-		controlView.liveBadgeView.viewBadge.backgroundColors[.normal] = UIColor.black.withAlphaComponent(0.2)
+		controlView.liveBadgeView.viewBadge.backgroundColors[.normal] = .clear
 		controlView.liveBadgeView.viewBadge.spacing = 6.0
+		controlView.liveBadgeView.frameLayout.rightFrameLayout.alignment = (.center, .center)
 		
 		controlView.nextButton.isHidden = true
 		controlView.previousButton.isHidden = true
@@ -156,9 +157,26 @@ open class UZDefaultTheme: UZPlayerTheme {
 		controlView.containerView.layer.addSublayer(topGradientLayer)
 		controlView.containerView.layer.addSublayer(bottomGradientLayer)
 		
+		let lineView = UIView()
+		lineView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+		controlView.addSubview(lineView)
+		
 		frameLayout + HStackLayout {
-			$0 + [controlView.backButton, controlView.titleLabel]
+			($0 + controlView.backButton).fixSize = buttonMinSize
+			$0 + controlView.titleLabel
 			($0 + 0).flexible()
+			$0 + controlView.liveBadgeView
+			($0 + lineView).with {
+				$0.maxContentSize = CGSize(width: 1, height: 10.0)
+				$0.minContentSize = CGSize(width: 1, height: 10.0)
+				$0.verticalAlignment = .center
+				$0.preSizeThatFitsConfigurationBlock = { layout in
+					layout.targetView?.isHidden = controlView.liveBadgeView.isHidden
+				}
+				$0.preLayoutConfigurationBlock = { layout in
+					layout.targetView?.isHidden = controlView.liveBadgeView.isHidden
+				}
+			}
 			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton]
 			$0.spacing = 10
 		}
@@ -174,7 +192,9 @@ open class UZDefaultTheme: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + controlView.currentTimeLabel
 			($0 + controlView.timeSlider).flexible()
-			$0 + [controlView.remainTimeLabel, controlView.previousButton, controlView.nextButton, controlView.fullscreenButton]
+			($0 + [controlView.remainTimeLabel, controlView.previousButton, controlView.nextButton, controlView.fullscreenButton]).forEach { (layout) in
+				layout.fixSize = buttonMinSize
+			}
 			$0.spacing = 10
 		}
 		frameLayout.padding(top: 10, left: 10, bottom: 0, right: 10)
@@ -196,11 +216,6 @@ open class UZDefaultTheme: UZPlayerTheme {
 		guard let controlView = controlView else { return }
 		
 		let viewSize = controlView.bounds.size
-		
-		if !controlView.liveBadgeView.isHidden {
-			let badgeSize = controlView.liveBadgeView.sizeThatFits(viewSize)
-			controlView.liveBadgeView.frame = CGRect(x: (viewSize.width - badgeSize.width)/2, y: 10, width: badgeSize.width, height: badgeSize.height)
-		}
 		
 		if !controlView.enlapseTimeLabel.isHidden {
 			let labelSize = controlView.enlapseTimeLabel.sizeThatFits(viewSize)
