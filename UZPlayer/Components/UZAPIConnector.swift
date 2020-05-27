@@ -59,7 +59,7 @@ open class UZAPIConnector: NSObject {
 
 //		DLog("\(params)")
 		#if DEBUG
-		if UZPLayerSDK.showRestfulInfo {
+		if UZPlayerSDK.showRestfulInfo {
 			print("📍 cURL:\n \(request.curlString)\n")
 		}
 		#endif

@@ -250,4 +250,9 @@ open class UZDefaultTheme: UZPlayerTheme {
 		// align logo manually here if needed
 	}
 	
+	public func updateLiveViewCount(_ viewCount: Int) {
+		let unit = viewCount > 1 ? "Viewers" : "Viewer"
+		controlView?.liveBadgeView.viewBadge.title = "\(viewCount.abbreviated) \(unit)"
+	}
+	
 }

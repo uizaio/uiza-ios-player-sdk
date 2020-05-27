@@ -39,6 +39,7 @@ public protocol UZPlayerTheme: class {
     
     func updateUI()
     func update(withResource: UZPlayerResource?, video: UZVideoItem?, playlist: [UZVideoItem]?)
+	func updateLiveViewCount(_ viewCount: Int)
     func layoutControls(rect: CGRect)
     func cleanUI()
     func allButtons() -> [UIButton]

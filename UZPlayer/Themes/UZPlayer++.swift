@@ -221,7 +221,7 @@ extension UZPlayer {
 				
 				let changed = view != self.controlView.liveBadgeView.views
 				if changed {
-					self.controlView.liveBadgeView.views = view
+					self.controlView.theme?.updateLiveViewCount(view)
 					self.controlView.setNeedsLayout()
 				}
 				

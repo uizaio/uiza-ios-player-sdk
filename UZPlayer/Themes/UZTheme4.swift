@@ -243,4 +243,8 @@ open class UZTheme4: UZPlayerTheme {
 		// align logo manually here if needed
 	}
 	
+	public func updateLiveViewCount(_ viewCount: Int) {
+		controlView?.liveBadgeView.views = viewCount
+	}
+	
 }

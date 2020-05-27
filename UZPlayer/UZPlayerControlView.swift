@@ -379,7 +379,7 @@ open class UZPlayerControlView: UIView {
 		
 		let isLiveVideo = (video?.isLive ?? resource.isLive)
 		liveBadgeView.isHidden = !isLiveVideo
-		liveBadgeView.views = -1
+		theme?.updateLiveViewCount(-1)
 		
 		let controlsForTimeshift: [UIView] = [totalTimeLabel, remainTimeLabel, currentTimeLabel, timeSlider]
 		var hiddenViewsWhenLive: [UIView] = [titleLabel, playpauseButton, playpauseCenterButton, forwardButton,
