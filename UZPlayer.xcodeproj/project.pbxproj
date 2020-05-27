@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2308F4AA247E50B300203424 /* UZDefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4A9247E50B300203424 /* UZDefaultTheme.swift */; };
+		2308F4AB247E50B300203424 /* UZDefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4A9247E50B300203424 /* UZDefaultTheme.swift */; };
+		2308F4AD247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */; };
+		2308F4AE247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */; };
 		230BA8552474F036009C09B1 /* UZTheme1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9216241D066D001B7A48 /* UZTheme1.swift */; };
 		230BA8562474F036009C09B1 /* UZPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9214241D066D001B7A48 /* UZPlayer.swift */; };
 		230BA8572474F036009C09B1 /* UZPlayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9241241D066D001B7A48 /* UZPlayer+.swift */; };
@@ -188,6 +192,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2308F4A9247E50B300203424 /* UZDefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZDefaultTheme.swift; sourceTree = "<group>"; };
+		2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UZDefaultThemeIcons.bundle; sourceTree = "<group>"; };
 		237ABECB2475352F00B270FF /* UZLiveServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZLiveServices.swift; sourceTree = "<group>"; };
 		237ABECE247536CA00B270FF /* UZAPIConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZAPIConnector.swift; sourceTree = "<group>"; };
 		476C9AF34D933783280476F6 /* Pods-UZPlayerExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayerExample.release.xcconfig"; path = "Target Support Files/Pods-UZPlayerExample/Pods-UZPlayerExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -386,6 +392,8 @@
 		63FD9215241D066D001B7A48 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
+				2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */,
+				2308F4A9247E50B300203424 /* UZDefaultTheme.swift */,
 				63FD9216241D066D001B7A48 /* UZTheme1.swift */,
 				63FD921A241D066D001B7A48 /* UZTheme2.swift */,
 				63FD9217241D066D001B7A48 /* UZTheme3.swift */,
@@ -615,6 +623,7 @@
 				63FD92B2241D0988001B7A48 /* MaterialIcons.ttf in Resources */,
 				63FD92A5241D0988001B7A48 /* MapIcons.ttf in Resources */,
 				63FD92AB241D0988001B7A48 /* TypIcons.ttf in Resources */,
+				2308F4AD247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */,
 				63FD92A7241D0988001B7A48 /* OpenIconic.ttf in Resources */,
 				63FD92A6241D0988001B7A48 /* Dripicons.ttf in Resources */,
 				63FD92AD241D0988001B7A48 /* FontAwesomeRegular.ttf in Resources */,
@@ -647,6 +656,7 @@
 				230BA8932474F053009C09B1 /* OpenIconic.ttf in Resources */,
 				230BA8912474F053009C09B1 /* MapIcons.ttf in Resources */,
 				230BA89C2474F053009C09B1 /* Emoji.ttf in Resources */,
+				2308F4AE247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */,
 				230BA8942474F053009C09B1 /* FontAwesomeSolid.ttf in Resources */,
 				63FD933D2420DA32001B7A48 /* Assets.xcassets in Resources */,
 			);
@@ -741,6 +751,7 @@
 				63FD9280241D066E001B7A48 /* UZMediaResource.swift in Sources */,
 				230BA8A22474F463009C09B1 /* UZTheme2.swift in Sources */,
 				63FD927F241D066E001B7A48 /* UZPlayer++.swift in Sources */,
+				2308F4AA247E50B300203424 /* UZDefaultTheme.swift in Sources */,
 				63FD924D241D066E001B7A48 /* NKProgressView.swift in Sources */,
 				63FD92BE241D12F1001B7A48 /* NSTimeInterval+ToString.swift in Sources */,
 				230BA8AB247502A6009C09B1 /* UZTheme6.swift in Sources */,
@@ -842,6 +853,7 @@
 				230BA8A824750182009C09B1 /* UZTheme5.swift in Sources */,
 				230BA8852474F047009C09B1 /* NSTimeInterval+ToString.swift in Sources */,
 				230BA8812474F043009C09B1 /* Tweenable.swift in Sources */,
+				2308F4AB247E50B300203424 /* UZDefaultTheme.swift in Sources */,
 				230BA8872474F047009C09B1 /* UIImage+Colorize.swift in Sources */,
 				230BA86E2474F043009C09B1 /* BezierPath.swift in Sources */,
 				230BA8672474F03B009C09B1 /* UZVideoSubtitle.swift in Sources */,

@@ -282,9 +282,9 @@ open class UZLiveBadgeView: UIView {
         }
     }
     
-    fileprivate let liveBadge = UZButton()
-    fileprivate let viewBadge = UZButton()
-    fileprivate var frameLayout: DoubleFrameLayout!
+    open var liveBadge = UZButton()
+    open var viewBadge = UZButton()
+	let frameLayout = DoubleFrameLayout(axis: .horizontal)
     
     init() {
         super.init(frame: .zero)
@@ -320,7 +320,8 @@ open class UZLiveBadgeView: UIView {
         addSubview(liveBadge)
         addSubview(viewBadge)
         
-        frameLayout = DoubleFrameLayout(axis: .horizontal, views: [liveBadge, viewBadge])
+		frameLayout <+ liveBadge
+		frameLayout +> viewBadge
         frameLayout.spacing = 5
         frameLayout.isIntrinsicSizeEnabled = true
         addSubview(frameLayout)
