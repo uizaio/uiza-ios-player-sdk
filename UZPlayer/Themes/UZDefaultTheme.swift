@@ -88,6 +88,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 		controlView.fullscreenButton.setImage(collapseIcon, for: .selected)
 		controlView.timeSlider.setThumbImage(thumbIcon, for: .normal)
 		controlView.timeSlider.tintColor = .red
+		controlView.timeSlider.progressView.progressColor = UIColor.red.withAlphaComponent(0.35)
 		
 		controlView.liveBadgeView.liveBadge.titles[.normal] = "Live"
 		controlView.liveBadgeView.liveBadge.titleFonts[.normal] = UIFont(name: "Avenir", size: 9)

@@ -11,6 +11,8 @@
 		2308F4AB247E50B300203424 /* UZDefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4A9247E50B300203424 /* UZDefaultTheme.swift */; };
 		2308F4AD247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */; };
 		2308F4AE247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */; };
+		2308F4B0247E5EDE00203424 /* UZPlayerSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */; };
+		2308F4B1247E5EDE00203424 /* UZPlayerSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */; };
 		230BA8552474F036009C09B1 /* UZTheme1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9216241D066D001B7A48 /* UZTheme1.swift */; };
 		230BA8562474F036009C09B1 /* UZPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9214241D066D001B7A48 /* UZPlayer.swift */; };
 		230BA8572474F036009C09B1 /* UZPlayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9241241D066D001B7A48 /* UZPlayer+.swift */; };
@@ -194,6 +196,7 @@
 /* Begin PBXFileReference section */
 		2308F4A9247E50B300203424 /* UZDefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZDefaultTheme.swift; sourceTree = "<group>"; };
 		2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UZDefaultThemeIcons.bundle; sourceTree = "<group>"; };
+		2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UZPlayerSDK.swift; sourceTree = "<group>"; };
 		237ABECB2475352F00B270FF /* UZLiveServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZLiveServices.swift; sourceTree = "<group>"; };
 		237ABECE247536CA00B270FF /* UZAPIConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZAPIConnector.swift; sourceTree = "<group>"; };
 		476C9AF34D933783280476F6 /* Pods-UZPlayerExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayerExample.release.xcconfig"; path = "Target Support Files/Pods-UZPlayerExample/Pods-UZPlayerExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -412,6 +415,7 @@
 				63FD928B241D085C001B7A48 /* Extensions */,
 				63FD9227241D066D001B7A48 /* TweenKit */,
 				63FD923F241D066D001B7A48 /* SwiftIcons.swift */,
+				2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */,
 				63FD92B3241D0CF3001B7A48 /* UZSentry.swift */,
 				237ABECE247536CA00B270FF /* UZAPIConnector.swift */,
 				63FD92B5241D0DAD001B7A48 /* UZLogger.swift */,
@@ -784,6 +788,7 @@
 				63FD927B241D066E001B7A48 /* SwiftIcons.swift in Sources */,
 				63FD9250241D066E001B7A48 /* UZSlider.swift in Sources */,
 				63FD9251241D066E001B7A48 /* UZAirPlayButton.swift in Sources */,
+				2308F4B0247E5EDE00203424 /* UZPlayerSDK.swift in Sources */,
 				63FD9279241D066E001B7A48 /* Lazy.swift in Sources */,
 				230BA8AD24750554009C09B1 /* UZTheme7.swift in Sources */,
 				63FD92BC241D12AD001B7A48 /* UIImage+Colorize.swift in Sources */,
@@ -830,6 +835,7 @@
 				230BA8632474F036009C09B1 /* UZPlayerViewController.swift in Sources */,
 				230BA86C2474F043009C09B1 /* UIKit+Tweenable.swift in Sources */,
 				230BA8772474F043009C09B1 /* YoyoAction.swift in Sources */,
+				2308F4B1247E5EDE00203424 /* UZPlayerSDK.swift in Sources */,
 				230BA8722474F043009C09B1 /* ReverseAction.swift in Sources */,
 				230BA8782474F043009C09B1 /* UIBezierPath+BezierPath.swift in Sources */,
 				230BA8862474F047009C09B1 /* UIDevice+Extension.swift in Sources */,

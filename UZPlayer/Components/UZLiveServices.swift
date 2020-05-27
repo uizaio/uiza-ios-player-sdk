@@ -9,10 +9,16 @@
 import UIKit
 
 public class UZLiveServices: UZAPIConnector {
-	static let viewAPIEndpoint = "https://development-api.uizadev.io/v1/analytics/live_viewers"
 	
 	public func loadViews(video: UZVideoItem, completionBlock: ((_ views: Int, _ error: Error?) -> Void)? = nil) {
-		guard let url = URL(string: Self.viewAPIEndpoint) else { return }
+		guard let enviroment = UZPlayerSDK.enviroment else { return }
+		var path: String? = nil
+		switch enviroment {
+			case .development: path = "https://development-api.uizadev.io/v1/analytics/live_viewers"
+			case .staging: path = "https://development-api.uizadev.io/v1/analytics/live_viewers"
+			case .production: path = "https://development-api.uizadev.io/v1/analytics/live_viewers"
+		}
+		guard let urlPath = path, let url = URL(string: urlPath) else { return }
 		
 		let params: Parameters = ["entity_id": video.entityId ?? "", "app_id" : video.appId ?? ""]
 		get(url: url, params: params) { (data, error) in
