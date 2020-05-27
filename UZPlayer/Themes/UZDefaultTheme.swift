@@ -22,7 +22,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 	open var iconColor = UIColor.white
 	open var iconSize = CGSize(width: 24, height: 24)
 	open var skipIconSize = CGSize(width: 32, height: 32)
-	open var centerIconSize = CGSize(width: 92, height: 92)
+	open var centerIconSize = CGSize(width: 48, height:48)
 	open var seekThumbSize = CGSize(width: 24, height: 24)
 	open var buttonMinSize = CGSize(width: 32, height: 32)
 	
@@ -57,12 +57,12 @@ open class UZDefaultTheme: UZPlayerTheme {
 		let settingsIcon = UIImage(named: "ic_settings", in: imageBundle, compatibleWith: nil)
 		let volumeIcon = UIImage(icon: .fontAwesomeSolid(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let playBigIcon = UIImage(icon: .fontAwesomeSolid(.playCircle), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
+		let playBigIcon = UIImage(icon: .fontAwesomeSolid(.play), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseBigIcon = UIImage(named: "ic_pause_big", in: imageBundle, compatibleWith: nil)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playArrow), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseIcon = UIImage(icon: .googleMaterialDesign(.pause), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let forwardIcon = UIImage(icon: .fontAwesomeSolid(.forward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let backwardIcon = UIImage(icon: .fontAwesomeSolid(.backward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+		let forwardIcon = UIImage(named: "ic_forward", in: imageBundle, compatibleWith: nil)
+		let backwardIcon = UIImage(named: "ic_backward", in: imageBundle, compatibleWith: nil)
 		let nextIcon = UIImage(icon: .fontAwesomeSolid(.stepForward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
 		let previousIcon = UIImage(icon: .fontAwesomeSolid(.stepBackward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
 		let fullscreenIcon = UIImage(named: "ic_fullscreen", in: imageBundle, compatibleWith: nil)
@@ -162,10 +162,10 @@ open class UZDefaultTheme: UZPlayerTheme {
 			$0.spacing = 10
 		}
 		frameLayout + HStackLayout {
-			($0 + [controlView.previousButton, controlView.playpauseCenterButton, controlView.nextButton]).forEach { (layout) in
+			($0 + [controlView.backwardButton, controlView.playpauseCenterButton, controlView.forwardButton]).forEach { (layout) in
 				layout.alignment = (.center, .center)
 			}
-			$0.spacing = 10
+			$0.spacing = 60
 			$0.alignment = (.center, .center)
 			$0.distribution = .center
 			$0.flexible()
@@ -173,7 +173,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + controlView.currentTimeLabel
 			($0 + controlView.timeSlider).flexible()
-			$0 + [controlView.remainTimeLabel, controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton]
+			$0 + [controlView.remainTimeLabel, controlView.previousButton, controlView.nextButton, controlView.fullscreenButton]
 			$0.spacing = 10
 		}
 		frameLayout.padding(top: 10, left: 10, bottom: 0, right: 10)
