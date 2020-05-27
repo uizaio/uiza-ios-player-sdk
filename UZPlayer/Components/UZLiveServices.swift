@@ -16,7 +16,7 @@ public class UZLiveServices: UZAPIConnector {
 		switch enviroment {
 			case .development: path = "https://development-api.uizadev.io/v1/analytics/live_viewers"
 			case .staging: path = "https://development-api.uizadev.io/v1/analytics/live_viewers"
-			case .production: path = "https://development-api.uizadev.io/v1/analytics/live_viewers"
+			case .production: path = "https://api.uiza.sh/v1/analytics/live_viewers"
 		}
 		guard let urlPath = path, let url = URL(string: urlPath) else { return }
 		
