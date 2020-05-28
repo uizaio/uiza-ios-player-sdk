@@ -20,6 +20,7 @@ open class UZLogger: UZAPIConnector {
 			appId = nil
 			entityId = nil
 			entitySource = nil
+			sessionId = nil
 			
 			guard let url = currentLinkPlay else { return }
 			guard let cmParam = url.params()["cm"] as? String else { return }
@@ -28,11 +29,13 @@ open class UZLogger: UZAPIConnector {
 			appId = dictionary["app_id"] as? String
 			entityId = dictionary["entity_id"] as? String
 			entitySource = dictionary["entity_source"] as? String
+			sessionId = UUID().uuidString
 		}
 	}
 	
 	public var entityId: String? = nil
 	public var entitySource: String? = nil
+	public var sessionId: String? = nil
 	public var appId: String? = nil
 	
 	let dateFormatter = DateFormatter()
@@ -49,12 +52,13 @@ open class UZLogger: UZAPIConnector {
 		
 		let logParams: Parameters = ["data" : ["entity_id": entityId ?? "",
 											   "entity_source": entitySource ?? "",
-											   "event_type": event,
+											   "event": event,
 											   "viewer_user_id" : uuid,
+											   "viewer_session_id": sessionId ?? "",
 											   "timestamp": timestamp,
 											   "app_id" : appId ?? ""]]
 		
-		let defaultParams: Parameters! = ["type": "io.uiza.\(event)",
+		let defaultParams: Parameters! = ["type": "io.uiza.\(event)event",
 										  "time": timestamp,
 										  "source" : "UZData/IOSSDK/\(PLAYER_VERSION)",
 										  "specversion" : "1.0"]

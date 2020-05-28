@@ -379,7 +379,7 @@ open class UZPlayer: UIView {
 		}
 		
 		if currentVideo?.isLive ?? false {
-			sendWatchingLiveEvent(after: 5)
+			sendWatchingLiveEvent(every: 5)
 		}
 	}
 	

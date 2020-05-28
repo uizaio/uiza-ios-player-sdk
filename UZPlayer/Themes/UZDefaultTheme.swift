@@ -177,7 +177,9 @@ open class UZDefaultTheme: UZPlayerTheme {
 					layout.targetView?.isHidden = controlView.liveBadgeView.isHidden
 				}
 			}
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton]
+			($0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]).forEach { (layout) in
+				layout.minSize = buttonMinSize
+			}
 			$0.spacing = 10
 		}
 		frameLayout + HStackLayout {
@@ -193,7 +195,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 			$0 + controlView.currentTimeLabel
 			($0 + controlView.timeSlider).flexible()
 			($0 + [controlView.remainTimeLabel, controlView.previousButton, controlView.nextButton, controlView.fullscreenButton]).forEach { (layout) in
-				layout.fixSize = buttonMinSize
+				layout.minSize = buttonMinSize
 			}
 			$0.spacing = 10
 		}
