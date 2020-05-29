@@ -15,22 +15,23 @@ public enum UZButtonTag: Int {
     case back       = 103
     case fullscreen = 105
     case replay     = 106
-    case settings    = 107
-    case help        = 108
-    case playlist    = 109
+    case settings   = 107
+    case help       = 108
+    case playlist   = 109
     case caption    = 110
-    case volume        = 111
+    case volume     = 111
     case forward    = 112
-    case backward    = 113
-    case share        = 114
+    case backward   = 113
+    case share      = 114
     case relates    = 115
     case pip        = 116
     case chromecast = 117
     case airplay    = 118
     case casting    = 119
-    case next        = 120
-    case previous    = 121
-    case logo        = 122
+    case next       = 120
+    case previous   = 121
+    case logo       = 122
+	case live		= 123
 }
 
 public protocol UZPlayerTheme: class {
@@ -158,11 +159,7 @@ extension UZPlayerControlView {
 		DispatchQueue.global(qos: .default).async {
 			let data = try? Data(contentsOf: url)
 			DispatchQueue.main.async(execute: {
-				if let data = data {
-					self.coverImageView.image = UIImage(data: data)
-				} else {
-					self.coverImageView.image = nil
-				}
+				self.coverImageView.image = data != nil ? UIImage(data: data!) : nil
 				self.hideLoader()
 			})
 		}
@@ -191,24 +188,6 @@ extension UZPlayerControlView {
         }
     }
     
-    // MARK: - Action
-    
-    @objc open func onButtonPressed(_ button: UIButton) {
-        autoFadeOutControlView(after: autoHideControlsInterval)
-        
-        if let type = UZButtonTag(rawValue: button.tag) {
-            switch type {
-            case .play, .replay:
-                hideEndScreen()
-                
-            default:
-                break
-            }
-        }
-        
-        delegate?.controlView(controlView: self, didSelectButton: button)
-        setNeedsLayout()
-    }
     
     @objc open func onTap(_ gesture: UITapGestureRecognizer) {
         if containerView.isHidden || containerView.alpha == 0 {
@@ -264,82 +243,4 @@ extension UZPlayerControlView {
         delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchUpInside)
         setNeedsLayout()
     }
-}
-
-// MARK: - UZLiveBadgeView
-
-open class UZLiveBadgeView: UIView {
-    
-    public var views: Int = 0 {
-        didSet {
-            if views < 0 {
-                viewBadge.setTitle("0", for: .normal)
-            } else {
-                viewBadge.setTitle("\(views.abbreviated)", for: .normal)
-            }
-            
-            viewBadge.isHidden = views < 0
-            setNeedsLayout()
-        }
-    }
-    
-    open var liveBadge = UZButton()
-    open var viewBadge = UZButton()
-	let frameLayout = DoubleFrameLayout(axis: .horizontal)
-    
-    init() {
-        super.init(frame: .zero)
-        
-        if #available(iOS 8.2, *) {
-            liveBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        } else {
-            liveBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        }
-        liveBadge.setTitle("LIVE", for: .normal)
-        liveBadge.setTitleColor(.white, for: .normal)
-        liveBadge.setBackgroundColor(UIColor(red: 0.91, green: 0.31, blue: 0.28, alpha: 1.00), for: .normal)
-        liveBadge.isUserInteractionEnabled = false
-        liveBadge.cornerRadius = 4
-        liveBadge.extendSize = CGSize(width: 10, height: 0)
-        
-        let icon = UIImage.init(icon: .googleMaterialDesign(.removeRedEye), size: CGSize(width: 20, height: 20),
-                                textColor: .white, backgroundColor: .clear)
-        if #available(iOS 8.2, *) {
-            viewBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        } else {
-            viewBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        }
-        viewBadge.setTitleColor(.white, for: .normal)
-        viewBadge.setTitle("0", for: .normal)
-        viewBadge.setImage(icon, for: .normal)
-        viewBadge.setBackgroundColor(UIColor(white: 0.6, alpha: 0.8), for: .normal)
-        viewBadge.extendSize = CGSize(width: 10, height: 0)
-        viewBadge.cornerRadius = 4
-        viewBadge.spacing = 2
-        viewBadge.isUserInteractionEnabled = false
-        
-        addSubview(liveBadge)
-        addSubview(viewBadge)
-        
-		frameLayout <+ liveBadge
-		frameLayout +> viewBadge
-        frameLayout.spacing = 5
-        frameLayout.isIntrinsicSizeEnabled = true
-        addSubview(frameLayout)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    open override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return frameLayout.sizeThatFits(size)
-    }
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        frameLayout.frame = bounds
-    }
-    
 }

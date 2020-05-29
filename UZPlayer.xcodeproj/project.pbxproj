@@ -13,6 +13,8 @@
 		2308F4AE247E524200203424 /* UZDefaultThemeIcons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */; };
 		2308F4B0247E5EDE00203424 /* UZPlayerSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */; };
 		2308F4B1247E5EDE00203424 /* UZPlayerSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */; };
+		2308F4E22480D1DA00203424 /* UZLiveBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4E12480D1DA00203424 /* UZLiveBadgeView.swift */; };
+		2308F4E32480D1DA00203424 /* UZLiveBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2308F4E12480D1DA00203424 /* UZLiveBadgeView.swift */; };
 		230BA8552474F036009C09B1 /* UZTheme1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9216241D066D001B7A48 /* UZTheme1.swift */; };
 		230BA8562474F036009C09B1 /* UZPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9214241D066D001B7A48 /* UZPlayer.swift */; };
 		230BA8572474F036009C09B1 /* UZPlayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9241241D066D001B7A48 /* UZPlayer+.swift */; };
@@ -197,6 +199,7 @@
 		2308F4A9247E50B300203424 /* UZDefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZDefaultTheme.swift; sourceTree = "<group>"; };
 		2308F4AC247E524100203424 /* UZDefaultThemeIcons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UZDefaultThemeIcons.bundle; sourceTree = "<group>"; };
 		2308F4AF247E5EDE00203424 /* UZPlayerSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UZPlayerSDK.swift; sourceTree = "<group>"; };
+		2308F4E12480D1DA00203424 /* UZLiveBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZLiveBadgeView.swift; sourceTree = "<group>"; };
 		237ABECB2475352F00B270FF /* UZLiveServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZLiveServices.swift; sourceTree = "<group>"; };
 		237ABECE247536CA00B270FF /* UZAPIConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZAPIConnector.swift; sourceTree = "<group>"; };
 		476C9AF34D933783280476F6 /* Pods-UZPlayerExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayerExample.release.xcconfig"; path = "Target Support Files/Pods-UZPlayerExample/Pods-UZPlayerExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -365,6 +368,7 @@
 				63FD9220241D066D001B7A48 /* UZPlayerControlView+.swift */,
 				63FD920A241D066D001B7A48 /* UZCastingManager.swift */,
 				63FD9242241D066D001B7A48 /* UZCastingView.swift */,
+				2308F4E12480D1DA00203424 /* UZLiveBadgeView.swift */,
 				63FD9240241D066D001B7A48 /* UZDeviceListTableViewController.swift */,
 				63FD9221241D066D001B7A48 /* UZEndscreenView.swift */,
 				63FD9224241D066D001B7A48 /* UZFloatingPlayerViewController.swift */,
@@ -768,6 +772,7 @@
 				63FD9284241D066E001B7A48 /* UZPlayerViewController.swift in Sources */,
 				63FD927E241D066E001B7A48 /* UZCastingView.swift in Sources */,
 				63FD9266241D066E001B7A48 /* BezierAction.swift in Sources */,
+				2308F4E22480D1DA00203424 /* UZLiveBadgeView.swift in Sources */,
 				63FD9293241D0890001B7A48 /* AVAsset+Selection.swift in Sources */,
 				63FD927A241D066E001B7A48 /* Tweenable.swift in Sources */,
 				63FD926F241D066E001B7A48 /* RepeatAction.swift in Sources */,
@@ -865,6 +870,7 @@
 				230BA8672474F03B009C09B1 /* UZVideoSubtitle.swift in Sources */,
 				230BA88F2474F04B009C09B1 /* UZCastButton.swift in Sources */,
 				230BA8592474F036009C09B1 /* UZPlayerControlView.swift in Sources */,
+				2308F4E32480D1DA00203424 /* UZLiveBadgeView.swift in Sources */,
 				230BA87E2474F043009C09B1 /* ActionSequence.swift in Sources */,
 				230BA8652474F03B009C09B1 /* UZPlayerConfig.swift in Sources */,
 				230BA87F2474F043009C09B1 /* Action.swift in Sources */,

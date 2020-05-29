@@ -91,16 +91,21 @@ open class UZDefaultTheme: UZPlayerTheme {
 		controlView.timeSlider.progressView.progressColor = UIColor.red.withAlphaComponent(0.35)
 		
 		controlView.liveBadgeView.liveBadge.titles[.normal] = "Live"
-		controlView.liveBadgeView.liveBadge.titleFonts[.normal] = UIFont(name: "Avenir", size: 9)
+		controlView.liveBadgeView.liveBadge.titleFonts[.normal] = UIFont(name: "Avenir", size: 10)
+		controlView.liveBadgeView.liveBadge.titleFonts[.disabled] = UIFont(name: "Avenir", size: 10)
 		controlView.liveBadgeView.liveBadge.titleColors[.normal] = UIColor(red: 0.796, green: 0.796, blue: 0.796, alpha: 1.0)
-		controlView.liveBadgeView.liveBadge.images[.normal] = UIImage(named: "ic_live_dot", in: imageBundle, compatibleWith: nil)
+		controlView.liveBadgeView.liveBadge.titleColors[.disabled] = UIColor(red: 0.796, green: 0.796, blue: 0.796, alpha: 1.0)
+		controlView.liveBadgeView.liveBadge.images[.normal] = UIImage(named: "ic_live_dot", in: imageBundle, compatibleWith: nil)?.tint(with: .gray)
+		controlView.liveBadgeView.liveBadge.images[.disabled] = UIImage(named: "ic_live_dot", in: imageBundle, compatibleWith: nil)
 		controlView.liveBadgeView.liveBadge.backgroundColors[.normal] = .clear
+		controlView.liveBadgeView.liveBadge.backgroundColors[.disabled] = .clear
 		controlView.liveBadgeView.liveBadge.spacing = 4.0
 		
 		controlView.liveBadgeView.viewBadge.images[.normal] = UIImage(named: "ic_view", in: imageBundle, compatibleWith: nil)
 		controlView.liveBadgeView.viewBadge.titleFonts[.normal] = UIFont(name: "Avenir", size: 9)
 		controlView.liveBadgeView.viewBadge.backgroundColors[.normal] = .clear
 		controlView.liveBadgeView.viewBadge.spacing = 6.0
+		controlView.liveBadgeView.frameLayout.leftFrameLayout.alignment = (.center, .center)
 		controlView.liveBadgeView.frameLayout.rightFrameLayout.alignment = (.center, .center)
 		
 		controlView.nextButton.isHidden = true
@@ -147,8 +152,9 @@ open class UZDefaultTheme: UZPlayerTheme {
 	func setupLayout() {
 		guard let controlView = controlView else { return }
 		
+		controlView.containerView.addSubview(frameLayout)
 		controlView.allControlViews.forEach { (view) in
-			frameLayout.addSubview(view)
+			controlView.containerView.addSubview(view)
 		}
 		
 		frameLayout.isUserInteractionEnabled = true
@@ -159,7 +165,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 		
 		let lineView = UIView()
 		lineView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-		controlView.addSubview(lineView)
+		controlView.containerView.addSubview(lineView)
 		
 		frameLayout + HStackLayout {
 			($0 + controlView.backButton).fixSize = buttonMinSize
@@ -200,7 +206,6 @@ open class UZDefaultTheme: UZPlayerTheme {
 			$0.spacing = 10
 		}
 		frameLayout.padding(top: 10, left: 10, bottom: 0, right: 10)
-		controlView.containerView.addSubview(frameLayout)
 	}
 	
 	open func layoutControls(rect: CGRect) {

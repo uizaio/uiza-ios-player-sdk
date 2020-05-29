@@ -447,7 +447,8 @@ open class UZPlayer: UIView {
 	open func seek(to interval: TimeInterval, completion: (() -> Void)? = nil) {
 		UZLogger.shared.log(event: "seeking")
 		seekCount += 1
-		self.currentPosition = interval
+		
+		currentPosition = interval
 		controlView.hideEndScreen()
 		
 		playerLayer?.seek(to: interval, completion: {

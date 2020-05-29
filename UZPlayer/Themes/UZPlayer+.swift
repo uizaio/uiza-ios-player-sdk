@@ -403,6 +403,9 @@ extension UZPlayer: UZPlayerControlViewDelegate {
                         }
                     }
                 }
+				
+			case .live:
+				seekToLive()
                 
             default:
                 #if DEBUG
@@ -560,8 +563,8 @@ extension UZPlayer: UZPlayerLayerViewDelegate {
         if !isSliderSliding {
             logPlayEvent(currentTime: currentTime, totalTime: totalTime)
             controlView.totalDuration = totalDuration
+			controlView.liveBadgeView.liveBadge.isEnabled = (totalTime - currentPosition) > 10
             controlView.playTimeDidChange(currentTime: currentTime, totalTime: totalTime)
-            
             playTimeDidChange?(currentTime, totalTime)
         }
     }

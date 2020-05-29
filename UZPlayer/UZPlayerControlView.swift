@@ -158,7 +158,7 @@ open class UZPlayerControlView: UIView {
 	}()
 	
 	lazy var allControlViews: [UIView] = {
-		return allButtons + allLabels + [airplayButton, liveBadgeView, timeSlider]
+		return allButtons + allLabels + [airplayButton, timeSlider, liveBadgeView]
 	}()
 	
 	// MARK: -
@@ -226,11 +226,15 @@ open class UZPlayerControlView: UIView {
 		airplayButton.tag = UZButtonTag.airplay.rawValue
 		castingButton.tag = UZButtonTag.casting.rawValue
 		logoButton.tag = UZButtonTag.logo.rawValue
+		liveBadgeView.liveBadge.tag = UZButtonTag.live.rawValue
 		
 		allButtons.forEach { (button) in
 			button.showsTouchWhenHighlighted = true
 			button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
 		}
+		
+		liveBadgeView.liveBadge.showsTouchWhenHighlighted = true
+		liveBadgeView.liveBadge.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
 		
 		endscreenView.isHidden = true
 		liveBadgeView.isHidden = true
@@ -249,6 +253,11 @@ open class UZPlayerControlView: UIView {
 			button.setImage(nil, for: .selected)
 			button.setImage(nil, for: .disabled)
 		}
+		
+		liveBadgeView.liveBadge.images[.normal] = nil
+		liveBadgeView.liveBadge.images[.highlighted] = nil
+		liveBadgeView.liveBadge.images[.selected] = nil
+		liveBadgeView.liveBadge.images[.disabled] = nil
 		
 		timeSlider.setThumbImage(nil, for: .normal)
 		timeSlider.setThumbImage(nil, for: .highlighted)
@@ -469,6 +478,26 @@ open class UZPlayerControlView: UIView {
 	open func updateUI(_ isForFullScreen: Bool) {
 		fullscreenButton.isSelected = isForFullScreen
 	}
+	
+	// MARK: - Action
+	
+	@objc open func onButtonPressed(_ button: UIButton) {
+		autoFadeOutControlView(after: autoHideControlsInterval)
+		
+		if let type = UZButtonTag(rawValue: button.tag) {
+			switch type {
+				case .play, .replay:
+					hideEndScreen()
+				
+				default:
+					break
+			}
+		}
+		
+		delegate?.controlView(controlView: self, didSelectButton: button)
+		setNeedsLayout()
+	}
+	
 }
 
 extension UZPlayerControlView {

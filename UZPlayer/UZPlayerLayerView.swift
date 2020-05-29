@@ -40,7 +40,7 @@ protocol UZPlayerLayerViewDelegate: class {
 	func player(player: UZPlayerLayerView, playerStateDidChange state: UZPlayerState)
 	func player(player: UZPlayerLayerView, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
 	func player(player: UZPlayerLayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval)
-	func player(player: UZPlayerLayerView, playerIsPlaying      playing: Bool)
+	func player(player: UZPlayerLayerView, playerIsPlaying playing: Bool)
 	func player(player: UZPlayerLayerView, playerDidFailToPlayToEndTime error: Error?)
 	func player(playerRequiresSeekingToLive: UZPlayerLayerView)
 	func player(playerDidStall: UZPlayerLayerView)
@@ -231,9 +231,7 @@ open class UZPlayerLayerView: UIView {
 	}
 	
 	open func seek(to seconds: TimeInterval, completion: (() -> Void)?) {
-		if seconds.isNaN {
-			return
-		}
+		if seconds.isNaN { return }
 		
 		if player?.currentItem?.status == .readyToPlay {
 			#if swift(>=4.2)
@@ -244,7 +242,7 @@ open class UZPlayerLayerView: UIView {
 			let zeroTime = kCMTimeZero
 			#endif
 			
-			player!.seek(to: draggedTime, toleranceBefore: zeroTime, toleranceAfter: zeroTime, completionHandler: { [weak self] (_) in
+			player?.seek(to: draggedTime, toleranceBefore: zeroTime, toleranceAfter: zeroTime, completionHandler: { [weak self] (_) in
 				self?.setupTimer()
 				completion?()
 			})
@@ -542,7 +540,7 @@ extension UZPlayerLayerView {
         }
     }
     
-    fileprivate func availableDuration() -> TimeInterval? {
+    public func availableDuration() -> TimeInterval? {
         if let loadedTimeRanges = player?.currentItem?.loadedTimeRanges,
             let first = loadedTimeRanges.first {
             let timeRange = first.timeRangeValue
