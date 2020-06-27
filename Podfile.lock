@@ -2,13 +2,13 @@ PODS:
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
-  - FrameLayoutKit (4.4.0)
+  - FrameLayoutKit (4.4.1)
   - NHNetworkTime (1.7):
     - CocoaAsyncSocket (~> 7.5.0)
   - NKModalViewManager (3.5.3)
-  - Sentry (5.1.0):
-    - Sentry/Core (= 5.1.0)
-  - Sentry/Core (5.1.0)
+  - Sentry (5.1.2):
+    - Sentry/Core (= 5.1.2)
+  - Sentry/Core (5.1.2)
 
 DEPENDENCIES:
   - FrameLayoutKit
@@ -26,11 +26,11 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
-  FrameLayoutKit: 870379391e36fd3b9ef3a628d60f73bb3a24b0d2
+  FrameLayoutKit: 59ea4b37f24e6b364048b49f1d5e57e976dca444
   NHNetworkTime: b140ee21770aed41e7b8fd43647bce6349ad10f2
   NKModalViewManager: aa52c0abdc2633b1ed3464baeb65dabfa9785dc3
-  Sentry: 01008d590825eb1c02a796cbdced2cd3625f61e4
+  Sentry: 7ee9a34a2c075a5e9306a1501d61c93a4b5c2333
 
 PODFILE CHECKSUM: dfffb22a1bf2db1b91c776b75d81a68b860d33dc
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3
