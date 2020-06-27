@@ -17,7 +17,7 @@
                BlueprintIdentifier = "63FD93302420DA30001B7A48"
                BuildableName = "UZPlayerExample.app"
                BlueprintName = "UZPlayerExample"
-               ReferencedContainer = "container:UZPlayer.xcodeproj">
+               ReferencedContainer = "container:UZPlayerExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "63FD93302420DA30001B7A48"
             BuildableName = "UZPlayerExample.app"
             BlueprintName = "UZPlayerExample"
-            ReferencedContainer = "container:UZPlayer.xcodeproj">
+            ReferencedContainer = "container:UZPlayerExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "63FD93302420DA30001B7A48"
             BuildableName = "UZPlayerExample.app"
             BlueprintName = "UZPlayerExample"
-            ReferencedContainer = "container:UZPlayer.xcodeproj">
+            ReferencedContainer = "container:UZPlayerExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
