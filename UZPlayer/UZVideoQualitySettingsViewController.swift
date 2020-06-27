@@ -15,7 +15,6 @@ internal class UZVideoQualitySettingsViewController: UIViewController {
 	let titleLabel = UILabel()
 	let collectionViewController = UZVideoQualityCollectionViewController()
 	var frameLayout: DoubleFrameLayout!
-	
 	var currentDefinition: UZVideoLinkPlay? {
 		didSet {
 			self.collectionViewController.selectedResource = currentDefinition
@@ -42,7 +41,6 @@ internal class UZVideoQualitySettingsViewController: UIViewController {
 		}
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = .center
-		
 		frameLayout = DoubleFrameLayout(axis: .vertical, views: [titleLabel, collectionViewController.view])
 		frameLayout.bottomFrameLayout.minSize = CGSize(width: 0, height: 100)
 		frameLayout.padding(top: 20, left: 10, bottom: 10, right: 10)
@@ -55,7 +53,6 @@ internal class UZVideoQualitySettingsViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		view.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
 		view.addSubview(blurView)
 		view.addSubview(titleLabel)
@@ -65,7 +62,6 @@ internal class UZVideoQualitySettingsViewController: UIViewController {
 	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		
 		blurView.frame = view.bounds
 		frameLayout.frame = view.bounds
 	}

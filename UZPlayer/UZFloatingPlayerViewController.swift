@@ -35,11 +35,9 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 			player = playerViewController.player
 			player?.backBlock = { [weak self] (_) in
 				guard let `self` = self else { return }
-				
+				print("backButton: \(self.playerViewController.isFullscreen)")
 				if self.playerViewController.isFullscreen {
-					self.playerViewController.setFullscreen(fullscreen: false, completion: {
-						self.dismiss(animated: true, completion: self.onDismiss)
-					})
+					self.playerViewController.setFullscreen(fullscreen: false)
 				} else {
 					self.dismiss(animated: true, completion: self.onDismiss)
 				}

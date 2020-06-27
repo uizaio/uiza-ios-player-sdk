@@ -176,7 +176,7 @@ open class UZDefaultTheme: UZPlayerTheme {
 				$0.maxContentSize = CGSize(width: 1, height: 10.0)
 				$0.minContentSize = CGSize(width: 1, height: 10.0)
 				$0.verticalAlignment = .center
-				$0.preSizeThatFitsConfigurationBlock = { layout in
+				$0.preSizeThatFitsConfigurationBlock = { (layout, size) in
 					layout.targetView?.isHidden = controlView.liveBadgeView.isHidden
 				}
 				$0.preLayoutConfigurationBlock = { layout in
