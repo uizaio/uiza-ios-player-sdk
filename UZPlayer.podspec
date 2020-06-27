@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
     s.summary = 'UZPlayer'
     s.homepage = 'https://uiza.io/'
     s.documentation_url = 'https://docs.uiza.io/v4'
-    s.author = { 'Uiza' => 'namnh@uiza.io' }
+    s.author = { 'Uiza' => 'developer@uiza.io' }
     s.license = { :type => "BSD", :file => "LICENSE" }
     s.source = { :git => "https://github.com/uizaio/uiza-ios-player-sdk.git", :tag => "v" + s.version.to_s }
     s.source_files = 'UZPlayer/**/*'
