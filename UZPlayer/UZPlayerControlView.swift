@@ -403,7 +403,7 @@ open class UZPlayerControlView: UIView {
 		helpButton.isHidden = isLiveVideo
 		ccButton.isHidden = isLiveVideo
 		
-		settingsButton.isHidden = (playerConfig?.showQualitySelector ?? true) || resource.definitions.count < 2
+		settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2
 		autoFadeOutControlView(after: autoHideControlsInterval)
 		setNeedsLayout()
 	}

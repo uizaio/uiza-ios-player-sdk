@@ -325,9 +325,7 @@ extension UZPlayer: UZPlayerControlViewDelegate {
         if let action = UZButtonTag(rawValue: button.tag) {
             switch action {
             case .back:
-                stop()
-                backBlock?(isFullScreen)
-                
+                    backBlock?(true)
             case .play:
                 if button.isSelected {
                     pause()
