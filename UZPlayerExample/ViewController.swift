@@ -49,7 +49,7 @@ class ViewController: UIViewController {
 	func presentFloatingPlayer(urlPath: String) {
 		guard let url = URL(string: urlPath) else { return }
 		let floatingPlayerViewController = UZFloatingPlayerViewController()
-		floatingPlayerViewController.present(with: UZVideoItem(name: nil, thumbnailURL: nil, linkPlay: UZVideoLinkPlay(definition: "", url: url), subtitleURLs: nil), playlist: nil).player.controlView.theme = UZDefaultTheme()
+		floatingPlayerViewController.present(with: UZVideoItem(name: nil, thumbnailURL: nil, linkPlay: UZVideoLinkPlay(definition: "", url: url), subtitleURLs: nil), playlist: nil).player.controlView.theme = UZTheme1()
 		floatingPlayerViewController.onDismiss = { [weak self] in
 			self?.askForURL()
 		}
