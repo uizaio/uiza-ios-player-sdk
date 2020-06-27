@@ -19,7 +19,7 @@ profile
 *.moved-aside
 DerivedData
 .idea/
-
+*.xcworkspace
 # CocoaPods
 Pods/
 Podfile.lock
