@@ -128,7 +128,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 63FD917A241D03FA001B7A48 /* Build configuration list for PBXProject "UZPlayer" */;
+			buildConfigurationList = 63FD917A241D03FA001B7A48 /* Build configuration list for PBXProject "UZPlayerExample" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -359,7 +359,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.PlayerExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = UZPlayerExample;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -380,7 +380,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.PlayerExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = UZPlayerExample;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -389,7 +389,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		63FD917A241D03FA001B7A48 /* Build configuration list for PBXProject "UZPlayer" */ = {
+		63FD917A241D03FA001B7A48 /* Build configuration list for PBXProject "UZPlayerExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				63FD9186241D03FA001B7A48 /* Debug */,
