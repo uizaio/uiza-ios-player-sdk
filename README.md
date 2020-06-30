@@ -5,6 +5,7 @@
 [![Version](https://img.shields.io/cocoapods/v/UZPlayer.svg?style=flat)](http://cocoapods.org/pods/UZPlayer)
 ![Swift](https://img.shields.io/badge/%20in-swift%205.0-success.svg)
 ![Platform](https://img.shields.io/badge/platform-ios-success.svg)&nbsp;
+[![Support](https://img.shields.io/badge/ios-9-success.svg)](https://www.apple.com/nl/ios/)&nbsp;
 
 UZPlayer is a framework allows you to play video with fully customizable controls.
 
