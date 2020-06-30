@@ -13,7 +13,7 @@ UZPlayer is a framework allows you to play video with fully customizable control
 
 ## Compatibility
 
-UZPlayer requires Swift 4.2+ and iOS 9+
+__UZPlayer__ requires Swift 4.2+ and iOS 9+
 
 ## Installation
 
