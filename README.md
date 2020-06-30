@@ -1,9 +1,10 @@
 # UZPlayer
-<!-- [![CI Status](http://img.shields.io/travis/uizaio/UZPlayer.svg?style=flat)](https://travis-ci.org/uizaio/UZPlayer) -->
+
+
+[![License BSD](https://img.shields.io/badge/license-BSD-success.svg?style=flat)](https://raw.githubusercontent.com/uizaio/uiza-android-broadcast-sdk/master/LICENSE)&nbsp;
 [![Version](https://img.shields.io/cocoapods/v/UZPlayer.svg?style=flat)](http://cocoapods.org/pods/UZPlayer)
-[![License](https://img.shields.io/cocoapods/l/UZPlayer.svg?style=flat)](http://cocoapods.org/pods/UZPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/UZPlayer.svg?style=flat)](http://cocoapods.org/pods/UZPlayer)
-![Swift](https://img.shields.io/badge/%20in-swift%205.0-orange.svg)
+![Swift](https://img.shields.io/badge/%20in-swift%205.0-success.svg)
 
 UZPlayer is a framework allows you to play video with fully customizable controls.
 
