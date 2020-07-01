@@ -188,9 +188,8 @@ open class UZPlayerLayerView: UIView {
 		} else {
 			player?.play()
 		}
-
 		guard let playerItem = playerItem else { return }
-		
+        
 		if playerItem.isPlaybackLikelyToKeepUp {
 			playerLayer?.removeFromSuperlayer()
 			player?.removeObserver(self, forKeyPath: "rate")
@@ -255,8 +254,9 @@ open class UZPlayerLayerView: UIView {
 		guard lastPlayerItem != playerItem else { return }
         
 		let notificationCenter = NotificationCenter.default
-        
+    
 		if let item = lastPlayerItem {
+      
 			notificationCenter.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: item)
 			notificationCenter.removeObserver(self, name: .AVPlayerItemFailedToPlayToEndTime, object: item)
 			notificationCenter.removeObserver(self, name: .AVPlayerItemPlaybackStalled, object: item)
@@ -437,7 +437,7 @@ open class UZPlayerLayerView: UIView {
 	override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
 		guard let item = object as? AVPlayerItem, let keyPath = keyPath else { return }
 		guard item == playerItem else { return }
-		print("keyPath = \(keyPath)")
+		
 		switch keyPath {
         case "status":
 			updateVideoQuality()

@@ -5,14 +5,9 @@
 target 'UZPlayerExample' do
   platform :ios, '9.0'
   use_frameworks!
-  #  pod 'UZPlayer', :path => '.'
-end
-
-target 'UZPlayer' do
-  platform :ios, '9.0'
-  use_frameworks!
   pod 'NKModalViewManager'
   pod 'FrameLayoutKit'
   pod 'Sentry'
   pod 'NHNetworkTime'
+  #  pod 'UZPlayer', :path => '.'
 end

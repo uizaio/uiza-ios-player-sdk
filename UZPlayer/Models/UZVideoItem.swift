@@ -24,8 +24,6 @@ public struct UZVideoLinkPlay {
 	/// `AVURLAsset` of this linkPlay
     public var avURLAsset: AVURLAsset {
 		return AVURLAsset(url: url, options: options)
-//		return AVURLAsset(url: URL(string: "http://sample.vodobox.com/planete_interdite/planete_interdite_alternate.m3u8")!)
-//		return AVURLAsset(url: URL(string: "https://cdn-vn-cache-3.uiza.io/a204e9cdeca44948a33e0d012ef74e90/jPnMHRVr/package/playlist.m3u8")!)
     }
 	
 	/**
@@ -64,9 +62,35 @@ Class chứa các thông tin về video item
 public struct UZVideoItem {
 	public var name: String?
 	public var thumbnailURL: URL?
+    public var extLinkPlay: UZVideoLinkPlay?
+    public var extIsTimeShift: Bool = false
 	public var linkPlay: UZVideoLinkPlay? {
 		didSet {
 			guard let url = linkPlay?.url else { return }
+            let manifest = MasterManifest().parse(url)
+            if let timeShift = manifest.timeShift {
+                if timeShift.hasPrefix("extras/") {
+                    do{
+                        let plName = try timeShift.replace("extras/", replacement: "")
+                        let extLink = try url.absoluteString.replace(plName, replacement: timeShift)
+                        guard let extUrl = URL(string: extLink) else { return }
+                        extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
+                        extIsTimeShift = true
+                    } catch {
+                        print("not parse extras/ in timeshift link")
+                    }
+                } else {
+                    do {
+                       let extLink = try url.absoluteString.replace(timeShift, replacement:"extras/\(timeShift)")
+                       guard let extUrl = URL(string: extLink) else { return }
+                       extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
+                        extIsTimeShift = false
+                   } catch {
+                       print("not parse extras/ in timeshift link")
+                   }
+                }
+            }
+
 			guard let cmParam = url.params()["cm"] as? String else { return }
 			guard let dictionary = cmParam.base64Decoded.toDictionary() else { return }
 			
