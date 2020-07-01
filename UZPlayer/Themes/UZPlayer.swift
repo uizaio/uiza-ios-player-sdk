@@ -30,7 +30,7 @@ import GoogleCast
 let PLAYER_VERSION = "1.0"
 
 func DLog(_ message: String, _ file: String = #file, _ line: Int = #line) {
-	#if DEBUG
+	#if DEBUG && false
 	print("\((file as NSString).lastPathComponent) [Line \(line)]: \((message))")
 	#endif
 }

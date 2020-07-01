@@ -14,6 +14,8 @@ public struct UZPlayerResource {
 	public let subtitles: [URL]?
 	public let definitions: [UZVideoLinkPlay]
 	public var isLive: Bool = false
+    public var enableTimeShift: Bool = false
+    public var timeShiftOn: Bool = false
 	
 	/**
 	Player recource item with url, used to play single difinition video

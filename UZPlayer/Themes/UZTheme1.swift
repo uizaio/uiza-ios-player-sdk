@@ -142,7 +142,7 @@ open class UZTheme1: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			($0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]).forEach { (layout) in
+			($0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton]).forEach { (layout) in
 				layout.minSize = buttonMinSize
 			}
 			$0.spacing = 10

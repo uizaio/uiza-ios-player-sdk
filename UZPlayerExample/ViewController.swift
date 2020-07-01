@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 	}
 	/// "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 	func askForURL() {
-		let prefilled = 
+		let prefilled = UserDefaults.standard.string(forKey: "last_url") ??
         "https://1775190502.rsc.cdn77.org/live/4e6dfc96-c1a1-4659-ad28-956f7b8340ff/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI0ZTZkZmM5Ni1jMWExLTQ2NTktYWQyOC05NTZmN2I4MzQwZmYiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6ImYxOWE0ZmQzYmFhMjQ0YmZhMThhODZjMDE0NDEzYWU4In0="
 		
 		let alertController = UIAlertController(title: "", message: "Please enter videoURL", preferredStyle: .alert)

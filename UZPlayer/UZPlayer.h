@@ -2,7 +2,7 @@
 //  UZPlayer.h
 //  UZPlayer
 //
-//  Created by Nam Kennic on 3/14/20.
+//  Created by Nam Nguyen on 7/1/20.
 //  Copyright © 2020 Nam Kennic. All rights reserved.
 //
 

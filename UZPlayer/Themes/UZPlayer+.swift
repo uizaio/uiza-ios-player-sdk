@@ -278,7 +278,6 @@ extension UZPlayer {
             self.switchVideoDefinition(linkPlay)
             viewController.dismiss(animated: true, completion: nil)
         }
-        
         NKModalViewManager.sharedInstance().presentModalViewController(viewController)
     }
     
@@ -286,7 +285,6 @@ extension UZPlayer {
 		guard let currentItem = avPlayer?.currentItem else { return }
 		
 		let asset = currentItem.asset
-		
 		let viewController = UZMediaOptionSelectionViewController()
 		viewController.asset = asset
 		viewController.selectedSubtitle = selectedSubtitle

@@ -253,9 +253,9 @@ open class UZPlayerLayerView: UIView {
 	
 	fileprivate func onPlayerItemChange() {
 		guard lastPlayerItem != playerItem else { return }
-		
+        
 		let notificationCenter = NotificationCenter.default
-		
+        
 		if let item = lastPlayerItem {
 			notificationCenter.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: item)
 			notificationCenter.removeObserver(self, name: .AVPlayerItemFailedToPlayToEndTime, object: item)
@@ -266,7 +266,7 @@ open class UZPlayerLayerView: UIView {
 			item.removeObserver(self, forKeyPath: "playbackBufferEmpty")
 			item.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
 		}
-		
+        
 		lastPlayerItem = playerItem
 		if let item = playerItem {
 			notificationCenter.addObserver(self, selector: #selector(moviePlayerDidEnd), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -437,9 +437,9 @@ open class UZPlayerLayerView: UIView {
 	override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
 		guard let item = object as? AVPlayerItem, let keyPath = keyPath else { return }
 		guard item == playerItem else { return }
-		
+		print("keyPath = \(keyPath)")
 		switch keyPath {
-		case "status":
+        case "status":
 			updateVideoQuality()
 			if player?.status == .readyToPlay {
 				if let video = currentVideo, video.isLive {

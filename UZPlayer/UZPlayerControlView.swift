@@ -238,7 +238,6 @@ open class UZPlayerControlView: UIView {
 		
 		endscreenView.isHidden = true
 		liveBadgeView.isHidden = true
-		settingsButton.isHidden = true
 		logoButton.isHidden = true
 		
 		addSubview(containerView)
@@ -403,7 +402,7 @@ open class UZPlayerControlView: UIView {
 		helpButton.isHidden = isLiveVideo
 		ccButton.isHidden = isLiveVideo
 		
-		settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2
+        settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2 || !resource.enableTimeShift
 		autoFadeOutControlView(after: autoHideControlsInterval)
 		setNeedsLayout()
 	}
