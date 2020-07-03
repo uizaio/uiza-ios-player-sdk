@@ -327,8 +327,7 @@ open class UZPlayerControlView: UIView {
 			if playerLastState == .readyToPlay {
 				seekedTime = -1
 				timeSlider.value = totalTime>0 ? Float(currentTime) / Float(totalTime) : 0
-				currentTimeLabel.text = currentTime.toString
-				
+                currentTimeLabel.text = currentTime.toString
 				remainingTime = max(totalTime - currentTime, 0)
 				remainTimeLabel.text = remainingTime.toString
 			} else {
@@ -340,8 +339,7 @@ open class UZPlayerControlView: UIView {
 			}
 		} else {
 			timeSlider.value = totalTime>0 ? Float(currentTime) / Float(totalTime) : 0
-			currentTimeLabel.text = currentTime.toString
-			
+			currentTimeLabel.text = (resource?.isLive ?? false) ? currentTime.toLiveString : currentTime.toString
 			remainingTime = max(totalTime - currentTime, 0)
 			remainTimeLabel.text = remainingTime.toString
 		}
@@ -414,6 +412,9 @@ open class UZPlayerControlView: UIView {
             settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2
         }
 		autoFadeOutControlView(after: autoHideControlsInterval)
+        if resource.timeshiftSupport {
+            setUIWithTimeshift(resource.timeShiftOn)
+        }
 		setNeedsLayout()
 	}
 	

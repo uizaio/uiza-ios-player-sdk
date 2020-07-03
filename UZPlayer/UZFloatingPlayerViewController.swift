@@ -228,16 +228,6 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 		detailsContainerView.frame = CGRect(x: 0, y: playerSize.height, width: viewSize.width, height: viewSize.height - playerSize.height)
 	}
 	
-//	override open func viewDidLayoutSubviews() {
-//		super.viewDidLayoutSubviews()
-//
-//		let viewSize = view.bounds
-//		DLog("DID: \(viewSize)")
-//		let playerSize = CGSize(width: viewSize.width, height: viewSize.width * playerRatio) // 4:3
-//		playerViewController.view.frame = CGRect(x: 0, y: 0, width: playerSize.width, height: playerSize.height)
-//		detailsContainerView.frame = CGRect(x: 0, y: playerSize.height, width: viewSize.width, height: viewSize.height - playerSize.height)
-//	}
-	
 	override open var prefersStatusBarHidden: Bool {
 		return true
 	}
@@ -292,13 +282,7 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 		
 		return CGRect(origin: point, size: floatingSize)
 	}
-	
-//	open var panGesture: UIPanGestureRecognizer! {
-//		get {
-//			return UIPanGestureRecognizer()
-//		}
-//	}
-//	
+		
 	open func floatingHandlerDidDragging(with progress: CGFloat) {
 		delegate?.floatingPlayer(self, onFloatingProgress: progress)
 		
@@ -338,17 +322,6 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 		dismiss(animated: true, completion: onDismiss)
 	}
 
-//	func forceDeviceRotate(to orientation: UIInterfaceOrientation, animated: Bool) {
-//		let currentDevice = UIDevice.current
-//		UIView.setAnimationsEnabled(false)
-//		currentDevice.beginGeneratingDeviceOrientationNotifications()
-//		//GCC diagnostic ignored "-Wdeprecated-declarations"
-//		UIApplication.shared.setStatusBarOrientation(orientation, animated: animated)
-//		currentDevice.endGeneratingDeviceOrientationNotifications()
-//		UIViewController.attemptRotationToDeviceOrientation()
-//		UIView.setAnimationsEnabled(true)
-//	}
-	
 	deinit {
 		DLog("DEINIT")
 	}
