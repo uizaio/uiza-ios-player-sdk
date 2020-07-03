@@ -63,34 +63,44 @@ public struct UZVideoItem {
 	public var name: String?
 	public var thumbnailURL: URL?
     public var extLinkPlay: UZVideoLinkPlay?
-    public var extIsTimeShift: Bool = false
+    public var extIsTimeshift: Bool = false
+    public var timeshiftSupport: Bool = false
+    
 	public var linkPlay: UZVideoLinkPlay? {
 		didSet {
 			guard let url = linkPlay?.url else { return }
-            let manifest = MasterManifest().parse(url)
-            if let timeShift = manifest.timeShift {
-                if timeShift.hasPrefix("extras/") {
-                    do{
-                        let plName = try timeShift.replace("extras/", replacement: "")
-                        let extLink = try url.absoluteString.replace(plName, replacement: timeShift)
-                        guard let extUrl = URL(string: extLink) else { return }
-                        extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
-                        extIsTimeShift = true
-                    } catch {
-                        print("not parse extras/ in timeshift link")
+            if url.absoluteString.contains(".m3u8") {
+                let manifest = MasterManifest().parse(url)
+                if let timeshift = manifest.timeshift {
+                    timeshiftSupport = true
+                    isLive = true
+                    if timeshift.hasPrefix("extras/") {
+                        print("start extras/")
+                        do{
+                            let plName = try timeshift.replace("extras/", replacement: "")
+                            let extLink = try url.absoluteString.replace(plName, replacement: timeshift)
+                            guard let extUrl = URL(string: extLink) else { return }
+                            extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
+                            extIsTimeshift = true
+                        } catch {
+                            print("not parse extras/ in timeshift link")
+                        }
+                    } else {
+                        print("not start extras/")
+                        do {
+                           let extLink = try url.absoluteString.replace("extras/\(timeshift)", replacement:timeshift)
+                           guard let extUrl = URL(string: extLink) else { return }
+                           extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
+                            extIsTimeshift = false
+                       } catch {
+                           print("not parse extras/ in timeshift link")
+                       }
                     }
+                    isTimeshiftOn = !extIsTimeshift
                 } else {
-                    do {
-                       let extLink = try url.absoluteString.replace(timeShift, replacement:"extras/\(timeShift)")
-                       guard let extUrl = URL(string: extLink) else { return }
-                       extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
-                        extIsTimeShift = false
-                   } catch {
-                       print("not parse extras/ in timeshift link")
-                   }
+                    timeshiftSupport = false
                 }
             }
-
 			guard let cmParam = url.params()["cm"] as? String else { return }
 			guard let dictionary = cmParam.base64Decoded.toDictionary() else { return }
 			
@@ -102,6 +112,8 @@ public struct UZVideoItem {
 	}
 	public var subtitleURLs: [URL]?
 	
+    public var isTimeshiftOn: Bool = false
+    
 	public fileprivate(set) var appId: String?
 	public fileprivate(set) var entityId: String?
 	public fileprivate(set) var entitySource: String?

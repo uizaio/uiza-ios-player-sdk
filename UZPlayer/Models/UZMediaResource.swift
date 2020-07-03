@@ -14,7 +14,7 @@ public struct UZPlayerResource {
 	public let subtitles: [URL]?
 	public let definitions: [UZVideoLinkPlay]
 	public var isLive: Bool = false
-    public var enableTimeShift: Bool = false
+    public var timeshiftSupport: Bool = false
     public var timeShiftOn: Bool = false
 	
 	/**
@@ -26,9 +26,9 @@ public struct UZPlayerResource {
 	- parameter cover:     video cover, will show before playing, and hide when play
 	- parameter isLive:     set `true` if live video
 	*/
-	public init(name: String = "", url: URL, subtitles: [URL]? = nil, cover: URL? = nil, isLive: Bool = false) {
+    public init(name: String = "", url: URL, subtitles: [URL]? = nil, cover: URL? = nil, isLive: Bool = false, timeshiftSupport: Bool = false) {
 		let definition = UZVideoLinkPlay(definition: "", url: url)
-		self.init(name: name, definitions: [definition], subtitles: subtitles, cover: cover, isLive: isLive)
+        self.init(name: name, definitions: [definition], subtitles: subtitles, cover: cover, isLive: isLive, timeshiftSupport: timeshiftSupport)
 	}
 	
 	/**
@@ -40,11 +40,12 @@ public struct UZPlayerResource {
 	- parameter cover:       video cover
 	- parameter isLive:     set `true` if live video
 	*/
-	public init(name: String = "", definitions: [UZVideoLinkPlay], subtitles: [URL]? = nil, cover: URL? = nil, isLive: Bool = false) {
+	public init(name: String = "", definitions: [UZVideoLinkPlay], subtitles: [URL]? = nil, cover: URL? = nil, isLive: Bool = false, timeshiftSupport: Bool = false) {
 		self.name        = name
 		self.subtitles	 = subtitles
 		self.cover       = cover
 		self.definitions = definitions
 		self.isLive 	 = isLive
+        self.timeshiftSupport = timeshiftSupport
 	}
 }

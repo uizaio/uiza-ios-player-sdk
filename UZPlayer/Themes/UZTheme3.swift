@@ -141,7 +141,7 @@ open class UZTheme3: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]
+			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.timeshiftToggle, controlView.volumeButton]
 			$0.spacing = 10
 		}
 		frameLayout + HStackLayout {
@@ -152,12 +152,17 @@ open class UZTheme3: UZPlayerTheme {
 			$0.alignment = (.center, .center)
 			$0.distribution = .center
 			$0.flexible()
-		}
-		
+		}        
 		let bottomBar = HStackLayout {
-			$0 + controlView.currentTimeLabel
-			($0 + controlView.timeSlider).flexible()
-			$0 + [controlView.remainTimeLabel, controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton]
+			$0 + HStackLayout {
+                $0 + controlView.currentTimeLabel
+                ($0 + controlView.timeSlider).flexible()
+                $0 + controlView.remainTimeLabel
+                $0.spacing = 10
+                $0.ignoreHiddenView = false
+                $0.flexible()
+            }
+			$0 + [controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton]
 			$0.spacing = 10
 			$0.backgroundColor = UIColor(white: 0.0, alpha: 0.8)
 			$0.layer.cornerRadius = 10

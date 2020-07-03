@@ -9,6 +9,6 @@
 import Foundation
 
 open class MasterPlaylist {
-    open var timeShift: String?
+    open var timeshift: String?
     open var version: Int?
 }

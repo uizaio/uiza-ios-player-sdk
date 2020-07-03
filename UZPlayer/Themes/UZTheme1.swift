@@ -46,12 +46,15 @@ open class UZTheme1: UZPlayerTheme {
 	
 	func setupSkin() {
 		guard let controlView = controlView else { return }
-		
-		let backIcon = UIImage(icon: .fontAwesomeSolid(.arrowLeft), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+        let bundlePath = Bundle.main.path(forResource: "UZDefaultThemeIcons", ofType: "bundle")
+        let imageBundle = Bundle(path: bundlePath ?? "")
+		let backIcon = UIImage(named: "ic_close", in: imageBundle, compatibleWith: nil)
+//		let backIcon = UIImage(icon: .fontAwesomeSolid(.arrowLeft), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let playlistIcon = UIImage(icon: .fontAwesomeSolid(.list), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .fontAwesomeSolid(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let settingsIcon = UIImage(icon: .fontAwesomeSolid(.cog), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+        let settingsIcon = UIImage(named: "ic_settings", in: imageBundle, compatibleWith: nil)
+//		let settingsIcon = UIImage(icon: .fontAwesomeSolid(.cog), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let volumeIcon = UIImage(icon: .fontAwesomeSolid(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let playBigIcon = UIImage(icon: .fontAwesomeSolid(.playCircle), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
@@ -62,8 +65,10 @@ open class UZTheme1: UZPlayerTheme {
 		let backwardIcon = UIImage(icon: .fontAwesomeSolid(.backward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let nextIcon = UIImage(icon: .fontAwesomeSolid(.stepForward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
 		let previousIcon = UIImage(icon: .fontAwesomeSolid(.stepBackward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
-		let fullscreenIcon = UIImage(icon: .fontAwesomeSolid(.expand), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let collapseIcon = UIImage(icon: .fontAwesomeSolid(.compress), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+        let fullscreenIcon = UIImage(named: "ic_fullscreen", in: imageBundle, compatibleWith: nil)
+//		let fullscreenIcon = UIImage(icon: .fontAwesomeSolid(.expand), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+        let collapseIcon = UIImage(named: "ic_exit_fullscreen", in: imageBundle, compatibleWith: nil)
+//		let collapseIcon = UIImage(icon: .fontAwesomeSolid(.compress), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: seekThumbSize, textColor: iconColor, backgroundColor: .clear)
 		
 		controlView.backButton.setImage(backIcon, for: .normal)
@@ -142,7 +147,7 @@ open class UZTheme1: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			($0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton]).forEach { (layout) in
+            ($0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.timeshiftToggle, controlView.settingsButton]).forEach { (layout) in
 				layout.minSize = buttonMinSize
 			}
 			$0.spacing = 10
@@ -157,9 +162,15 @@ open class UZTheme1: UZPlayerTheme {
 			$0.flexible()
 		}
 		frameLayout + HStackLayout {
-			$0 + controlView.currentTimeLabel
-			($0 + controlView.timeSlider).flexible()
-			($0 + [controlView.remainTimeLabel, controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton]).forEach { (layout) in
+            $0 + HStackLayout {
+                $0 + controlView.currentTimeLabel
+                ($0 + controlView.timeSlider).flexible()
+                $0 + controlView.remainTimeLabel
+                $0.spacing = 10
+                $0.flexible()
+                $0.ignoreHiddenView = false
+            }
+            ($0 + [controlView.backwardButton, controlView.forwardButton, controlView.fullscreenButton]).forEach { (layout) in
 				layout.minSize = buttonMinSize
 			}
 			$0.spacing = 10

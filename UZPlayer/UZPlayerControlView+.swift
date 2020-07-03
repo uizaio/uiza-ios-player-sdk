@@ -32,6 +32,7 @@ public enum UZButtonTag: Int {
     case previous   = 121
     case logo       = 122
 	case live		= 123
+    case timeshift = 124
 }
 
 public protocol UZPlayerTheme: class {

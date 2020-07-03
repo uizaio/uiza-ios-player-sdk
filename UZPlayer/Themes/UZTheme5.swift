@@ -137,7 +137,7 @@ open class UZTheme5: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]
+            $0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.timeshiftToggle, controlView.volumeButton]
 			$0.spacing = 10
 		}
 		frameLayout + HStackLayout {
@@ -150,9 +150,15 @@ open class UZTheme5: UZPlayerTheme {
 			$0.flexible()
 		}
 		frameLayout + HStackLayout {
-			$0 + controlView.playpauseButton
-			($0 + controlView.timeSlider).flexible()
-			$0 + [controlView.currentTimeLabel, controlView.remainTimeLabel, controlView.settingsButton, controlView.fullscreenButton]
+            $0 + controlView.playpauseButton
+            $0 + HStackLayout {
+                ($0 + controlView.timeSlider).flexible()
+                $0 + [controlView.currentTimeLabel, controlView.remainTimeLabel]
+                $0.ignoreHiddenView = false
+                $0.spacing = 10
+                 $0.flexible()
+            }
+			$0 + [controlView.settingsButton, controlView.fullscreenButton]
 			$0.spacing = 10
 		}
 		frameLayout.padding(top: 10, left: 10, bottom: 0, right: 10)

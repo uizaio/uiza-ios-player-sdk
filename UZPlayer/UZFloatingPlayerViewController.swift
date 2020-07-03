@@ -63,17 +63,14 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 				return
 			}
 			guard player?.currentVideo != videoItem else { return }
-			
 			if let floatingHandler = floatingHandler {
 				if floatingHandler.isFloatingMode {
 					floatingHandler.backToNormalState()
-					
 					DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 						self.view.setNeedsLayout()
 					}
 				}
 			}
-			
 			player?.loadVideo(videoItem)
 		}
 	}
@@ -137,38 +134,8 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 		if playerViewController == nil {
 			playerViewController = UZPlayerViewController()
 		}
-		
 		playerViewController.onOrientationUpdateRequestBlock = { fullscreen in
-//			guard let `self` = self else { return }
-//
-//			guard let lastRootViewController = self.playerWindow?.rootViewController as? UZPlayerContainerViewController else { return }
-//
-//			if fullscreen {
-//				DLog("FULL")
-//				let currentOrientation = UIApplication.shared.statusBarOrientation
-//				let forceOrientation: UIInterfaceOrientation = currentOrientation == .landscapeRight ? .landscapeLeft : .landscapeRight
-//				lastRootViewController.forceOrientation = forceOrientation
-//			}
-//			else {
-//				DLog("EXIT")
-//				lastRootViewController.forceOrientation = nil
-//				self.forceDeviceRotate(to: .portrait, animated: false)
-//				self.playerWindow?.rootViewController = nil
-//				self.playerWindow?.rootViewController = lastRootViewController
-//				self.playerWindow?.makeKeyAndVisible()
-//			}
-
-//			self.forceDeviceRotate(to: forceOrientation, animated: false)
-
-//			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//				self.playerWindow?.rootViewController = nil
-//				self.playerWindow?.rootViewController = lastRootViewController
-//				self.playerWindow?.makeKeyAndVisible()
-//
-//				DLog("\(lastRootViewController.supportedInterfaceOrientations)")
-//			}
 		}
-		
 		if playerWindow == nil {
 			modalPresentationStyle = .overCurrentContext
 			
@@ -193,7 +160,6 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 		
 		self.videoItem = videoItem
 		player?.playlist = playlist
-		
 		return playerViewController
 	}
 	

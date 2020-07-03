@@ -413,6 +413,23 @@ extension UZPlayer: UZPlayerControlViewDelegate {
         buttonSelectionBlock?(button)
     }
     
+    open func controlView(controlView: UZPlayerControlView, sender: UISwitch) {
+        if let type = UZButtonTag(rawValue: sender.tag) {
+               switch type {
+               case .timeshift:
+                    let result = switchTimeshiftMode(sender.isOn)
+                    if(result){
+                        setTimeshiftOn(sender.isOn)
+                    }
+                   break
+               default:
+                   #if DEBUG
+                   print("[UZPlayer] Unhandled Action")
+                   #endif
+               }
+           }
+    }
+    
     open func controlView(controlView: UZPlayerControlView, slider: UISlider, onSliderEvent event: UIControl.Event) {
         #if canImport(GoogleCast)
         let castingManager = UZCastingManager.shared

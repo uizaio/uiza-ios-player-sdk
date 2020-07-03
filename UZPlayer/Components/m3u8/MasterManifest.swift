@@ -37,8 +37,8 @@ open class MasterManifest {
                     }
                 } else if line.hasPrefix("#EXT-X-UZ-TIMESHIFT"){
                      do {
-                        let timeShift = try line.replace("#EXT-X-UZ-TIMESHIFT:", replacement: "")
-                         masterPlaylist.timeShift = timeShift
+                        let timeshift = try line.replace("#EXT-X-UZ-TIMESHIFT:", replacement: "")
+                         masterPlaylist.timeshift = timeshift
                      } catch {
                           print("Failed to parse TIMESHIFT on master playlist. Line = \(line)")
                      }
