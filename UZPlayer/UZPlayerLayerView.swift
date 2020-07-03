@@ -186,6 +186,7 @@ open class UZPlayerLayerView: UIView {
 		if #available(iOS 10.0, *) {
 			player?.playImmediately(atRate: 1.0)
 		} else {
+            player?.rate = 1.0
 			player?.play()
 		}
 		guard let playerItem = playerItem else { return }
@@ -203,6 +204,10 @@ open class UZPlayerLayerView: UIView {
 			retryPlaying(after: 2.0)
 		}
 	}
+    
+    open func changeRate(_ rate: Float){
+        player?.rate = rate
+    }
 	
 	override open func layoutSubviews() {
 		CATransaction.begin()

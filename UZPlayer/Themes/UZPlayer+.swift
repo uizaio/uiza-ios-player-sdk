@@ -308,6 +308,43 @@ extension UZPlayer {
 		
 		NKModalViewManager.sharedInstance().presentModalViewController(viewController)
     }
+    
+    open func showSettings() {
+        if let window = UIApplication.shared.keyWindow,
+            let viewController = window.rootViewController {
+            let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
+            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: [ SettingItem(title: "Timeshift", tag: .timeshift, toggle: true) ])
+            settingViewController.delegate = self
+            let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
+            navigationController.navigationBar.isTranslucent = false
+            activeViewController.present(navigationController, animated: true)
+        }
+    }
+}
+
+// MARK: - UZSettingViewDelegate
+
+extension UZPlayer: UZSettingViewDelegate {
+    public func settingRow(sender: UISwitch) {
+        if let type = UZSettingTag(rawValue: sender.tag) {
+              switch type {
+              case .timeshift:
+                   let result = switchTimeshiftMode(sender.isOn)
+                   if(result){
+                       setTimeshiftOn(sender.isOn)
+                   }
+                  break
+              default:
+                  #if DEBUG
+                  print("[UZPlayer] Unhandled Action")
+                  #endif
+              }
+          }
+    }
+    
+    public func settingRow(didSelectButton button: UIButton) {
+        // nothing
+    }
 }
 
 // MARK: - UZPlayerControlViewDelegate
@@ -324,6 +361,7 @@ extension UZPlayer: UZPlayerControlViewDelegate {
             switch action {
             case .back:
                     backBlock?(true)
+                break
             case .play:
                 if button.isSelected {
                     pause()
@@ -337,58 +375,58 @@ extension UZPlayer: UZPlayerControlViewDelegate {
                         play()
                     }
                 }
-                
+                break
             case .pause:
                 pause()
                 isPauseByUser = true
-                
+                break
             case .replay:
                 replay()
-                
+                break
             case .forward:
                 seek(offset: 5)
-                
+                break
             case .backward:
                 seek(offset: -5)
-                
+                break
             case .next:
                 nextVideo()
-                
+                break
             case .previous:
                 previousVideo()
-                
+                break
             case .fullscreen:
                 fullscreenBlock?(nil)
-                
+                break
             case .volume:
                 if let avPlayer = avPlayer {
                     avPlayer.isMuted = !avPlayer.isMuted
                     button.isSelected = avPlayer.isMuted
                 }
-                
+                break
             case .share:
                 showShare(from: button)
                 button.isEnabled = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     button.isEnabled = true
                 }
-                
+                break
             case .pip:
                 togglePiP()
-                
+                break
             case .settings:
-                showQualitySelector()
-                
+                showSettings()
+                break
             case .caption:
                 showMediaOptionSelector()
-                
+                break
             case .casting:
                 if button.isSelected {
                     showCastDisconnectConfirmation(at: button)
                 } else {
                     showCastingDeviceList()
                 }
-                
+                break
             case .logo:
                 if let url = controlView.playerConfig?.logoRedirectUrl {
                     if UIApplication.shared.canOpenURL(url) {
@@ -399,10 +437,10 @@ extension UZPlayer: UZPlayerControlViewDelegate {
                         }
                     }
                 }
-				
+				break
 			case .live:
 				seekToLive()
-                
+                break
             default:
                 #if DEBUG
                 print("[UZPlayer] Unhandled Action")
@@ -411,23 +449,6 @@ extension UZPlayer: UZPlayerControlViewDelegate {
         }
         
         buttonSelectionBlock?(button)
-    }
-    
-    open func controlView(controlView: UZPlayerControlView, sender: UISwitch) {
-        if let type = UZButtonTag(rawValue: sender.tag) {
-               switch type {
-               case .timeshift:
-                    let result = switchTimeshiftMode(sender.isOn)
-                    if(result){
-                        setTimeshiftOn(sender.isOn)
-                    }
-                   break
-               default:
-                   #if DEBUG
-                   print("[UZPlayer] Unhandled Action")
-                   #endif
-               }
-           }
     }
     
     open func controlView(controlView: UZPlayerControlView, slider: UISlider, onSliderEvent event: UIControl.Event) {

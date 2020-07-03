@@ -135,7 +135,7 @@ open class UZTheme7: UZPlayerTheme {
 		
 		frameLayout + HStackLayout {
 			($0 + controlView.titleLabel).flexible()
-            $0 + [ controlView.timeshiftToggle , controlView.backButton]
+            $0 + [controlView.backButton]
 			//			($0 + 0).flexible()
 			//			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]
 			$0.distribution = .right

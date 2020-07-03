@@ -48,10 +48,12 @@ public protocol UZPlayerDelegate: class {
 public protocol UZPlayerControlViewDelegate: class {
 	func controlView(controlView: UZPlayerControlView, didChooseDefinition index: Int)
 	func controlView(controlView: UZPlayerControlView, didSelectButton button: UIButton)
-    func controlView(controlView: UZPlayerControlView, sender: UISwitch)
-    
 	func controlView(controlView: UZPlayerControlView, slider: UISlider, onSliderEvent event: UIControl.Event)
-   
+}
+
+public protocol UZSettingViewDelegate: class {
+    func settingRow(sender: UISwitch)
+    func settingRow(didSelectButton button: UIButton)
 }
 
 // to make them optional
@@ -314,7 +316,6 @@ open class UZPlayer: UIView {
 		controlView.showControlView()
 		controlView.showLoader()
 		controlView.liveStartDate = nil
-        controlView.timeshiftToggle.isOn = video.isTimeshiftOn
         UZVisualizeSavedInformation.shared.currentVideo = video
 		
 		guard let linkPlay = video.linkPlay else { return }

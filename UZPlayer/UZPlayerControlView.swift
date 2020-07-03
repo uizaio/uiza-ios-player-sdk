@@ -128,7 +128,6 @@ open class UZPlayerControlView: UIView {
 	public let airplayButton = UZAirPlayButton()
 	public let coverImageView = UIImageView()
 	public let liveBadgeView = UZLiveBadgeView()
-    public let timeshiftToggle = UISwitch()
 	public var loadingIndicatorView: UIActivityIndicatorView?
 	public var endscreenView = UZEndscreenView()
 	public var timeSlider: UZSlider! {
@@ -159,7 +158,7 @@ open class UZPlayerControlView: UIView {
 	}()
     
 	lazy var allControlViews: [UIView] = {
-		return allButtons + allLabels + [airplayButton, timeSlider, liveBadgeView] + [timeshiftToggle]
+		return allButtons + allLabels + [airplayButton, timeSlider, liveBadgeView]
 	}()
 	
 	// MARK: -
@@ -228,15 +227,11 @@ open class UZPlayerControlView: UIView {
 		castingButton.tag = UZButtonTag.casting.rawValue
 		logoButton.tag = UZButtonTag.logo.rawValue
 		liveBadgeView.liveBadge.tag = UZButtonTag.live.rawValue
-        timeshiftToggle.tag = UZButtonTag.timeshift.rawValue
         
 		allButtons.forEach { (button) in
 			button.showsTouchWhenHighlighted = true
 			button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
 		}
-        
-        timeshiftToggle.addTarget(self, action: #selector(onToggleAction(_:)), for: .valueChanged)
-
 		
 		liveBadgeView.liveBadge.showsTouchWhenHighlighted = true
 		liveBadgeView.liveBadge.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
@@ -406,9 +401,7 @@ open class UZPlayerControlView: UIView {
 		ccButton.isHidden = isLiveVideo
         if resource.timeshiftSupport {
             settingsButton.isHidden = false
-            timeshiftToggle.isHidden = false
         } else {
-            timeshiftToggle.isHidden = true
             settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2
         }
 		autoFadeOutControlView(after: autoHideControlsInterval)
@@ -496,11 +489,6 @@ open class UZPlayerControlView: UIView {
 		fullscreenButton.isSelected = isForFullScreen
 	}
     
-    @objc open func onToggleAction(_ sender: UISwitch) {
-        delegate?.controlView(controlView: self, sender: sender)
-        setNeedsLayout()
-    }
-	
 	// MARK: - Action
 	
 	@objc open func onButtonPressed(_ button: UIButton) {
