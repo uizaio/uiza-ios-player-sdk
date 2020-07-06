@@ -186,11 +186,11 @@ open class UZPlayerLayerView: UIView {
 		if #available(iOS 10.0, *) {
 			player?.playImmediately(atRate: 1.0)
 		} else {
+            player?.rate = 1.0
 			player?.play()
 		}
-
 		guard let playerItem = playerItem else { return }
-		
+        
 		if playerItem.isPlaybackLikelyToKeepUp {
 			playerLayer?.removeFromSuperlayer()
 			player?.removeObserver(self, forKeyPath: "rate")
@@ -204,6 +204,10 @@ open class UZPlayerLayerView: UIView {
 			retryPlaying(after: 2.0)
 		}
 	}
+    
+    open func changeRate(_ rate: Float){
+        player?.rate = rate
+    }
 	
 	override open func layoutSubviews() {
 		CATransaction.begin()
@@ -253,10 +257,11 @@ open class UZPlayerLayerView: UIView {
 	
 	fileprivate func onPlayerItemChange() {
 		guard lastPlayerItem != playerItem else { return }
-		
+        
 		let notificationCenter = NotificationCenter.default
-		
+    
 		if let item = lastPlayerItem {
+      
 			notificationCenter.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: item)
 			notificationCenter.removeObserver(self, name: .AVPlayerItemFailedToPlayToEndTime, object: item)
 			notificationCenter.removeObserver(self, name: .AVPlayerItemPlaybackStalled, object: item)
@@ -266,7 +271,7 @@ open class UZPlayerLayerView: UIView {
 			item.removeObserver(self, forKeyPath: "playbackBufferEmpty")
 			item.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
 		}
-		
+        
 		lastPlayerItem = playerItem
 		if let item = playerItem {
 			notificationCenter.addObserver(self, selector: #selector(moviePlayerDidEnd), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -439,7 +444,7 @@ open class UZPlayerLayerView: UIView {
 		guard item == playerItem else { return }
 		
 		switch keyPath {
-		case "status":
+        case "status":
 			updateVideoQuality()
 			if player?.status == .readyToPlay {
 				if let video = currentVideo, video.isLive {

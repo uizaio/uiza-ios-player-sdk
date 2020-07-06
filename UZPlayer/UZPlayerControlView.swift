@@ -156,7 +156,7 @@ open class UZPlayerControlView: UIView {
 	open lazy var allLabels: [UILabel] = {
 		return [titleLabel, currentTimeLabel, totalTimeLabel, remainTimeLabel]
 	}()
-	
+    
 	lazy var allControlViews: [UIView] = {
 		return allButtons + allLabels + [airplayButton, timeSlider, liveBadgeView]
 	}()
@@ -227,7 +227,7 @@ open class UZPlayerControlView: UIView {
 		castingButton.tag = UZButtonTag.casting.rawValue
 		logoButton.tag = UZButtonTag.logo.rawValue
 		liveBadgeView.liveBadge.tag = UZButtonTag.live.rawValue
-		
+        
 		allButtons.forEach { (button) in
 			button.showsTouchWhenHighlighted = true
 			button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
@@ -238,7 +238,6 @@ open class UZPlayerControlView: UIView {
 		
 		endscreenView.isHidden = true
 		liveBadgeView.isHidden = true
-		settingsButton.isHidden = true
 		logoButton.isHidden = true
 		
 		addSubview(containerView)
@@ -323,8 +322,7 @@ open class UZPlayerControlView: UIView {
 			if playerLastState == .readyToPlay {
 				seekedTime = -1
 				timeSlider.value = totalTime>0 ? Float(currentTime) / Float(totalTime) : 0
-				currentTimeLabel.text = currentTime.toString
-				
+                currentTimeLabel.text = currentTime.toString
 				remainingTime = max(totalTime - currentTime, 0)
 				remainTimeLabel.text = remainingTime.toString
 			} else {
@@ -336,8 +334,7 @@ open class UZPlayerControlView: UIView {
 			}
 		} else {
 			timeSlider.value = totalTime>0 ? Float(currentTime) / Float(totalTime) : 0
-			currentTimeLabel.text = currentTime.toString
-			
+			currentTimeLabel.text = (resource?.isLive ?? false) ? currentTime.toLiveString : currentTime.toString
 			remainingTime = max(totalTime - currentTime, 0)
 			remainTimeLabel.text = remainingTime.toString
 		}
@@ -402,9 +399,15 @@ open class UZPlayerControlView: UIView {
 		
 		helpButton.isHidden = isLiveVideo
 		ccButton.isHidden = isLiveVideo
-		
-		settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2
+        if resource.timeshiftSupport {
+            settingsButton.isHidden = false
+        } else {
+            settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2
+        }
 		autoFadeOutControlView(after: autoHideControlsInterval)
+        if resource.timeshiftSupport {
+            setUIWithTimeshift(resource.timeShiftOn)
+        }
 		setNeedsLayout()
 	}
 	
@@ -419,6 +422,13 @@ open class UZPlayerControlView: UIView {
 		
 		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + interval, execute: delayItem!)
 	}
+    
+    open func setUIWithTimeshift(_ timeshiftOn: Bool) {
+        timeSlider.isHidden = !timeshiftOn
+        currentTimeLabel.isHidden = !timeshiftOn
+        totalTimeLabel.isHidden = !timeshiftOn
+        remainTimeLabel.isHidden = !timeshiftOn
+    }
 	
 	open func cancelAutoFadeOutAnimation() {
 		delayItem?.cancel()
@@ -478,7 +488,7 @@ open class UZPlayerControlView: UIView {
 	open func updateUI(_ isForFullScreen: Bool) {
 		fullscreenButton.isSelected = isForFullScreen
 	}
-	
+    
 	// MARK: - Action
 	
 	@objc open func onButtonPressed(_ button: UIButton) {

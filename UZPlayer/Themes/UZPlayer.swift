@@ -30,7 +30,7 @@ import GoogleCast
 let PLAYER_VERSION = "1.0"
 
 func DLog(_ message: String, _ file: String = #file, _ line: Int = #line) {
-	#if DEBUG
+	#if DEBUG && false
 	print("\((file as NSString).lastPathComponent) [Line \(line)]: \((message))")
 	#endif
 }
@@ -49,6 +49,11 @@ public protocol UZPlayerControlViewDelegate: class {
 	func controlView(controlView: UZPlayerControlView, didChooseDefinition index: Int)
 	func controlView(controlView: UZPlayerControlView, didSelectButton button: UIButton)
 	func controlView(controlView: UZPlayerControlView, slider: UISlider, onSliderEvent event: UIControl.Event)
+}
+
+public protocol UZSettingViewDelegate: class {
+    func settingRow(sender: UISwitch)
+    func settingRow(didSelectButton button: UIButton)
 }
 
 // to make them optional
@@ -296,6 +301,7 @@ open class UZPlayer: UIView {
 	- parameter video: UZVideoItem
 	*/
 	open func loadVideo(_ video: UZVideoItem) {
+        print("loadStart")
 		UZLogger.shared.log(event: "loadstart")
 		if currentVideo != nil {
 			stop()
@@ -310,23 +316,44 @@ open class UZPlayer: UIView {
 		controlView.showControlView()
 		controlView.showLoader()
 		controlView.liveStartDate = nil
-		
         UZVisualizeSavedInformation.shared.currentVideo = video
 		
 		guard let linkPlay = video.linkPlay else { return }
 		if let host = linkPlay.url.host {
 			UZVisualizeSavedInformation.shared.host = host
 		}
-		
-		let resource = UZPlayerResource(name: video.name ?? "", definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive)
-		setResource(resource: resource)
-		
+        let resource = UZPlayerResource(name: video.name ?? "", definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive, timeshiftSupport: video.timeshiftSupport)
+        setResource(resource: resource)
 		if video.isLive {
 			controlView.liveStartDate = nil
 			loadLiveViews()
 			sendWatchingLiveEvent()
 		}
 	}
+    
+    open func switchTimeshiftMode(_ timeshiftOn: Bool) -> Bool {
+        guard let video = currentVideo else {
+            return false
+        }
+        if(video.extIsTimeshift) {
+            guard let extLinkPlay = timeshiftOn ? video.extLinkPlay : video.linkPlay else { return false }
+            let resource = UZPlayerResource(name: video.name ?? "", definitions: [extLinkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive, timeshiftSupport: video.timeshiftSupport)
+            setResource(resource: resource)
+            setTimeshiftOn(timeshiftOn)
+            return true
+        } else {
+            guard let linkPlay = timeshiftOn ? video.linkPlay : video.extLinkPlay else { return false}
+            let resource = UZPlayerResource(name: video.name ?? "", definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive, timeshiftSupport: video.timeshiftSupport)
+            setResource(resource: resource)
+            setTimeshiftOn(timeshiftOn)
+            return true
+        }
+    }
+    
+    open func setTimeshiftOn(_ timeshiftOn: Bool) {
+        currentVideo?.isTimeshiftOn = timeshiftOn
+        controlView.setUIWithTimeshift(timeshiftOn)
+    }
 	
 	open func playIfApplicable() {
 		if !isPauseByUser && isURLSet && !isPlayToTheEnd {

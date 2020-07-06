@@ -133,7 +133,7 @@ open class UZTheme4: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]
+			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.volumeButton]
 			$0.spacing = 10
 			$0.padding(top: 0, left: 10, bottom: 0, right: 10)
 		}
@@ -146,9 +146,12 @@ open class UZTheme4: UZPlayerTheme {
 			$0.distribution = .center
 			$0.flexible()
 		}
-		
 		frameLayout + HStackLayout {
-			$0 + [controlView.currentTimeLabel, controlView.remainTimeLabel]
+            $0 + HStackLayout {
+                $0 + [controlView.currentTimeLabel, controlView.remainTimeLabel]
+                $0.ignoreHiddenView = false
+                $0.spacing = 10
+            }
 			$0 + HStackLayout {
 				($0 + [controlView.backwardButton, controlView.previousButton, controlView.playpauseButton, controlView.nextButton, controlView.forwardButton]).forEach { (layout) in
 					layout.alignment = (.center, .center)
