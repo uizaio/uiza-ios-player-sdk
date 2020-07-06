@@ -36,8 +36,10 @@ public class SettingViewController: UIViewController {
 //        let contentView = UIView.makeView(withTitle: text)
 //        view.backgroundColor = tableView?.backgroundColor
         view.addSubview(tableView)
+        tableView.separatorColor = UIColor.clear
         tableView.estimatedRowHeight = 46.0
-        let contentHeight: CGFloat = 4.0 + 46.0 * CGFloat(self.settingItems?.count ?? 0 + 1)
+        let contentHeight: CGFloat = 46.0 + 46.0 * CGFloat(self.settingItems?.count ?? 0 + 1)
+        tableView.isScrollEnabled = (tableView.contentSize.height >= contentHeight)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -102,7 +104,9 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        self.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
+           self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc open func onToggleAction(_ sender: UISwitch) {

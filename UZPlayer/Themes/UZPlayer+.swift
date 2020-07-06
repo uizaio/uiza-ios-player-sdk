@@ -313,7 +313,7 @@ extension UZPlayer {
         if let window = UIApplication.shared.keyWindow,
             let viewController = window.rootViewController {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
-            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: [ SettingItem(title: "Timeshift", tag: .timeshift, toggle: true) ])
+            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: [ SettingItem(title: "Stats", tag: UZSettingTag.stats), SettingItem(title: "Timeshift", tag: .timeshift, toggle: true, toggleOn: isTimeshiftOn()) ])
             settingViewController.delegate = self
             let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
             navigationController.navigationBar.isTranslucent = false

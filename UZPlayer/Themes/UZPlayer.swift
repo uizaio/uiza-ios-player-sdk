@@ -354,6 +354,10 @@ open class UZPlayer: UIView {
         currentVideo?.isTimeshiftOn = timeshiftOn
         controlView.setUIWithTimeshift(timeshiftOn)
     }
+    
+    open func isTimeshiftOn() -> Bool {
+        return currentVideo?.isTimeshiftOn ?? false
+    }
 	
 	open func playIfApplicable() {
 		if !isPauseByUser && isURLSet && !isPlayToTheEnd {
