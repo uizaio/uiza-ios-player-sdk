@@ -399,7 +399,7 @@ open class UZPlayerControlView: UIView {
 		
 		helpButton.isHidden = isLiveVideo
 		ccButton.isHidden = isLiveVideo
-        if resource.timeshiftSupport {
+        if resource.timeshiftSupport || !resource.isLive {
             settingsButton.isHidden = false
         } else {
             settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2

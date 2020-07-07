@@ -35,13 +35,6 @@ public enum UZButtonTag: Int {
 	case live		= 123
 }
 
-public enum UZSettingTag: Int {
-    case none = -1
-    case timeshift = 101
-    case stats = 103
-    case quality = 105
-    case audio = 107
-}
 
 public protocol UZPlayerTheme: class {
 	var id: String { get set }

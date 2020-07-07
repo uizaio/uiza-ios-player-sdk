@@ -8,17 +8,35 @@
 
 import Foundation
 
+public enum UZSettingTag: Int {
+    case none = -1
+    case timeshift = 101
+    case speedRate = 103
+    case stats = 105
+    case quality = 107
+    case audio = 109
+}
+
+public enum UZSettingType: Int {
+    case ARRAY_TYPE = 0
+    case BOOL_TYPE = 1
+    case NORMAL_TYPE = 2
+}
+
 class SettingItem: NSObject {
-    var title : String?
-    var tag: UZSettingTag = UZSettingTag.none
-    var toggle: Bool = false
-    open var toggleOn: Bool = false
+    fileprivate(set) var title : String = ""
+    fileprivate(set) var tag: UZSettingTag = UZSettingTag.none
+    fileprivate(set) var type: UZSettingType = .NORMAL_TYPE
+    open var initValue: Any?
     
-    init(title: String?, tag: UZSettingTag, toggle: Bool = false, toggleOn : Bool = false) {
+    init(title: String = "", tag: UZSettingTag, type: UZSettingType = .NORMAL_TYPE, initValue : Any? = nil) {
         super.init()
         self.title = title
         self.tag = tag
-        self.toggle = toggle
-        self.toggleOn = toggleOn
+        self.type = type
+        self.initValue = initValue
     }
+    
 }
+
+

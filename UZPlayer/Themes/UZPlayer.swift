@@ -30,7 +30,7 @@ import GoogleCast
 let PLAYER_VERSION = "1.0"
 
 func DLog(_ message: String, _ file: String = #file, _ line: Int = #line) {
-	#if DEBUG && false
+	#if DEBUG
 	print("\((file as NSString).lastPathComponent) [Line \(line)]: \((message))")
 	#endif
 }
@@ -301,7 +301,6 @@ open class UZPlayer: UIView {
 	- parameter video: UZVideoItem
 	*/
 	open func loadVideo(_ video: UZVideoItem) {
-        print("loadStart")
 		UZLogger.shared.log(event: "loadstart")
 		if currentVideo != nil {
 			stop()
@@ -357,6 +356,14 @@ open class UZPlayer: UIView {
     
     open func isTimeshiftOn() -> Bool {
         return currentVideo?.isTimeshiftOn ?? false
+    }
+    
+    open func isTimeshiftSupport() -> Bool {
+        return currentVideo?.timeshiftSupport ?? false
+    }
+    
+    open func isLive() -> Bool {
+        return currentVideo?.isLive ?? false
     }
 	
 	open func playIfApplicable() {

@@ -80,27 +80,42 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "setting_row", for: indexPath)
         if let settingItem = self.settingItems?[indexPath.row] {
-            cell.textLabel?.text = settingItem.title ?? ""
-            if settingItem.toggle {
+            cell.textLabel?.text = settingItem.title
+            switch settingItem.type {
+            case .BOOL_TYPE:
                 let toogle = UISwitch(frame: CGRect.zero)
                 toogle.tag = settingItem.tag.rawValue
-                toogle.isOn = settingItem.toggleOn
+                toogle.isOn = settingItem.initValue as? Bool ?? false
                 toogle.addTarget(self, action: #selector(onToggleAction(_:)), for: .valueChanged)
                 cell.accessoryView = toogle
+                break
+            case .ARRAY_TYPE:
+                let arrowIcon = UIImage(icon: .fontAwesomeSolid(.caretRight), size: CGSize(width: 22, height: 22), textColor: UIColor.gray, backgroundColor: .clear)
+                let accessorView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+                accessorView.image = arrowIcon
+                cell.accessoryView = accessorView
+                break
+            default:
+                break
             }
         }
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected")
         if let settingItem = self.settingItems?[indexPath.row] {
-            if settingItem.toggle {
+            switch settingItem.type {
+            case .BOOL_TYPE:
                 let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
                 let toggle = (currentCell.accessoryView as! UISwitch)
                 toggle.isOn = !toggle.isOn
                 self.delegate?.settingRow(sender: toggle)
                 setNeedsFocusUpdate()
+                break
+            case .ARRAY_TYPE:
+                break
+            default:
+                break
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
