@@ -11,16 +11,18 @@ import UIKit
 public class SettingViewController: UIViewController {
     private let withNavigationButton: Bool
     private var settingItems: [SettingItem]?
+    private var defaultValue: Any? = nil
     private let text: String?
     private var tableView = UITableView()
     open weak var delegate: UZSettingViewDelegate?
 
-    init(withNavigationButton: Bool, text: String? = nil, settingItems: [SettingItem]? = nil) {
+    init(withNavigationButton: Bool, text: String? = nil, settingItems: [SettingItem]? = nil, defaultValue: Any? = nil) {
         self.withNavigationButton = withNavigationButton
         self.text = text
         self.settingItems = settingItems
         super.init(nibName: nil, bundle: nil)
         self.title = text
+        self.defaultValue = defaultValue
     }
 
     required init?(coder: NSCoder) {
@@ -48,7 +50,7 @@ public class SettingViewController: UIViewController {
         ])
 
         preferredContentSize.height = contentHeight
-//
+
 //        if withNavigationButton {
 //            let button = UIButton(type: .system)
 //            button.translatesAutoresizingMaskIntoConstraints = false
@@ -82,14 +84,24 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         if let settingItem = self.settingItems?[indexPath.row] {
             cell.textLabel?.text = settingItem.title
             switch settingItem.type {
-            case .BOOL_TYPE:
+            case .bool:
                 let toogle = UISwitch(frame: CGRect.zero)
                 toogle.tag = settingItem.tag.rawValue
                 toogle.isOn = settingItem.initValue as? Bool ?? false
                 toogle.addTarget(self, action: #selector(onToggleAction(_:)), for: .valueChanged)
                 cell.accessoryView = toogle
                 break
-            case .ARRAY_TYPE:
+            case .number:
+                if settingItem.tag == .speedRate {
+                    let dv = (self.defaultValue as? Float) ?? UZSpeedRate.normal.rawValue
+                    let iv =  (settingItem.initValue as? Float) ?? UZSpeedRate.normal.rawValue
+                    let checkIcon = UIImage(icon:  dv == iv ? .fontAwesomeSolid(.dotCircle) : .fontAwesomeRegular(.circle), size: CGSize(width: 22, height: 22), textColor: dv == iv ? UIColor.red : UIColor.gray, backgroundColor: .clear)
+                    let accessorCheckView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+                    accessorCheckView.image = checkIcon
+                    cell.accessoryView = accessorCheckView
+                }
+                break
+            case .array:
                 let arrowIcon = UIImage(icon: .fontAwesomeSolid(.caretRight), size: CGSize(width: 22, height: 22), textColor: UIColor.gray, backgroundColor: .clear)
                 let accessorView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
                 accessorView.image = arrowIcon
@@ -104,24 +116,41 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let settingItem = self.settingItems?[indexPath.row] {
+             let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
             switch settingItem.type {
-            case .BOOL_TYPE:
-                let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+            case .bool:
                 let toggle = (currentCell.accessoryView as! UISwitch)
                 toggle.isOn = !toggle.isOn
                 self.delegate?.settingRow(sender: toggle)
                 setNeedsFocusUpdate()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
+                     self.dismiss(animated: true, completion: nil)
+                  }
                 break
-            case .ARRAY_TYPE:
+            case .number:
+                if settingItem.tag == .speedRate {
+                    self.delegate?.settingRow(didSelected: UZSpeedRate(rawValue: settingItem.initValue as! Float) ?? UZSpeedRate.normal)
+                }
+                setNeedsFocusUpdate()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
+                     self.dismiss(animated: true, completion: nil)
+                  }
+                break
+            case .array:
+                if settingItem.tag == .speedRate {
+                    let settingRates = UZSpeedRate.allCases.map{ SettingItem(title: $0.description, tag: .speedRate, type: .number, initValue: $0.rawValue) }
+                    let viewController = SettingViewController(withNavigationButton: false, text: currentCell.textLabel?.text ?? "", settingItems: settingRates, defaultValue: settingItem.initValue)
+                    viewController.delegate = self.delegate
+                    viewController.title = currentCell.textLabel?.text ?? ""
+                    navigationController?.pushViewController(viewController, animated: true)
+                }
+             
                 break
             default:
                 break
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
-           self.dismiss(animated: true, completion: nil)
-        }
     }
     
     @objc open func onToggleAction(_ sender: UISwitch) {

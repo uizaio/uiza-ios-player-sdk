@@ -53,6 +53,7 @@ public protocol UZPlayerControlViewDelegate: class {
 
 public protocol UZSettingViewDelegate: class {
     func settingRow(sender: UISwitch)
+    func settingRow(didSelected speedRate: UZSpeedRate)
     func settingRow(didSelectButton button: UIButton)
 }
 
@@ -388,13 +389,10 @@ open class UZPlayer: UIView {
 		
 		playerLayer?.play()
 		isPauseByUser = false
-		
 		if #available(iOS 9.0, *) {
 			if pictureInPictureController == nil {
 				setupPictureInPicture()
 			}
-		} else {
-			// Fallback on earlier versions
 		}
 		
 		if currentPosition == 0 && !isPauseByUser {

@@ -315,11 +315,11 @@ extension UZPlayer {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
             if !isLive() {
-                settingItems.append(SettingItem(title: "Speed", tag: .speedRate, type: .ARRAY_TYPE, initValue: [0, 1, 2]))
+                settingItems.append(SettingItem(title: "Speed", tag: .speedRate, type: .array, initValue: playerLayer?.currentSpeedRate().rawValue ?? UZSpeedRate.normal.rawValue))
             }
             settingItems.append(SettingItem(title: "Stats", tag: UZSettingTag.stats))
             if isTimeshiftSupport() {
-                settingItems.append(SettingItem(title: "Timeshift", tag: .timeshift, type: .BOOL_TYPE, initValue: isTimeshiftOn()))
+                settingItems.append(SettingItem(title: "Timeshift", tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
             }
             let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
             settingViewController.delegate = self
@@ -348,6 +348,11 @@ extension UZPlayer: UZSettingViewDelegate {
                   #endif
               }
           }
+    }
+    
+    public func settingRow(didSelected speedRate: UZSpeedRate) {
+        print("speedRate = \(speedRate.description)")
+        playerLayer?.changeSpeedRate(speedRate)
     }
     
     public func settingRow(didSelectButton button: UIButton) {

@@ -18,18 +18,19 @@ public enum UZSettingTag: Int {
 }
 
 public enum UZSettingType: Int {
-    case ARRAY_TYPE = 0
-    case BOOL_TYPE = 1
-    case NORMAL_TYPE = 2
+    case normal = 0
+    case array = 3
+    case bool = 1
+    case number = 2
 }
 
 class SettingItem: NSObject {
     fileprivate(set) var title : String = ""
-    fileprivate(set) var tag: UZSettingTag = UZSettingTag.none
-    fileprivate(set) var type: UZSettingType = .NORMAL_TYPE
+    fileprivate(set) var tag: UZSettingTag = .none
+    fileprivate(set) var type: UZSettingType = .normal
     open var initValue: Any?
     
-    init(title: String = "", tag: UZSettingTag, type: UZSettingType = .NORMAL_TYPE, initValue : Any? = nil) {
+    init(title: String = "", tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil) {
         super.init()
         self.title = title
         self.tag = tag

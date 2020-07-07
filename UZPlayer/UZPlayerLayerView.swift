@@ -34,6 +34,36 @@ public enum UZPlayerAspectRatio {
 	case sixteen2Nine
 	/// 4:3
 	case four2Three
+    
+    var description : String {
+      switch self {
+          case .default: return "Default"
+          case .sixteen2Nine: return "16:9"
+          case .four2Three: return "4:3"
+        }
+    }
+}
+/// Speed rate
+public enum UZSpeedRate: Float, CaseIterable {
+    case x05 = 0.5
+    case x075 = 0.75
+    case normal = 1.0
+    case x125 = 1.25
+    case x150 = 1.5
+    case x175 = 1.75
+    case x2 = 2.0
+    
+    var description : String {
+      switch self {
+          case .x05: return "0.5x"
+          case .x075: return "0.75x"
+          case .normal: return "Normal"
+          case .x125: return "1.25x"
+          case .x150: return "1.5x"
+          case .x175: return "1.75x"
+          case .x2: return "2x"
+        }
+    }
 }
 
 protocol UZPlayerLayerViewDelegate: class {
@@ -182,11 +212,10 @@ open class UZPlayerLayerView: UIView {
 	
 	@objc func retry() {
 		DLog("Retrying...")
-		
 		if #available(iOS 10.0, *) {
-			player?.playImmediately(atRate: 1.0)
+			player?.playImmediately(atRate: UZSpeedRate.normal.rawValue)
 		} else {
-            player?.rate = 1.0
+            player?.rate = UZSpeedRate.normal.rawValue
 			player?.play()
 		}
 		guard let playerItem = playerItem else { return }
@@ -205,8 +234,13 @@ open class UZPlayerLayerView: UIView {
 		}
 	}
     
-    open func changeRate(_ rate: Float){
-        player?.rate = rate
+    open func changeSpeedRate(_ speedRate: UZSpeedRate){
+        player?.rate = speedRate.rawValue        
+    }
+    
+    open func currentSpeedRate() -> UZSpeedRate {
+        let rate =  player?.rate ?? 1.0
+        return UZSpeedRate(rawValue: rate) ?? UZSpeedRate.normal
     }
 	
 	override open func layoutSubviews() {
@@ -216,19 +250,20 @@ open class UZPlayerLayerView: UIView {
 		super.layoutSubviews()
 		
 		switch aspectRatio {
-		case .default:
-			playerLayer?.videoGravity = .resizeAspect
-			playerLayer?.frame  = bounds
-			
-		case .sixteen2Nine:
-			let height = bounds.width/(16/9)
-			playerLayer?.videoGravity = .resize
-			playerLayer?.frame = CGRect(x: 0, y: (bounds.height - height)/2, width: bounds.width, height: height)
-			
-		case .four2Three:
-			playerLayer?.videoGravity = .resize
-			let width = bounds.height * 4 / 3
-			playerLayer?.frame = CGRect(x: (bounds.width - width)/2, y: 0, width: width, height: bounds.height)
+            case .default:
+                playerLayer?.videoGravity = .resizeAspect
+                playerLayer?.frame  = bounds
+                break
+            case .sixteen2Nine:
+                let height = bounds.width/(16/9)
+                playerLayer?.videoGravity = .resize
+                playerLayer?.frame = CGRect(x: 0, y: (bounds.height - height)/2, width: bounds.width, height: height)
+                break
+            case .four2Three:
+                playerLayer?.videoGravity = .resize
+                let width = bounds.height * 4 / 3
+                playerLayer?.frame = CGRect(x: (bounds.width - width)/2, y: 0, width: width, height: bounds.height)
+                break
 		}
 		
 		CATransaction.commit()
@@ -500,7 +535,6 @@ open class UZPlayerLayerView: UIView {
 			
 		case "rate":
 			updateStatus()
-			
 		default:
 			break
 		}

@@ -242,6 +242,21 @@ open class UZPlayerControlView: UIView {
 		
 		addSubview(containerView)
 	}
+    
+    open func setDefaultThemeIcon() {
+        let bundlePath = Bundle.main.path(forResource: "UZDefaultThemeIcons", ofType: "bundle")
+        let imageBundle = Bundle(path: bundlePath ?? "")
+        
+        backButton.setImage(UIImage(named: "ic_close", in: imageBundle, compatibleWith: nil), for: .normal)
+        /// settings
+        settingsButton.setImage(UIImage(named: "ic_settings", in: imageBundle, compatibleWith: nil), for: .normal)
+        /// fullscreen/ exit fullscreen
+        fullscreenButton.setImage(UIImage(named: "ic_maximize", in: imageBundle, compatibleWith: nil), for: .normal)
+        fullscreenButton.setImage(UIImage(named: "ic_minimize", in: imageBundle, compatibleWith: nil), for: .selected)
+//        let thumbIcon = UIImage(named: "ic_thumb", in: imageBundle, compatibleWith: nil)
+        let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: CGSize(width: 22, height: 22), textColor: UIColor.red, backgroundColor: .clear)
+        timeSlider.setThumbImage(thumbIcon, for: .normal)
+    }
 	
 	// MARK: - Skins
 	
