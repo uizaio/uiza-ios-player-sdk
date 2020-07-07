@@ -34,7 +34,7 @@ public class SettingViewController: UIViewController {
         tableView = UITableView(frame: self.view.bounds, style: UITableView.Style.plain)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "setting_row")
+        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "setting_row")
 //        let contentView = UIView.makeView(withTitle: text)
 //        view.backgroundColor = tableView?.backgroundColor
         view.addSubview(tableView)
@@ -80,9 +80,9 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "setting_row", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "setting_row", for: indexPath) as! SettingTableViewCell
         if let settingItem = self.settingItems?[indexPath.row] {
-            cell.textLabel?.text = settingItem.title
+            cell.titleLabel.text = settingItem.title
             switch settingItem.type {
             case .bool:
                 let toogle = UISwitch(frame: CGRect.zero)
@@ -103,9 +103,13 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 break
             case .array:
                 let arrowIcon = UIImage(icon: .fontAwesomeSolid(.caretRight), size: CGSize(width: 22, height: 22), textColor: UIColor.gray, backgroundColor: .clear)
-                let accessorView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+                let accessorView = UIImageView(frame: CGRect(x: 0, y: 0, width: 22, height: 22))
                 accessorView.image = arrowIcon
                 cell.accessoryView = accessorView
+                if settingItem.tag == .speedRate {
+                    let dv = UZSpeedRate (rawValue: (settingItem.initValue as? Float) ?? UZSpeedRate.normal.rawValue) ?? UZSpeedRate.normal
+                    cell.summaryLabel.text = dv.description
+                }
                 break
             default:
                 break
@@ -116,7 +120,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let settingItem = self.settingItems?[indexPath.row] {
-             let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+            let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
             switch settingItem.type {
             case .bool:
                 let toggle = (currentCell.accessoryView as! UISwitch)
@@ -151,6 +155,38 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let settingItem = self.settingItems?[indexPath.row] {
+            let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+            switch settingItem.type {
+            case .number:
+                let checkIcon = UIImage(icon:   .fontAwesomeSolid(.dotCircle), size: CGSize(width: 22, height: 22), textColor: UIColor.red, backgroundColor: .clear)
+                let accessorCheckView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+                accessorCheckView.image = checkIcon
+                currentCell.accessoryView = accessorCheckView
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let settingItem = self.settingItems?[indexPath.row] {
+            let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+            switch settingItem.type {
+            case .number:
+                let checkIcon = UIImage(icon: .fontAwesomeRegular(.circle), size: CGSize(width: 22, height: 22), textColor: UIColor.gray, backgroundColor: .clear)
+                let accessorCheckView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+                accessorCheckView.image = checkIcon
+                currentCell.accessoryView = accessorCheckView
+                break
+            default:
+                break
+            }
+        }
     }
     
     @objc open func onToggleAction(_ sender: UISwitch) {
