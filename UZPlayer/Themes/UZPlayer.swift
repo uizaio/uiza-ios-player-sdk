@@ -58,6 +58,7 @@ public protocol UZPlayerControlViewDelegate: class {
 public protocol UZSettingViewDelegate: class {
     func settingRow(didChanged sender: UISwitch)
     func settingRow(didSelected tag: UZSettingTag, value: Float)
+    func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption)
 }
 
 // to make them optional
@@ -108,13 +109,26 @@ open class UZPlayer: UIView {
 		return playerLayer?.player
 	}
 	
+    public var subtitleGroup : AVMediaSelectionGroup? {
+        return self.avPlayer?.currentItem?.asset.subtitleGroup
+    }
+    
 	public var subtitleOptions: [AVMediaSelectionOption]? {
         return self.avPlayer?.currentItem?.asset.subtitles
 	}
-	
+    
+    public var audioGroup : AVMediaSelectionGroup? {
+        return self.avPlayer?.currentItem?.asset.audioGroup
+    }
+    
 	public var audioOptions: [AVMediaSelectionOption]? {
         return self.avPlayer?.currentItem?.asset.audioTracks
 	}
+    
+//    @available(iOS 11.0, *)
+    public var videoQualities: [AVAssetTrack]? {
+        return self.avPlayer?.currentItem?.asset.videoTracks
+    }
 	
 	public var playlist: [UZVideoItem]? = nil {
 		didSet {
@@ -123,7 +137,37 @@ open class UZPlayer: UIView {
 			controlView.setNeedsLayout()
 		}
 	}
-	
+    
+    open func currentAudioOption() -> AVMediaSelectionOption? {
+        if let currentItem = self.avPlayer?.currentItem,
+            let audioGroup = currentItem.asset.audioGroup{
+            return currentItem.currentMediaSelection.selectedMediaOption(in: audioGroup)
+        }
+        return nil
+    }
+    
+    open func changeAudioSelect(option: AVMediaSelectionOption) {
+        if let currentItem = self.avPlayer?.currentItem,
+            let audioGroup = currentItem.asset.audioGroup {
+            currentItem.select(option, in: audioGroup)
+        }
+    }
+    
+    open func currentSubtileOption() -> AVMediaSelectionOption? {
+        if let currentItem = self.avPlayer?.currentItem,
+            let subtitleGroup = currentItem.asset.subtitleGroup{
+            return currentItem.currentMediaSelection.selectedMediaOption(in: subtitleGroup)
+        }
+        return nil
+    }
+    
+    open func changeSubtitleSelect(option: AVMediaSelectionOption) {
+        if let currentItem = self.avPlayer?.currentItem,
+            let subtitleGroup = currentItem.asset.subtitleGroup {
+            currentItem.select(option, in: subtitleGroup)
+        }
+    }
+    
 	public var currentVideoIndex: Int {
 		get {
 			if let currentVideo = currentVideo, let playlist = playlist {

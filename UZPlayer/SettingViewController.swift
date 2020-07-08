@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 public class SettingViewController: UIViewController {
     private let withNavigationButton: Bool
@@ -92,14 +93,21 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.accessoryView = toogle
                 break
             case .number:
+                var checked : Bool = false
                 if settingItem.tag == .speedRate {
                     let dv = (self.defaultValue as? Float) ?? UZSpeedRate.normal.rawValue
                     let iv =  (settingItem.initValue as? Float) ?? UZSpeedRate.normal.rawValue
-                    let checkIcon = UIImage(icon:  dv == iv ? .fontAwesomeSolid(.dotCircle) : .fontAwesomeRegular(.circle), size: CGSize(width: 22, height: 22), textColor: dv == iv ? UIColor.red : UIColor.gray, backgroundColor: .clear)
-                    let accessorCheckView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-                    accessorCheckView.image = checkIcon
-                    cell.accessoryView = accessorCheckView
+                    checked = (dv == iv)
+                } else if settingItem.tag == .audio || settingItem.tag == .captions {
+                    if let dv = self.defaultValue as? AVMediaSelectionOption,
+                        let iv = settingItem.initValue as? AVMediaSelectionOption {
+                        checked = (dv == iv)
+                    }
                 }
+                let checkIcon = UIImage(icon:  checked ? .fontAwesomeSolid(.dotCircle) : .fontAwesomeRegular(.circle), size: CGSize(width: 22, height: 22), textColor: checked ? UIColor.red : UIColor.gray, backgroundColor: .clear)
+                            let accessorCheckView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+                            accessorCheckView.image = checkIcon
+                            cell.accessoryView = accessorCheckView
                 break
             case .array:
                 let arrowIcon = UIImage(icon: .fontAwesomeSolid(.caretRight), size: CGSize(width: 22, height: 22), textColor: UIColor.gray, backgroundColor: .clear)
@@ -109,6 +117,10 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 if settingItem.tag == .speedRate {
                     let dv = UZSpeedRate (rawValue: (settingItem.initValue as? Float) ?? UZSpeedRate.normal.rawValue) ?? UZSpeedRate.normal
                     cell.summaryLabel.text = dv.description
+                } else if settingItem.tag == .audio || settingItem.tag == .captions {
+                    if let dv = settingItem.initValue as? AVMediaSelectionOption {
+                        cell.summaryLabel.text = dv.displayName
+                    }
                 }
                 break
             default:
@@ -134,6 +146,8 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
             case .number:
                 if settingItem.tag == .speedRate {
                     self.delegate?.settingRow(didSelected: .speedRate, value: settingItem.initValue as! Float)
+                } else if settingItem.tag == .audio || settingItem.tag == .captions {
+                    self.delegate?.settingRow(didSelected: settingItem.tag, value: settingItem.initValue as! AVMediaSelectionOption)
                 }
                 setNeedsFocusUpdate()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
@@ -147,6 +161,14 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                     viewController.delegate = self.delegate
                     viewController.title = currentCell.textLabel?.text ?? ""
                     navigationController?.pushViewController(viewController, animated: true)
+                } else if settingItem.tag == .audio || settingItem.tag == .captions {
+                    if let audioOptions = settingItem.childItems {
+                        let settingAudios = audioOptions.map{ SettingItem(title: $0.displayName, tag: settingItem.tag, type: .number, initValue: $0) }
+                        let viewController = SettingViewController(withNavigationButton: false, text: settingItem.tag.description, settingItems: settingAudios, defaultValue: settingItem.initValue)
+                                viewController.delegate = self.delegate
+                                viewController.title = settingItem.tag.description
+                                navigationController?.pushViewController(viewController, animated: true)
+                    }
                 }
              
                 break

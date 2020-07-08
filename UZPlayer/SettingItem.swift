@@ -8,17 +8,32 @@
 
 import UIKit
 import FrameLayoutKit
+import AVFoundation
 
-public enum UZSettingTag: Int {
+public enum UZSettingTag: Int, CaseIterable {
     case none = -1
     case timeshift = 101
     case speedRate = 103
     case stats = 105
     case quality = 107
     case audio = 109
+    case captions = 111
+    
+    var description : String {
+      switch self {
+          case .none: return "None"
+          case .timeshift: return "Timeshift"
+          case .speedRate: return "Speed"
+          case .stats: return "Stats"
+          case .quality: return "Quality"
+          case .audio: return "Audio"
+          case .captions: return "Captions"
+        }
+    }
+
 }
 
-public enum UZSettingType: Int {
+public enum UZSettingType: Int, CaseIterable {
     case normal = 0
     case array = 3
     case bool = 1
@@ -31,14 +46,25 @@ class SettingItem: NSObject {
     fileprivate(set) var tag: UZSettingTag = .none
     fileprivate(set) var type: UZSettingType = .normal
     open var initValue: Any?
+    open var childItems: [AVMediaSelectionOption]? = nil
     
-    init(title: String = "", tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil) {
+    init(tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil, childItems: [AVMediaSelectionOption]? = nil) {
+        super.init()
+        self.title = tag.description
+        self.tag = tag
+        self.type = type
+        self.initValue = initValue
+        self.childItems = childItems
+    }
+    
+    init(title: String, tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil) {
         super.init()
         self.title = title
         self.tag = tag
         self.type = type
         self.initValue = initValue
     }
+
     
 }
 

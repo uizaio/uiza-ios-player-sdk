@@ -314,12 +314,30 @@ extension UZPlayer {
             let viewController = window.rootViewController {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
-            if !isLive() {
-                settingItems.append(SettingItem(title: "Speed", tag: .speedRate, type: .array, initValue: playerLayer?.currentSpeedRate().rawValue ?? UZSpeedRate.normal.rawValue))
+            print("videos: \(videoQualities?.count ?? 0)")
+
+            if let videoQualities = videoQualities {
+                for vq in videoQualities {
+                    print("video: \(vq.description)")
+                }
             }
-            settingItems.append(SettingItem(title: "Stats", tag: UZSettingTag.stats))
+            
+            if let audioOptions = audioOptions,
+            audioOptions.count > 0 {
+                settingItems.append(SettingItem(tag: .audio, type: .array, initValue: currentAudioOption(),  childItems: audioOptions))
+            }
+        
+            if let subtitleOptions = subtitleOptions,
+            subtitleOptions.count > 0 {
+                settingItems.append(SettingItem(tag: .captions, type: .array, initValue: currentSubtileOption(), childItems: subtitleOptions))
+            }
+            
+            if !isLive() {
+                settingItems.append(SettingItem(tag: .speedRate, type: .array, initValue: playerLayer?.currentSpeedRate().rawValue ?? UZSpeedRate.normal.rawValue))
+            }
+            settingItems.append(SettingItem(tag: .stats))
             if isTimeshiftSupport() {
-                settingItems.append(SettingItem(title: "Timeshift", tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
+                settingItems.append(SettingItem(tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
             }
             let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
             settingViewController.delegate = self
@@ -363,7 +381,21 @@ extension UZPlayer: UZSettingViewDelegate {
             print("[UZPlayer] Unhandled Action")
             #endif
         }
+    }
     
+    public func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption) {
+        switch tag {
+        case .audio:
+            changeAudioSelect(option: value)
+            break
+        case .captions:
+            changeSubtitleSelect(option: value)
+            break
+        default:
+            #if DEBUG
+            print("[UZPlayer] Unhandled Action")
+            #endif
+        }
     }
 }
 
