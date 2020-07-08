@@ -314,28 +314,24 @@ extension UZPlayer {
             let viewController = window.rootViewController {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
-            print("videos: \(videoQualities?.count ?? 0)")
-
-            if let videoQualities = videoQualities {
-                for vq in videoQualities {
-                    print("video: \(vq.description)")
-                }
-            }
-            
-            if let audioOptions = audioOptions,
-            audioOptions.count > 0 {
-                settingItems.append(SettingItem(tag: .audio, type: .array, initValue: currentAudioOption(),  childItems: audioOptions))
-            }
-        
-            if let subtitleOptions = subtitleOptions,
-            subtitleOptions.count > 0 {
-                settingItems.append(SettingItem(tag: .captions, type: .array, initValue: currentSubtileOption(), childItems: subtitleOptions))
-            }
             
             if !isLive() {
+                // audio
+                if let audioOptions = audioOptions,
+                    audioOptions.count > 0 {
+                      settingItems.append(SettingItem(tag: .audio, type: .array, initValue: currentAudioOption(),  childItems: audioOptions))
+                }
+                // subtitles
+                if let subtitleOptions = subtitleOptions,
+                    subtitleOptions.count > 0 {
+                      settingItems.append(SettingItem(tag: .captions, type: .array, initValue: currentSubtileOption(), childItems: subtitleOptions))
+                }
+                // speed rate
                 settingItems.append(SettingItem(tag: .speedRate, type: .array, initValue: playerLayer?.currentSpeedRate().rawValue ?? UZSpeedRate.normal.rawValue))
             }
+            #if DEBUG
             settingItems.append(SettingItem(tag: .stats))
+            #endif
             if isTimeshiftSupport() {
                 settingItems.append(SettingItem(tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
             }

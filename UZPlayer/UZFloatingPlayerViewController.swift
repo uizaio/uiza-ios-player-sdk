@@ -205,7 +205,9 @@ open class UZFloatingPlayerViewController: UIViewController, NKFloatingViewHandl
 	
 	override open func viewDidLoad() {
 		super.viewDidLoad()
-		
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
 		view.clipsToBounds = true
 		view.backgroundColor = UIColor(red: 0.04, green: 0.06, blue: 0.12, alpha: 1.00)
 		view.addSubview(detailsContainerView)

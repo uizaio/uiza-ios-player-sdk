@@ -14,15 +14,15 @@ class ViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		UZPlayerSDK.initWith(enviroment: .development)
-		UZPlayerSDK.showRestfulInfo = true
+		UZPlayerSDK.initWith(enviroment: .production)
 		
 		askForURL()
 	}
 /// UserDefaults.standard.string(forKey: "last_url") ?? "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 	func askForURL() {
-//		let prefilled = "https://1955897154.rsc.cdn77.org/live/8dee8601-931e-409a-b2e8-aa84761add1e/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI4ZGVlODYwMS05MzFlLTQwOWEtYjJlOC1hYTg0NzYxYWRkMWUiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6IjhhZTY3ZDlmM2EyNzQyODVhMTUwNmUzZjc3Njc5MmVhIn0="
-		let prefilled = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+       let prefilled = "https://uz-test2live.uizacdn.net/865be795-836e-4f08-bbb6-34808374dced.smil/playlist.m3u8?cm=eyJlbnRpdHlfaWQiOiI4NjViZTc5NS04MzZlLTRmMDgtYmJiNi0zNDgwODM3NGRjZWQiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6Ijk2NTU4YWI0YTZiMTRlOTA5ZWVkOThjMWNlNTBkNWVmIn0="
+//		let prefilled = "https://vn-t11em6innm.uizacdn.net/live/4615fd4c-5beb-462d-9f72-a1bffd20e4c7/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI0NjE1ZmQ0Yy01YmViLTQ2MmQtOWY3Mi1hMWJmZmQyMGU0YzciLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6ImU2YzY1ZThiOTc4NzQ4MDlhYzY2YWEwZWEwODEwMzRjIn0"
+//		let prefilled = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
         
 		let alertController = UIAlertController(title: "", message: "Please enter videoURL", preferredStyle: .alert)
 		alertController.addTextField { (textField) in
@@ -52,9 +52,6 @@ class ViewController: UIViewController {
 		let floatingPlayerViewController = UZFloatingPlayerViewController()
         let videoItem = UZVideoItem(name: nil, thumbnailURL: nil, linkPlay: UZVideoLinkPlay(definition: "", url: url), subtitleURLs: nil)
 		floatingPlayerViewController.present(with: videoItem, playlist: nil).player.controlView.theme = UZTheme1()
-        print("extIsTimeshift = \(videoItem.extIsTimeshift)")
-        print("linkPlay = \(videoItem.linkPlay?.url.absoluteString ?? "")")
-          print("extLinkPlay = \(videoItem.extLinkPlay?.url.absoluteString ?? "")")
 		floatingPlayerViewController.onDismiss = { [weak self] in
 			self?.askForURL()
 		}

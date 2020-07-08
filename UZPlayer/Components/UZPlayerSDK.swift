@@ -21,7 +21,6 @@ public enum UZEnviroment: String {
 public class UZPlayerSDK {
 	internal static var enviroment: UZEnviroment? = nil // set this before calling the API
 	
-	public static var showRestfulInfo: Bool = false
 	public static var language: String = "vi"
 	
 	/**

@@ -29,6 +29,7 @@ import GoogleCast
 
 let PLAYER_VERSION = "1.0"
 
+
 let DEFAULT_SEEK_FORWARD: TimeInterval = TimeInterval(10)
 let DEFAULT_SEEK_BACKWARD: TimeInterval = TimeInterval(-10)
 
