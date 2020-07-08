@@ -253,8 +253,10 @@ open class UZPlayerControlView: UIView {
         /// fullscreen/ exit fullscreen
         fullscreenButton.setImage(UIImage(named: "ic_maximize", in: imageBundle, compatibleWith: nil), for: .normal)
         fullscreenButton.setImage(UIImage(named: "ic_minimize", in: imageBundle, compatibleWith: nil), for: .selected)
+        forwardButton.setImage(UIImage(named: "ic_forward", in: imageBundle, compatibleWith: nil), for: .normal)
+        backwardButton.setImage(UIImage(named: "ic_backward", in: imageBundle, compatibleWith: nil), for: .normal)
 //        let thumbIcon = UIImage(named: "ic_thumb", in: imageBundle, compatibleWith: nil)
-        let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: CGSize(width: 22, height: 22), textColor: UIColor.red, backgroundColor: .clear)
+        let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: CGSize(width: 18, height: 18), textColor: UIColor.red, backgroundColor: .clear)
         timeSlider.setThumbImage(thumbIcon, for: .normal)
     }
 	

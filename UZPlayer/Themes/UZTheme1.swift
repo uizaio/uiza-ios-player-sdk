@@ -48,7 +48,7 @@ open class UZTheme1: UZPlayerTheme {
 		guard let controlView = controlView else { return }
         
         controlView.setDefaultThemeIcon()
-		
+		// modify icon
         let playlistIcon = UIImage(icon: .fontAwesomeSolid(.list), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .fontAwesomeSolid(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
@@ -60,8 +60,6 @@ open class UZTheme1: UZPlayerTheme {
 		let pauseBigIcon = UIImage(icon: .fontAwesomeSolid(.pauseCircle), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playArrow), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseIcon = UIImage(icon: .googleMaterialDesign(.pause), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let forwardIcon = UIImage(icon: .fontAwesomeSolid(.forward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let backwardIcon = UIImage(icon: .fontAwesomeSolid(.backward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let nextIcon = UIImage(icon: .fontAwesomeSolid(.stepForward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
 		let previousIcon = UIImage(icon: .fontAwesomeSolid(.stepBackward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
 		
@@ -75,11 +73,8 @@ open class UZTheme1: UZPlayerTheme {
 		controlView.playpauseCenterButton.setImage(pauseBigIcon, for: .selected)
 		controlView.playpauseButton.setImage(playIcon, for: .normal)
 		controlView.playpauseButton.setImage(pauseIcon, for: .selected)
-		controlView.forwardButton.setImage(forwardIcon, for: .normal)
-		controlView.backwardButton.setImage(backwardIcon, for: .normal)
 		controlView.nextButton.setImage(nextIcon, for: .normal)
 		controlView.previousButton.setImage(previousIcon, for: .normal)
-		
 		
 		controlView.nextButton.isHidden = true
 		controlView.previousButton.isHidden = true

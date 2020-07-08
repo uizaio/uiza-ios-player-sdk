@@ -29,6 +29,10 @@ import GoogleCast
 
 let PLAYER_VERSION = "1.0"
 
+let DEFAULT_SEEK_FORWARD: TimeInterval = TimeInterval(10)
+let DEFAULT_SEEK_BACKWARD: TimeInterval = TimeInterval(-10)
+
+
 func DLog(_ message: String, _ file: String = #file, _ line: Int = #line) {
 	#if DEBUG
 	print("\((file as NSString).lastPathComponent) [Line \(line)]: \((message))")
@@ -52,9 +56,8 @@ public protocol UZPlayerControlViewDelegate: class {
 }
 
 public protocol UZSettingViewDelegate: class {
-    func settingRow(sender: UISwitch)
-    func settingRow(didSelected speedRate: UZSpeedRate)
-    func settingRow(didSelectButton button: UIButton)
+    func settingRow(didChanged sender: UISwitch)
+    func settingRow(didSelected tag: UZSettingTag, value: Float)
 }
 
 // to make them optional

@@ -125,7 +125,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
             case .bool:
                 let toggle = (currentCell.accessoryView as! UISwitch)
                 toggle.isOn = !toggle.isOn
-                self.delegate?.settingRow(sender: toggle)
+                self.delegate?.settingRow(didChanged: toggle)
                 setNeedsFocusUpdate()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
                      self.dismiss(animated: true, completion: nil)
@@ -133,7 +133,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 break
             case .number:
                 if settingItem.tag == .speedRate {
-                    self.delegate?.settingRow(didSelected: UZSpeedRate(rawValue: settingItem.initValue as! Float) ?? UZSpeedRate.normal)
+                    self.delegate?.settingRow(didSelected: .speedRate, value: settingItem.initValue as! Float)
                 }
                 setNeedsFocusUpdate()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
@@ -151,6 +151,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
              
                 break
             default:
+                self.delegate?.settingRow(didSelected: settingItem.tag, value: 1.0)
                 break
             }
         }
@@ -190,40 +191,6 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc open func onToggleAction(_ sender: UISwitch) {
-        self.delegate?.settingRow(sender: sender)
-    }
-}
-
-private extension UIView {
-    static func makeView(withTitle title: String? = nil) -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(hue: 0.5, saturation: 0.3, brightness: 0.6, alpha: 1.0)
-        
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = title
-        label.textAlignment = .center
-        label.textColor = .white
-        view.addSubview(label)
-
-        let borderView = UIView()
-        borderView.translatesAutoresizingMaskIntoConstraints = false
-        borderView.backgroundColor = .white
-        borderView.alpha = 0.4
-        view.addSubview(borderView)
-
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            borderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            borderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            borderView.heightAnchor.constraint(equalToConstant: 2),
-            borderView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
-        return view
+        self.delegate?.settingRow(didChanged: sender)
     }
 }

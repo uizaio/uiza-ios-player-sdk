@@ -333,7 +333,7 @@ extension UZPlayer {
 // MARK: - UZSettingViewDelegate
 
 extension UZPlayer: UZSettingViewDelegate {
-    public func settingRow(sender: UISwitch) {
+    public func settingRow(didChanged sender: UISwitch) {
         if let type = UZSettingTag(rawValue: sender.tag) {
               switch type {
               case .timeshift:
@@ -350,13 +350,20 @@ extension UZPlayer: UZSettingViewDelegate {
           }
     }
     
-    public func settingRow(didSelected speedRate: UZSpeedRate) {
-        print("speedRate = \(speedRate.description)")
-        playerLayer?.changeSpeedRate(speedRate)
-    }
+    public func settingRow(didSelected tag: UZSettingTag, value: Float) {
+        switch tag {
+        case .speedRate:
+            let speedRate = UZSpeedRate(rawValue: value) ?? UZSpeedRate.normal
+            playerLayer?.changeSpeedRate(speedRate)
+            break
+        case .stats:
+            break
+        default:
+            #if DEBUG
+            print("[UZPlayer] Unhandled Action")
+            #endif
+        }
     
-    public func settingRow(didSelectButton button: UIButton) {
-        // nothing
     }
 }
 
@@ -397,10 +404,10 @@ extension UZPlayer: UZPlayerControlViewDelegate {
                 replay()
                 break
             case .forward:
-                seek(offset: 5)
+                seek(offset: DEFAULT_SEEK_FORWARD)
                 break
             case .backward:
-                seek(offset: -5)
+                seek(offset: DEFAULT_SEEK_BACKWARD)
                 break
             case .next:
                 nextVideo()
