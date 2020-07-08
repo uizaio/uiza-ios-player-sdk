@@ -13,7 +13,8 @@ Class for logging
 */
 open class UZLogger: UZAPIConnector {
 	static let logAPIEndpoint = "https://tracking-dev.uizadev.io/v1/events"
-	
+	static let prodAPIEndpoint = "https://tracking.uiza.sh/v1/events"
+    
 	public var currentVideo: UZVideoItem? = nil
 	public var currentLinkPlay: URL? = nil {
 		didSet {
@@ -46,7 +47,7 @@ open class UZLogger: UZAPIConnector {
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 	}
 	
-	open func log(event: String, params: Parameters? = nil) {
+    open func log(event: String, params: Parameters? = nil) {
 		let uuid = UIDevice.current.identifierForVendor?.uuidString ?? ""
 		let timestamp: String = dateFormatter.string(from: Date())
 		
@@ -69,8 +70,8 @@ open class UZLogger: UZAPIConnector {
 		if params != nil {
 			finalParams.appendFrom(params!)
 		}
-		
-		guard let url = URL(string: Self.logAPIEndpoint) else { return }
+        let prod = UZPlayerSDK.enviroment == .production
+        guard let url = URL(string: prod ? Self.prodAPIEndpoint : Self.logAPIEndpoint) else { return }
 		post(url: url, params: finalParams)
 	}
 	

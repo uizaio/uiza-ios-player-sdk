@@ -63,8 +63,8 @@ public struct UZVideoItem {
 	public var name: String?
 	public var thumbnailURL: URL?
     public var extLinkPlay: UZVideoLinkPlay?
-    public var extIsTimeshift: Bool = false
-    public var timeshiftSupport: Bool = false
+    public fileprivate(set) var extIsTimeshift: Bool = false
+    public fileprivate(set) var timeshiftSupport: Bool = false
     
 	public var linkPlay: UZVideoLinkPlay? {
 		didSet {
@@ -75,7 +75,6 @@ public struct UZVideoItem {
                     timeshiftSupport = true
                     isLive = true
                     if timeshift.hasPrefix("extras/") {
-                        print("start extras/")
                         do{
                             let plName = try timeshift.replace("extras/", replacement: "")
                             let extLink = try url.absoluteString.replace(plName, replacement: timeshift)
@@ -83,17 +82,16 @@ public struct UZVideoItem {
                             extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
                             extIsTimeshift = true
                         } catch {
-                            print("not parse extras/ in timeshift link")
+                            DLog("not parse extras/ in timeshift link")
                         }
                     } else {
-                        print("not start extras/")
                         do {
                            let extLink = try url.absoluteString.replace("extras/\(timeshift)", replacement:timeshift)
                            guard let extUrl = URL(string: extLink) else { return }
                            extLinkPlay = UZVideoLinkPlay(definition: linkPlay?.definition ?? "", url: extUrl)
                             extIsTimeshift = false
                        } catch {
-                           print("not parse extras/ in timeshift link")
+                           DLog("not parse extras/ in timeshift link")
                        }
                     }
                     isTimeshiftOn = !extIsTimeshift
@@ -101,6 +99,7 @@ public struct UZVideoItem {
                     timeshiftSupport = false
                 }
             }
+            // parse cm
 			guard let cmParam = url.params()["cm"] as? String else { return }
 			guard let dictionary = cmParam.base64Decoded.toDictionary() else { return }
 			

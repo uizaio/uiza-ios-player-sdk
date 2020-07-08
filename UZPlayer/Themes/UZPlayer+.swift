@@ -313,7 +313,29 @@ extension UZPlayer {
         if let window = UIApplication.shared.keyWindow,
             let viewController = window.rootViewController {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
-            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: [ SettingItem(title: "Timeshift", tag: .timeshift, toggle: true) ])
+            var settingItems = [SettingItem]()
+            
+            if !isLive() {
+                // audio
+                if let audioOptions = audioOptions,
+                    audioOptions.count > 0 {
+                      settingItems.append(SettingItem(tag: .audio, type: .array, initValue: currentAudioOption(),  childItems: audioOptions))
+                }
+                // subtitles
+                if let subtitleOptions = subtitleOptions,
+                    subtitleOptions.count > 0 {
+                      settingItems.append(SettingItem(tag: .captions, type: .array, initValue: currentSubtileOption(), childItems: subtitleOptions))
+                }
+                // speed rate
+                settingItems.append(SettingItem(tag: .speedRate, type: .array, initValue: playerLayer?.currentSpeedRate().rawValue ?? UZSpeedRate.normal.rawValue))
+            }
+            #if DEBUG
+            settingItems.append(SettingItem(tag: .stats))
+            #endif
+            if isTimeshiftSupport() {
+                settingItems.append(SettingItem(tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
+            }
+            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
             settingViewController.delegate = self
             let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
             navigationController.navigationBar.isTranslucent = false
@@ -325,7 +347,7 @@ extension UZPlayer {
 // MARK: - UZSettingViewDelegate
 
 extension UZPlayer: UZSettingViewDelegate {
-    public func settingRow(sender: UISwitch) {
+    public func settingRow(didChanged sender: UISwitch) {
         if let type = UZSettingTag(rawValue: sender.tag) {
               switch type {
               case .timeshift:
@@ -342,8 +364,34 @@ extension UZPlayer: UZSettingViewDelegate {
           }
     }
     
-    public func settingRow(didSelectButton button: UIButton) {
-        // nothing
+    public func settingRow(didSelected tag: UZSettingTag, value: Float) {
+        switch tag {
+        case .speedRate:
+            let speedRate = UZSpeedRate(rawValue: value) ?? UZSpeedRate.normal
+            playerLayer?.changeSpeedRate(speedRate)
+            break
+        case .stats:
+            break
+        default:
+            #if DEBUG
+            print("[UZPlayer] Unhandled Action")
+            #endif
+        }
+    }
+    
+    public func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption) {
+        switch tag {
+        case .audio:
+            changeAudioSelect(option: value)
+            break
+        case .captions:
+            changeSubtitleSelect(option: value)
+            break
+        default:
+            #if DEBUG
+            print("[UZPlayer] Unhandled Action")
+            #endif
+        }
     }
 }
 
@@ -384,10 +432,10 @@ extension UZPlayer: UZPlayerControlViewDelegate {
                 replay()
                 break
             case .forward:
-                seek(offset: 5)
+                seek(offset: DEFAULT_SEEK_FORWARD)
                 break
             case .backward:
-                seek(offset: -5)
+                seek(offset: DEFAULT_SEEK_BACKWARD)
                 break
             case .next:
                 nextVideo()

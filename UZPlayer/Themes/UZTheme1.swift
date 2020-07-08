@@ -46,14 +46,13 @@ open class UZTheme1: UZPlayerTheme {
 	
 	func setupSkin() {
 		guard let controlView = controlView else { return }
-        let bundlePath = Bundle.main.path(forResource: "UZDefaultThemeIcons", ofType: "bundle")
-        let imageBundle = Bundle(path: bundlePath ?? "")
-		let backIcon = UIImage(named: "ic_close", in: imageBundle, compatibleWith: nil)
-//		let backIcon = UIImage(icon: .fontAwesomeSolid(.arrowLeft), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let playlistIcon = UIImage(icon: .fontAwesomeSolid(.list), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+        
+        controlView.setDefaultThemeIcon()
+		// modify icon
+        let playlistIcon = UIImage(icon: .fontAwesomeSolid(.list), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .fontAwesomeSolid(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-        let settingsIcon = UIImage(named: "ic_settings", in: imageBundle, compatibleWith: nil)
+        
 //		let settingsIcon = UIImage(icon: .fontAwesomeSolid(.cog), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let volumeIcon = UIImage(icon: .fontAwesomeSolid(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
@@ -61,34 +60,21 @@ open class UZTheme1: UZPlayerTheme {
 		let pauseBigIcon = UIImage(icon: .fontAwesomeSolid(.pauseCircle), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playArrow), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseIcon = UIImage(icon: .googleMaterialDesign(.pause), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let forwardIcon = UIImage(icon: .fontAwesomeSolid(.forward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let backwardIcon = UIImage(icon: .fontAwesomeSolid(.backward), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let nextIcon = UIImage(icon: .fontAwesomeSolid(.stepForward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
 		let previousIcon = UIImage(icon: .fontAwesomeSolid(.stepBackward), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
-        let fullscreenIcon = UIImage(named: "ic_fullscreen", in: imageBundle, compatibleWith: nil)
-//		let fullscreenIcon = UIImage(icon: .fontAwesomeSolid(.expand), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-        let collapseIcon = UIImage(named: "ic_exit_fullscreen", in: imageBundle, compatibleWith: nil)
-//		let collapseIcon = UIImage(icon: .fontAwesomeSolid(.compress), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: seekThumbSize, textColor: iconColor, backgroundColor: .clear)
 		
-		controlView.backButton.setImage(backIcon, for: .normal)
 		controlView.playlistButton.setImage(playlistIcon, for: .normal)
 		controlView.helpButton.setImage(helpIcon, for: .normal)
 		controlView.ccButton.setImage(ccIcon, for: .normal)
-		controlView.settingsButton.setImage(settingsIcon, for: .normal)
+		
 		controlView.volumeButton.setImage(volumeIcon, for: .normal)
 		controlView.volumeButton.setImage(muteIcon, for: .selected)
 		controlView.playpauseCenterButton.setImage(playBigIcon, for: .normal)
 		controlView.playpauseCenterButton.setImage(pauseBigIcon, for: .selected)
 		controlView.playpauseButton.setImage(playIcon, for: .normal)
 		controlView.playpauseButton.setImage(pauseIcon, for: .selected)
-		controlView.forwardButton.setImage(forwardIcon, for: .normal)
-		controlView.backwardButton.setImage(backwardIcon, for: .normal)
 		controlView.nextButton.setImage(nextIcon, for: .normal)
 		controlView.previousButton.setImage(previousIcon, for: .normal)
-		controlView.fullscreenButton.setImage(fullscreenIcon, for: .normal)
-		controlView.fullscreenButton.setImage(collapseIcon, for: .selected)
-		controlView.timeSlider.setThumbImage(thumbIcon, for: .normal)
 		
 		controlView.nextButton.isHidden = true
 		controlView.previousButton.isHidden = true
@@ -100,10 +86,7 @@ open class UZTheme1: UZPlayerTheme {
 			controlView.pipButton.setImage(pipStopIcon, for: .selected)
 			controlView.pipButton.imageView?.contentMode = .scaleAspectFit
 			controlView.pipButton.isHidden = !AVPictureInPictureController.isPictureInPictureSupported()
-		} else {
-			// Fallback on earlier versions
-		}
-		
+		} 
 //		controlView.airplayButton.setupDefaultIcon(iconSize: iconSize, offColor: iconColor)
 		controlView.castingButton.setupDefaultIcon(iconSize: iconSize, offColor: iconColor)
 		

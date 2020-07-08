@@ -242,6 +242,23 @@ open class UZPlayerControlView: UIView {
 		
 		addSubview(containerView)
 	}
+    
+    open func setDefaultThemeIcon() {
+        let bundlePath = Bundle.main.path(forResource: "UZDefaultThemeIcons", ofType: "bundle")
+        let imageBundle = Bundle(path: bundlePath ?? "")
+        
+        backButton.setImage(UIImage(named: "ic_close", in: imageBundle, compatibleWith: nil), for: .normal)
+        /// settings
+        settingsButton.setImage(UIImage(named: "ic_settings", in: imageBundle, compatibleWith: nil), for: .normal)
+        /// fullscreen/ exit fullscreen
+        fullscreenButton.setImage(UIImage(named: "ic_maximize", in: imageBundle, compatibleWith: nil), for: .normal)
+        fullscreenButton.setImage(UIImage(named: "ic_minimize", in: imageBundle, compatibleWith: nil), for: .selected)
+        forwardButton.setImage(UIImage(named: "ic_forward", in: imageBundle, compatibleWith: nil), for: .normal)
+        backwardButton.setImage(UIImage(named: "ic_backward", in: imageBundle, compatibleWith: nil), for: .normal)
+//        let thumbIcon = UIImage(named: "ic_thumb", in: imageBundle, compatibleWith: nil)
+        let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: CGSize(width: 18, height: 18), textColor: UIColor.red, backgroundColor: .clear)
+        timeSlider.setThumbImage(thumbIcon, for: .normal)
+    }
 	
 	// MARK: - Skins
 	
@@ -399,7 +416,8 @@ open class UZPlayerControlView: UIView {
 		
 		helpButton.isHidden = isLiveVideo
 		ccButton.isHidden = isLiveVideo
-        if resource.timeshiftSupport {
+        print("definitions: \(resource.definitions.count)")
+        if resource.timeshiftSupport || !resource.isLive {
             settingsButton.isHidden = false
         } else {
             settingsButton.isHidden = (playerConfig?.showQualitySelector ?? false) || resource.definitions.count < 2

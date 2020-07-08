@@ -28,10 +28,8 @@ open class UZAPIConnector: NSObject {
 //		DLog("\(params)")
 //		URLSession.shared.dataTask(with: request).resume()
 		
-        #if DEBUG && false
-		if UZPlayerSDK.showRestfulInfo {
+        #if DEBUG
 			print("📍 cURL:\n \(request.curlString)\n")
-		}
 		#endif
 		
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -68,10 +66,8 @@ open class UZAPIConnector: NSObject {
 		}
 
 //		DLog("\(params)")
-		#if DEBUG && false
-		if UZPlayerSDK.showRestfulInfo {
+		#if DEBUG
 			print("📍 cURL:\n \(request.curlString)\n")
-		}
 		#endif
 		
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
