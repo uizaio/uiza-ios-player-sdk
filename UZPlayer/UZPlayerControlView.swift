@@ -244,6 +244,7 @@ open class UZPlayerControlView: UIView {
 	}
     
     open func setDefaultThemeIcon() {
+
         let bundlePath = Bundle(for: Self.self).path(forResource: "UZDefaultThemeIcons", ofType: "bundle", inDirectory: "Icons.bundle")
         let imageBundle = bundlePath != nil ? Bundle(path: bundlePath!) : Bundle.main
         
