@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import UZPlayer
+import UZPlayer
 
 class ViewController: UIViewController {
 	

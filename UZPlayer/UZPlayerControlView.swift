@@ -244,8 +244,8 @@ open class UZPlayerControlView: UIView {
 	}
     
     open func setDefaultThemeIcon() {
-        let bundlePath = Bundle.main.path(forResource: "UZDefaultThemeIcons", ofType: "bundle")
-        let imageBundle = Bundle(path: bundlePath ?? "")
+        let bundlePath = Bundle(for: Self.self).path(forResource: "UZDefaultThemeIcons", ofType: "bundle", inDirectory: "Icons.bundle")
+        let imageBundle = bundlePath != nil ? Bundle(path: bundlePath!) : Bundle.main
         
         backButton.setImage(UIImage(named: "ic_close", in: imageBundle, compatibleWith: nil), for: .normal)
         /// settings
