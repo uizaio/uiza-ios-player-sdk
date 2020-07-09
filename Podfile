@@ -9,5 +9,5 @@ target 'UZPlayerExample' do
   pod 'FrameLayoutKit'
   pod 'Sentry'
   pod 'NHNetworkTime'
-  #  pod 'UZPlayer', :path => '.'
+#  pod 'UZPlayer', :path => '.'
 end
