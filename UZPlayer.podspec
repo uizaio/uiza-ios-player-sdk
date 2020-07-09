@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
     s.source = { :git => "https://github.com/uizaio/uiza-ios-player-sdk.git", :tag => "v" + s.version.to_s }
     s.source_files = 'UZPlayer/**/*.swift'
     s.resource_bundles = { 'Fonts' => ['UZPlayer/Fonts/*.ttf'],
-                           'Icons' => ['UZPlayer/Themes/UZDefaultThemeIcons.bundle'] }
+                           'Icons' => ['UZPlayer/Themes/UZIcons.bundle'] }
     s.ios.deployment_target = '9.0'
     s.requires_arc  = true
     s.swift_version = '4.2'

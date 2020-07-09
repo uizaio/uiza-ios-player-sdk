@@ -245,17 +245,18 @@ open class UZPlayerControlView: UIView {
     
     open func setDefaultThemeIcon() {
 
-        let bundlePath = Bundle(for: Self.self).path(forResource: "UZDefaultThemeIcons", ofType: "bundle", inDirectory: "Icons.bundle")
-        let imageBundle = bundlePath != nil ? Bundle(path: bundlePath!) : Bundle.main
+        guard let imagePath = Bundle(for: Self.self).uzIconPath() else { return }
         
-        backButton.setImage(UIImage(named: "ic_close", in: imageBundle, compatibleWith: nil), for: .normal)
+        let imageBundle = Bundle(path: imagePath)
+        
+        backButton.setImage(imageBundle?.getUZImage(named: "ic_close"), for: .normal)
         /// settings
-        settingsButton.setImage(UIImage(named: "ic_settings", in: imageBundle, compatibleWith: nil), for: .normal)
+        settingsButton.setImage(imageBundle?.getUZImage(named: "ic_settings"), for: .normal)
         /// fullscreen/ exit fullscreen
-        fullscreenButton.setImage(UIImage(named: "ic_maximize", in: imageBundle, compatibleWith: nil), for: .normal)
-        fullscreenButton.setImage(UIImage(named: "ic_minimize", in: imageBundle, compatibleWith: nil), for: .selected)
-        forwardButton.setImage(UIImage(named: "ic_forward", in: imageBundle, compatibleWith: nil), for: .normal)
-        backwardButton.setImage(UIImage(named: "ic_backward", in: imageBundle, compatibleWith: nil), for: .normal)
+        fullscreenButton.setImage(imageBundle?.getUZImage(named: "ic_maximize"), for: .normal)
+        fullscreenButton.setImage(imageBundle?.getUZImage(named: "ic_minimize"), for: .selected)
+        forwardButton.setImage(imageBundle?.getUZImage(named: "ic_forward"), for: .normal)
+        backwardButton.setImage(imageBundle?.getUZImage(named: "ic_backward"), for: .normal)
 //        let thumbIcon = UIImage(named: "ic_thumb", in: imageBundle, compatibleWith: nil)
         let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: CGSize(width: 18, height: 18), textColor: UIColor.red, backgroundColor: .clear)
         timeSlider.setThumbImage(thumbIcon, for: .normal)

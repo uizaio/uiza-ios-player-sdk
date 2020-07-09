@@ -39,7 +39,6 @@ public enum UZButtonTag: Int {
 public protocol UZPlayerTheme: class {
 	var id: String { get set }
     var controlView: UZPlayerControlView? { get set }
-    
     func updateUI()
     func update(withResource: UZPlayerResource?, video: UZVideoItem?, playlist: [UZVideoItem]?)
 	func updateLiveViewCount(_ viewCount: Int)
