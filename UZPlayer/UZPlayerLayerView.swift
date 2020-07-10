@@ -32,6 +32,8 @@ public enum UZPlayerAspectRatio {
 	case `default`
 	/// 16:9
 	case sixteen2Nine
+    ///16:10
+    case sixteen2Ten
 	/// 4:3
 	case four2Three
     
@@ -39,12 +41,14 @@ public enum UZPlayerAspectRatio {
       switch self {
           case .default: return "Default"
           case .sixteen2Nine: return "16:9"
+          case .sixteen2Ten: return "16:10"
           case .four2Three: return "4:3"
         }
     }
 }
 /// Speed rate
 public enum UZSpeedRate: Float, CaseIterable {
+    case x025 = 0.25
     case x05 = 0.5
     case x075 = 0.75
     case normal = 1.0
@@ -55,6 +59,7 @@ public enum UZSpeedRate: Float, CaseIterable {
     
     var description : String {
       switch self {
+          case .x025: return "0.25x"
           case .x05: return "0.5x"
           case .x075: return "0.75x"
           case .normal: return "Normal"
@@ -255,6 +260,11 @@ open class UZPlayerLayerView: UIView {
                 break
             case .sixteen2Nine:
                 let height = bounds.width/(16/9)
+                playerLayer?.videoGravity = .resize
+                playerLayer?.frame = CGRect(x: 0, y: (bounds.height - height)/2, width: bounds.width, height: height)
+                break
+            case .sixteen2Ten:
+                let height = bounds.width/(16/10)
                 playerLayer?.videoGravity = .resize
                 playerLayer?.frame = CGRect(x: 0, y: (bounds.height - height)/2, width: bounds.width, height: height)
                 break

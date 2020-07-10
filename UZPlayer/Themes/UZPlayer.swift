@@ -14,6 +14,7 @@ import CoreGraphics
 import NKModalViewManager
 import Sentry
 import FrameLayoutKit
+import M3U8Kit
 
 #if canImport(NHNetworkTime)
 import NHNetworkTime
@@ -59,7 +60,7 @@ public protocol UZPlayerControlViewDelegate: class {
 public protocol UZSettingViewDelegate: class {
     func settingRow(didChanged sender: UISwitch)
     func settingRow(didSelected tag: UZSettingTag, value: Float)
-    func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption)
+    func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption?)
 }
 
 // to make them optional
@@ -127,8 +128,10 @@ open class UZPlayer: UIView {
 	}
     
 //    @available(iOS 11.0, *)
-    public var videoQualities: [AVAssetTrack]? {
-        return self.avPlayer?.currentItem?.asset.videoTracks
+    public var videoQualities: [AVMediaCharacteristic]? {
+        return self.avPlayer?.currentItem?.asset.availableMediaCharacteristicsWithMediaSelectionOptions
+//        return self.avPlayer?.currentItem?.preferredPeakBitRate
+        
     }
 	
 	public var playlist: [UZVideoItem]? = nil {
@@ -147,7 +150,7 @@ open class UZPlayer: UIView {
         return nil
     }
     
-    open func changeAudioSelect(option: AVMediaSelectionOption) {
+    open func changeAudioSelect(option: AVMediaSelectionOption?) {
         if let currentItem = self.avPlayer?.currentItem,
             let audioGroup = currentItem.asset.audioGroup {
             currentItem.select(option, in: audioGroup)
@@ -162,11 +165,22 @@ open class UZPlayer: UIView {
         return nil
     }
     
-    open func changeSubtitleSelect(option: AVMediaSelectionOption) {
+    open func changeSubtitleSelect(option: AVMediaSelectionOption?) {
         if let currentItem = self.avPlayer?.currentItem,
             let subtitleGroup = currentItem.asset.subtitleGroup {
             currentItem.select(option, in: subtitleGroup)
         }
+    }
+    
+    open func changeBitrate(bitrate: Double) {
+        print("change = \(bitrate)")
+        if let currentItem = self.avPlayer?.currentItem {
+            currentItem.preferredPeakBitRate = bitrate
+        }
+    }
+    
+    open func currentBitrate() -> Double {
+        return self.avPlayer?.currentItem?.preferredPeakBitRate ?? 0.0
     }
     
 	public var currentVideoIndex: Int {

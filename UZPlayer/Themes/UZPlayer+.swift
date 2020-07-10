@@ -315,7 +315,13 @@ extension UZPlayer {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
             
+            print("quality = \(currentBitrate() ?? Double(0.0))")
+            
             if !isLive() {
+                if let videoStreams = currentVideo?.streams,
+                    videoStreams.count > 0 {
+                      settingItems.append(SettingItem(tag: .quality, type: .array, initValue: currentBitrate(), streamItems: videoStreams))
+                }
                 // audio
                 if let audioOptions = audioOptions,
                     audioOptions.count > 0 {
@@ -335,11 +341,13 @@ extension UZPlayer {
             if isTimeshiftSupport() {
                 settingItems.append(SettingItem(tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
             }
-            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
-            settingViewController.delegate = self
-            let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
-            navigationController.navigationBar.isTranslucent = false
-            activeViewController.present(navigationController, animated: true)
+            if !isFullScreen {
+                let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
+                settingViewController.delegate = self
+                let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
+                navigationController.navigationBar.isTranslucent = false
+                activeViewController.present(navigationController, animated: true)
+            }
         }
     }
 }
@@ -372,6 +380,9 @@ extension UZPlayer: UZSettingViewDelegate {
             break
         case .stats:
             break
+        case .quality:
+            changeBitrate(bitrate: Double(value))
+            break
         default:
             #if DEBUG
             print("[UZPlayer] Unhandled Action")
@@ -379,7 +390,7 @@ extension UZPlayer: UZSettingViewDelegate {
         }
     }
     
-    public func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption) {
+    public func settingRow(didSelected tag: UZSettingTag, value: AVMediaSelectionOption?) {
         switch tag {
         case .audio:
             changeAudioSelect(option: value)
