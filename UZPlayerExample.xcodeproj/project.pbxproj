@@ -12,6 +12,7 @@
 		63FD933D2420DA32001B7A48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63FD933C2420DA32001B7A48 /* Assets.xcassets */; };
 		63FD93402420DA32001B7A48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63FD933E2420DA32001B7A48 /* LaunchScreen.storyboard */; };
 		63FD93472420DD25001B7A48 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FD93462420DD25001B7A48 /* ExternalAccessory.framework */; };
+		8BA9CD2024BC242B00047B8E /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA9CD1F24BC242B00047B8E /* Bundle+.swift */; };
 		8BC84AA024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift */; };
 		8BC84AA124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift */; };
 		8BC84AA224B70D8E002906F6 /* SettingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9324B70D8E002906F6 /* SettingItem.swift */; };
@@ -120,7 +121,6 @@
 		8BC84B7124B70E93002906F6 /* UZPlayerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B6B24B70E93002906F6 /* UZPlayerConfig.swift */; };
 		8BC84B7224B70E93002906F6 /* UZMediaResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B6C24B70E93002906F6 /* UZMediaResource.swift */; };
 		8BC84B7324B70E93002906F6 /* UZSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B6D24B70E93002906F6 /* UZSubtitles.swift */; };
-		8BC84B7524B7100A002906F6 /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B7424B7100A002906F6 /* Bundle+.swift */; };
 		D86D6A10C87021F6E13AF2B2 /* Pods_UZPlayerExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 247B026F15A1E99186FC6FA2 /* Pods_UZPlayerExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +149,7 @@
 		63FD93452420DD25001B7A48 /* UZPlayerExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UZPlayerExample.entitlements; sourceTree = "<group>"; };
 		63FD93462420DD25001B7A48 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		8B2347BC24AC70400065B426 /* Pods_UZPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_UZPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BA9CD1F24BC242B00047B8E /* Bundle+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Bundle+.swift"; path = "UZPlayer/Components/Extensions/Bundle+.swift"; sourceTree = "<group>"; };
 		8BC84A9024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZVideoQualitySettingsViewController.swift; path = UZPlayer/UZVideoQualitySettingsViewController.swift; sourceTree = "<group>"; };
 		8BC84A9124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZMediaOptionSelectionViewController.swift; path = UZPlayer/UZMediaOptionSelectionViewController.swift; sourceTree = "<group>"; };
 		8BC84A9224B70D8E002906F6 /* UZPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UZPlayer.h; path = UZPlayer/UZPlayer.h; sourceTree = "<group>"; };
@@ -258,7 +259,6 @@
 		8BC84B6B24B70E93002906F6 /* UZPlayerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZPlayerConfig.swift; path = UZPlayer/Models/UZPlayerConfig.swift; sourceTree = "<group>"; };
 		8BC84B6C24B70E93002906F6 /* UZMediaResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZMediaResource.swift; path = UZPlayer/Models/UZMediaResource.swift; sourceTree = "<group>"; };
 		8BC84B6D24B70E93002906F6 /* UZSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZSubtitles.swift; path = UZPlayer/Models/UZSubtitles.swift; sourceTree = "<group>"; };
-		8BC84B7424B7100A002906F6 /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		A2CCA21F5A81E821FED69841 /* Pods-UZPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayer.debug.xcconfig"; path = "Target Support Files/Pods-UZPlayer/Pods-UZPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 		D17E8EDB9F4BEC2A3F8176B9 /* Pods-UZPlayerExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZPlayerExample.release.xcconfig"; path = "Target Support Files/Pods-UZPlayerExample/Pods-UZPlayerExample.release.xcconfig"; sourceTree = "<group>"; };
 		D4298A75B82B07A10122C526 /* Pods_UZPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UZPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -445,6 +445,7 @@
 		8BC84B1224B70E2E002906F6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8BA9CD1F24BC242B00047B8E /* Bundle+.swift */,
 				8BC84B1824B70E3C002906F6 /* AVAsset+Selection.swift */,
 				8BC84B1A24B70E3C002906F6 /* AVAudioSession+Airplay.swift */,
 				8BC84B1524B70E3C002906F6 /* NSTimeInterval+ToString.swift */,
@@ -453,7 +454,6 @@
 				8BC84B1724B70E3C002906F6 /* UIImage+Colorize.swift */,
 				8BC84B1624B70E3C002906F6 /* UIView+.swift */,
 				8BC84B1324B70E3C002906F6 /* UIViewController+TopPresented.swift */,
-				8BC84B7424B7100A002906F6 /* Bundle+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -724,6 +724,7 @@
 				8BC84B3524B70E5B002906F6 /* MasterPlaylist.swift in Sources */,
 				8BC84B3724B70E5B002906F6 /* NSURLExtension.swift in Sources */,
 				8BC84B1E24B70E3C002906F6 /* UIView+.swift in Sources */,
+				8BA9CD2024BC242B00047B8E /* Bundle+.swift in Sources */,
 				8BC84AA624B70D8E002906F6 /* UZPlayerLayerView.swift in Sources */,
 				8BC84AA224B70D8E002906F6 /* SettingItem.swift in Sources */,
 				8BC84B7124B70E93002906F6 /* UZPlayerConfig.swift in Sources */,
@@ -747,7 +748,6 @@
 				8BC84AC424B70DA4002906F6 /* UZTheme6.swift in Sources */,
 				8BC84AAB24B70D8E002906F6 /* UZPlayerControlView+.swift in Sources */,
 				8BC84B1124B70E25002906F6 /* UZAirPlayButton.swift in Sources */,
-				8BC84B7524B7100A002906F6 /* Bundle+.swift in Sources */,
 				8BC84B3024B70E5B002906F6 /* StringBufferedReader.swift in Sources */,
 				8BC84ABC24B70DA4002906F6 /* UZTheme3.swift in Sources */,
 				8BC84AAA24B70D8E002906F6 /* UZPlayerControlView.swift in Sources */,
