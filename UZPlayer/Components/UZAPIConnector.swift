@@ -38,15 +38,14 @@ open class UZAPIConnector: NSObject {
 				(200 ..< 300) ~= response.statusCode,         // is statusCode 2XX
 				error == nil
 			else {                           // was there no error, otherwise ...
-					completion?(nil, error)
-					return
+                completion?(nil, error)
+                return
 			}
 			
 			let responseObject = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
 			DLog("response = \(String(describing: responseObject))")
 			completion?(responseObject as NSDictionary?, nil)
 		}
-		
 		task.resume()
 	}
 	

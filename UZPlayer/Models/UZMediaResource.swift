@@ -40,12 +40,13 @@ public struct UZPlayerResource {
 	- parameter cover:       video cover
 	- parameter isLive:     set `true` if live video
 	*/
-	public init(name: String = "", definitions: [UZVideoLinkPlay], subtitles: [URL]? = nil, cover: URL? = nil, isLive: Bool = false, timeshiftSupport: Bool = false) {
+    public init(name: String = "", definitions: [UZVideoLinkPlay], subtitles: [URL]? = nil, cover: URL? = nil, isLive: Bool = false, timeshiftSupport: Bool = false, timeShiftOn: Bool = false) {
 		self.name        = name
 		self.subtitles	 = subtitles
 		self.cover       = cover
 		self.definitions = definitions
 		self.isLive 	 = isLive
         self.timeshiftSupport = timeshiftSupport
+        self.timeShiftOn = timeShiftOn
 	}
 }

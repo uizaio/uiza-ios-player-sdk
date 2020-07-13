@@ -52,10 +52,7 @@ open class UZTheme1: UZPlayerTheme {
         let playlistIcon = UIImage(icon: .fontAwesomeSolid(.list), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .fontAwesomeSolid(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-        
-//		let settingsIcon = UIImage(icon: .fontAwesomeSolid(.cog), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let volumeIcon = UIImage(icon: .fontAwesomeSolid(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
+		
 		let playBigIcon = UIImage(icon: .fontAwesomeSolid(.playCircle), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseBigIcon = UIImage(icon: .fontAwesomeSolid(.pauseCircle), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playArrow), size: iconSize, textColor: iconColor, backgroundColor: .clear)
@@ -67,8 +64,7 @@ open class UZTheme1: UZPlayerTheme {
 		controlView.helpButton.setImage(helpIcon, for: .normal)
 		controlView.ccButton.setImage(ccIcon, for: .normal)
 		
-		controlView.volumeButton.setImage(volumeIcon, for: .normal)
-		controlView.volumeButton.setImage(muteIcon, for: .selected)
+
 		controlView.playpauseCenterButton.setImage(playBigIcon, for: .normal)
 		controlView.playpauseCenterButton.setImage(pauseBigIcon, for: .selected)
 		controlView.playpauseButton.setImage(playIcon, for: .normal)
@@ -223,8 +219,6 @@ open class UZTheme1: UZPlayerTheme {
 		let isEmptyPlaylist = (playlist?.count ?? 0) < 2
 		controlView?.nextButton.isHidden = isEmptyPlaylist
 		controlView?.previousButton.isHidden = isEmptyPlaylist
-//		controlView?.forwardButton.isHidden = !isEmptyPlaylist
-//		controlView?.backwardButton.isHidden = !isEmptyPlaylist
 	}
 	
 	open func alignLogo() {

@@ -110,7 +110,7 @@ public struct UZVideoItem {
 			guard let url = linkPlay?.url else { return }
             
             if url.absoluteString.contains(".m3u8") {
-                let manifest = ManifestBuilder().parse(url)
+                let manifest = MasterManifest().parse(url)
                 if let timeshift = manifest.timeshift {
                     timeshiftSupport = true
                     isLive = true
@@ -149,7 +149,7 @@ public struct UZVideoItem {
                             }
                         }
                     } catch {
-                        print("Error when fetch m3u8")
+                        DLog("Error when fetch m3u8")
                     }
                 }
             }
@@ -185,7 +185,6 @@ public struct UZVideoItem {
 			self.linkPlay = linkPlay
 		}
 	}
-	
 }
 
 extension UZVideoItem: Equatable {

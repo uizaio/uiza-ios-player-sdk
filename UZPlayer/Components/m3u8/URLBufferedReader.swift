@@ -23,7 +23,7 @@ open class URLBufferedReader: BufferedReader {
             let text = String(data: dataVal, encoding: String.Encoding.utf8)!
             _stringReader = StringBufferedReader(string: text)
         } catch {
-            print("Failed to make request for content at \(_uri)")
+            DLog("Failed to make request for content at \(_uri)")
         }
     }
 

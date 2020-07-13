@@ -384,7 +384,7 @@ open class UZPlayer: UIView {
 		if let host = linkPlay.url.host {
 			UZVisualizeSavedInformation.shared.host = host
 		}
-        let resource = UZPlayerResource(name: video.name ?? "", definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive, timeshiftSupport: video.timeshiftSupport)
+        let resource = UZPlayerResource(name: video.name ?? "", definitions: [linkPlay], subtitles: video.subtitleURLs, cover: video.thumbnailURL, isLive: video.isLive, timeshiftSupport: video.timeshiftSupport, timeShiftOn: video.isTimeshiftOn)
         setResource(resource: resource)
 		if video.isLive {
 			controlView.liveStartDate = nil

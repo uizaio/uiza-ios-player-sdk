@@ -19,14 +19,14 @@ open class UZTheme6: UZPlayerTheme {
 	public let frameLayout = StackFrameLayout(axis: .vertical)
 	public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
 	
-	open var iconColor = UIColor.black
+	open var iconColor = UIColor.white
 	open var iconSize = CGSize(width: 24, height: 24)
 	open var skipIconSize = CGSize(width: 32, height: 32)
 	open var centerIconSize = CGSize(width: 50, height: 50)
 	open var seekThumbSize = CGSize(width: 24, height: 24)
 	open var buttonMinSize = CGSize(width: 32, height: 32)
 	
-	public convenience init(iconSize: CGSize = CGSize(width: 24, height: 24), centerIconSize: CGSize = CGSize(width: 50, height: 50), seekThumbSize: CGSize = CGSize(width: 24, height: 24), iconColor: UIColor = .black) {
+	public convenience init(iconSize: CGSize = CGSize(width: 24, height: 24), centerIconSize: CGSize = CGSize(width: 50, height: 50), seekThumbSize: CGSize = CGSize(width: 24, height: 24), iconColor: UIColor = .white) {
 		self.init()
 		
 		self.iconSize = iconSize
@@ -51,11 +51,6 @@ open class UZTheme6: UZPlayerTheme {
 		let playlistIcon = UIImage(icon: .icofont(.listineDots), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .icofont(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-    
-		let volumeIcon = UIImage(icon: .icofont(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-//		let playBigIcon = UIImage(icon: .googleMaterialDesign(.playCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
-//		let pauseBigIcon = UIImage(icon: .googleMaterialDesign(.pauseCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseIcon = UIImage(icon: .googleMaterialDesign(.pauseCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let nextIcon = UIImage(icon: .googleMaterialDesign(.skipNext), size: skipIconSize, textColor: iconColor, backgroundColor: .clear)
@@ -65,8 +60,6 @@ open class UZTheme6: UZPlayerTheme {
 		controlView.helpButton.setImage(helpIcon, for: .normal)
 		controlView.ccButton.setImage(ccIcon, for: .normal)
 
-		controlView.volumeButton.setImage(volumeIcon, for: .normal)
-		controlView.volumeButton.setImage(muteIcon, for: .selected)
 //		controlView.playpauseCenterButton.setImage(playBigIcon, for: .normal)
 //		controlView.playpauseCenterButton.setImage(pauseBigIcon, for: .selected)
 		controlView.playpauseButton.setImage(playIcon, for: .normal)
@@ -122,11 +115,9 @@ open class UZTheme6: UZPlayerTheme {
 		controlView.containerView.layer.addSublayer(topGradientLayer)
 		
 		frameLayout + HStackLayout {
-			($0 + controlView.titleLabel).flexible()
-            $0 + [controlView.backButton]
-//			($0 + 0).flexible()
-//			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton, controlView.volumeButton]
-			$0.distribution = .right
+            $0 + controlView.backButton
+            ($0 + controlView.titleLabel).flexible()
+			$0.distribution = .left
 			$0.spacing = 10
 			$0.padding(top: 0, left: 10, bottom: 0, right: 10)
 		}
@@ -226,8 +217,8 @@ open class UZTheme6: UZPlayerTheme {
 		let isEmptyPlaylist = (playlist?.count ?? 0) < 2
 		controlView?.nextButton.isHidden = isEmptyPlaylist
 		controlView?.previousButton.isHidden = isEmptyPlaylist
-		controlView?.forwardButton.isHidden = !isEmptyPlaylist
-		controlView?.backwardButton.isHidden = !isEmptyPlaylist
+//		controlView?.forwardButton.isHidden = !isEmptyPlaylist
+//		controlView?.backwardButton.isHidden = !isEmptyPlaylist
 	}
 	
 	open func alignLogo() {

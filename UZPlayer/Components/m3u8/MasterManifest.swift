@@ -33,14 +33,14 @@ open class MasterManifest {
                         let version = try line.replace("#EXT-X-VERSION:", replacement: "")
                             masterPlaylist.version = Int(version)
                         } catch {
-                            print("Failed to parse VERSION on master playlist. Line = \(line)")
+                            DLog("Failed to parse VERSION on master playlist. Line = \(line)")
                     }
                 } else if line.hasPrefix("#EXT-X-UZ-TIMESHIFT"){
                      do {
                         let timeshift = try line.replace("#EXT-X-UZ-TIMESHIFT:", replacement: "")
                          masterPlaylist.timeshift = timeshift
                      } catch {
-                          print("Failed to parse TIMESHIFT on master playlist. Line = \(line)")
+                          DLog("Failed to parse TIMESHIFT on master playlist. Line = \(line)")
                      }
                 } else {
                      // URI - must be

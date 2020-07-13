@@ -314,9 +314,7 @@ extension UZPlayer {
             let viewController = window.rootViewController {
             let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
-            
-            print("quality = \(currentBitrate() ?? Double(0.0))")
-            
+            // VOD
             if !isLive() {
                 if let videoStreams = currentVideo?.streams,
                     videoStreams.count > 0 {
@@ -335,19 +333,17 @@ extension UZPlayer {
                 // speed rate
                 settingItems.append(SettingItem(tag: .speedRate, type: .array, initValue: playerLayer?.currentSpeedRate().rawValue ?? UZSpeedRate.normal.rawValue))
             }
-            #if DEBUG
-            settingItems.append(SettingItem(tag: .stats))
-            #endif
+//            #if DEBUG
+//            settingItems.append(SettingItem(tag: .stats))
+//            #endif
             if isTimeshiftSupport() {
                 settingItems.append(SettingItem(tag: .timeshift, type: .bool, initValue: isTimeshiftOn()))
             }
-            if !isFullScreen {
-                let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
-                settingViewController.delegate = self
-                let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
-                navigationController.navigationBar.isTranslucent = false
-                activeViewController.present(navigationController, animated: true)
-            }
+            let settingViewController = SettingViewController(withNavigationButton: true, settingItems: settingItems)
+            settingViewController.delegate = self
+            let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
+            navigationController.navigationBar.isTranslucent = false
+            activeViewController.present(navigationController, animated: true)
         }
     }
 }
