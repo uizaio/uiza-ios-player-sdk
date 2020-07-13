@@ -41,7 +41,7 @@ import QuartzCore
     public func remove(animation: Animation) {
         
 		guard let index = animations.firstIndex(of: animation) else {
-            print("Can't find animation to remove")
+            DLog("Can't find animation to remove")
             return
         }
         

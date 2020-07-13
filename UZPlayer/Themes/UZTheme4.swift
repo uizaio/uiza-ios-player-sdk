@@ -48,10 +48,6 @@ open class UZTheme4: UZPlayerTheme {
 		let playlistIcon = UIImage(icon: .icofont(.listineDots), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .icofont(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let volumeIcon = UIImage(icon: .icofont(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-//		let playBigIcon = UIImage(icon: .googleMaterialDesign(.playCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
-//		let pauseBigIcon = UIImage(icon: .googleMaterialDesign(.pauseCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseIcon = UIImage(icon: .googleMaterialDesign(.pauseCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let nextIcon = UIImage(icon: .googleMaterialDesign(.skipNext), size: iconSize, textColor: iconColor, backgroundColor: .clear)
@@ -60,15 +56,14 @@ open class UZTheme4: UZPlayerTheme {
 		controlView.playlistButton.setImage(playlistIcon, for: .normal)
 		controlView.helpButton.setImage(helpIcon, for: .normal)
 		controlView.ccButton.setImage(ccIcon, for: .normal)
-		controlView.volumeButton.setImage(volumeIcon, for: .normal)
-		controlView.volumeButton.setImage(muteIcon, for: .selected)
 //		controlView.playpauseCenterButton.setImage(playBigIcon, for: .normal)
 //		controlView.playpauseCenterButton.setImage(pauseBigIcon, for: .selected)
 		controlView.playpauseButton.setImage(playIcon, for: .normal)
 		controlView.playpauseButton.setImage(pauseIcon, for: .selected)
 		controlView.nextButton.setImage(nextIcon, for: .normal)
 		controlView.previousButton.setImage(previousIcon, for: .normal)
-		
+        
+        
 		if #available(iOS 9.0, *) {
 			let pipStartIcon = AVPictureInPictureController.pictureInPictureButtonStartImage(compatibleWith: nil).colorize(with: iconColor)
 			let pipStopIcon = AVPictureInPictureController.pictureInPictureButtonStopImage(compatibleWith: nil).colorize(with: iconColor)
@@ -76,10 +71,8 @@ open class UZTheme4: UZPlayerTheme {
 			controlView.pipButton.setImage(pipStopIcon, for: .selected)
 			controlView.pipButton.imageView?.contentMode = .scaleAspectFit
 			controlView.pipButton.isHidden = !AVPictureInPictureController.isPictureInPictureSupported()
-		} else {
-			// Fallback on earlier versions
 		}
-		
+        
 		controlView.castingButton.setupDefaultIcon(iconSize: iconSize, offColor: iconColor)
 		
 		controlView.titleLabel.textColor = .white
@@ -120,17 +113,12 @@ open class UZTheme4: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.volumeButton]
+			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton, controlView.settingsButton]
 			$0.spacing = 10
-			$0.padding(top: 0, left: 10, bottom: 0, right: 10)
+			$0.padding(top: 10, left: 10, bottom: 0, right:12)
 		}
+        // center layout in vertical
 		frameLayout + HStackLayout {
-			($0 + [controlView.previousButton, controlView.playpauseCenterButton, controlView.nextButton]).forEach { (layout) in
-				layout.alignment = (.center, .center)
-			}
-			$0.spacing = 10
-			$0.alignment = (.center, .center)
-			$0.distribution = .center
 			$0.flexible()
 		}
 		frameLayout + HStackLayout {
@@ -148,15 +136,14 @@ open class UZTheme4: UZPlayerTheme {
 				$0.flexible()
 			}
 			$0 + [controlView.playlistButton, controlView.fullscreenButton]
-			
+            $0.ignoreHiddenView = false
 			$0.fixSize = CGSize(width: 0, height: 50)
 			$0.spacing = 10
-			$0.padding(top: 0, left: 10, bottom: 0, right: 10)
+			$0.padding(top: 0, left: 10, bottom: 0, right: 12)
 			$0.backgroundColor = UIColor(white: 0.0, alpha: 0.8)
 			$0.layer.masksToBounds = true
 			controlView.containerView.insertSubview($0, at: 0)
 		}
-		
 		controlView.containerView.addSubview(frameLayout)
 	}
 	
@@ -225,8 +212,8 @@ open class UZTheme4: UZPlayerTheme {
 		let isEmptyPlaylist = (playlist?.count ?? 0) < 2
 		controlView?.nextButton.isHidden = isEmptyPlaylist
 		controlView?.previousButton.isHidden = isEmptyPlaylist
-		controlView?.forwardButton.isHidden = !isEmptyPlaylist
-		controlView?.backwardButton.isHidden = !isEmptyPlaylist
+//		controlView?.forwardButton.isHidden = !isEmptyPlaylist
+//		controlView?.backwardButton.isHidden = !isEmptyPlaylist
 	}
 	
 	open func alignLogo() {

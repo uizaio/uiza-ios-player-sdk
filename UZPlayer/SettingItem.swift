@@ -9,6 +9,7 @@
 import UIKit
 import FrameLayoutKit
 import AVFoundation
+import M3U8Kit
 
 public enum UZSettingTag: Int, CaseIterable {
     case none = -1
@@ -47,14 +48,16 @@ class SettingItem: NSObject {
     fileprivate(set) var type: UZSettingType = .normal
     open var initValue: Any?
     open var childItems: [AVMediaSelectionOption]? = nil
+    open var streamItems: [M3U8ExtXStreamInf]? = nil
     
-    init(tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil, childItems: [AVMediaSelectionOption]? = nil) {
+    init(tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil, childItems: [AVMediaSelectionOption]? = nil, streamItems: [M3U8ExtXStreamInf]? = nil) {
         super.init()
         self.title = tag.description
         self.tag = tag
         self.type = type
         self.initValue = initValue
         self.childItems = childItems
+        self.streamItems = streamItems
     }
     
     init(title: String, tag: UZSettingTag, type: UZSettingType = .normal, initValue : Any? = nil) {
@@ -82,14 +85,15 @@ class SettingTableViewCell: UITableViewCell {
     
     let titleLabel:UILabel = {
         let label = UILabel()
-        label.textColor =  UIColor.black
+//        label.textColor =  UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let summaryLabel:UILabel = {
         let label = UILabel()
-        label.textColor =  UIColor.gray
+        label.textColor = label.textColor.withAlphaComponent(0.5)
+        label.font = .systemFont(ofSize: 15.0, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -102,18 +106,15 @@ class SettingTableViewCell: UITableViewCell {
     }()
     
     func initViews() {
-//        containerView.addSubview(HStackLayout {
-//            ($0 + titleLabel).flexible()
-//            $0 + summaryLabel
-//            $0.spacing = 10
-//        })
+
         containerView.addSubview(titleLabel)
         containerView.addSubview(summaryLabel)
         self.contentView.addSubview(containerView)
         containerView.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor).isActive = true
         containerView.leadingAnchor.constraint(equalTo:self.contentView.leadingAnchor).isActive = true
         containerView.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-10).isActive = true
-        containerView.heightAnchor.constraint(equalToConstant:46).isActive = true
+        containerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+        //
         titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         // summary

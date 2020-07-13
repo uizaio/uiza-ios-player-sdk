@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import M3U8Kit
 
 public class SettingViewController: UIViewController {
     private let withNavigationButton: Bool
@@ -105,6 +106,8 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                     if let dv = self.defaultValue as? AVMediaSelectionOption,
                         let iv = settingItem.initValue as? AVMediaSelectionOption {
                         checked = (dv == iv)
+                    } else {
+                        checked = (self.defaultValue == nil) && (settingItem.initValue == nil)
                     }
                 }
                 let checkIcon = UIImage(icon:  checked ? .fontAwesomeSolid(.dotCircle) : .fontAwesomeRegular(.circle), size: CGSize(width: 22, height: 22), textColor: checked ? UIColor.red : UIColor.gray, backgroundColor: .clear)
@@ -123,6 +126,11 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 } else if settingItem.tag == .audio || settingItem.tag == .captions {
                     if let dv = settingItem.initValue as? AVMediaSelectionOption {
                         cell.summaryLabel.text = dv.displayName
+                    } else {
+                        if settingItem.tag == .captions,
+                        settingItem.initValue == nil {
+                            cell.summaryLabel.text = "Off"
+                        }
                     }
                 }
                 break
@@ -150,7 +158,11 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 if settingItem.tag == .speedRate {
                     self.delegate?.settingRow(didSelected: .speedRate, value: settingItem.initValue as! Float)
                 } else if settingItem.tag == .audio || settingItem.tag == .captions {
-                    self.delegate?.settingRow(didSelected: settingItem.tag, value: settingItem.initValue as! AVMediaSelectionOption)
+                    self.delegate?.settingRow(didSelected: settingItem.tag, value: settingItem.initValue as? AVMediaSelectionOption)
+                } else if settingItem.tag == .quality {
+                    if let initValue = settingItem.initValue as? Float {
+                        self.delegate?.settingRow(didSelected: .quality, value: initValue)
+                    }
                 }
                 setNeedsFocusUpdate()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 500 milliseconds.
@@ -165,9 +177,20 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                     viewController.title = currentCell.textLabel?.text ?? ""
                     navigationController?.pushViewController(viewController, animated: true)
                 } else if settingItem.tag == .audio || settingItem.tag == .captions {
-                    if let audioOptions = settingItem.childItems {
-                        let settingAudios = audioOptions.map{ SettingItem(title: $0.displayName, tag: settingItem.tag, type: .number, initValue: $0) }
-                        let viewController = SettingViewController(withNavigationButton: false, text: settingItem.tag.description, settingItems: settingAudios, defaultValue: settingItem.initValue)
+                    if let itemOptions = settingItem.childItems {
+                        var settingMedias = itemOptions.map{ SettingItem(title: $0.displayName.capitalizingFirstLetter(), tag: settingItem.tag, type: .number, initValue: $0) }
+                        if(settingItem.tag == .captions){
+                            settingMedias.insert(SettingItem(title: "Off", tag: settingItem.tag, type: .number), at: 0)
+                        }
+                        let viewController = SettingViewController(withNavigationButton: false, text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
+                                viewController.delegate = self.delegate
+                                viewController.title = settingItem.tag.description
+                                navigationController?.pushViewController(viewController, animated: true)
+                    }
+                } else if settingItem.tag == .quality {
+                    if let itemOptions = settingItem.streamItems {
+                        let settingMedias = itemOptions.map{ SettingItem(title: $0.shortDescription, tag: settingItem.tag, type: .number, initValue: Float($0.bandwidth)) }
+                        let viewController = SettingViewController(withNavigationButton: false, text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
                                 viewController.delegate = self.delegate
                                 viewController.title = settingItem.tag.description
                                 navigationController?.pushViewController(viewController, animated: true)

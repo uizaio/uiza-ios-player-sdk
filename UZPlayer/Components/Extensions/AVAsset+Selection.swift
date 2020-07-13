@@ -33,6 +33,6 @@ extension AVAsset {
     }
 
     var videoTracks: [AVAssetTrack]? {
-       return self.tracks(withMediaType: AVMediaType.video)
+       return self.tracks
     }
 }

@@ -49,8 +49,6 @@ open class UZTheme3: UZPlayerTheme {
 		let playlistIcon = UIImage(icon: .icofont(.listineDots), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let helpIcon = UIImage(icon: .icofont(.questionCircle), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let ccIcon = UIImage(icon: .icofont(.cc), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let volumeIcon = UIImage(icon: .icofont(.volumeUp), size: iconSize, textColor: iconColor, backgroundColor: .clear)
-		let muteIcon = UIImage(icon: .icofont(.volumeMute), size: iconSize, textColor: iconColor, backgroundColor: .clear)
 		let playBigIcon = UIImage(icon: .googleMaterialDesign(.playCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let pauseBigIcon = UIImage(icon: .googleMaterialDesign(.pauseCircleOutline), size: centerIconSize, textColor: iconColor, backgroundColor: .clear)
 		let playIcon = UIImage(icon: .googleMaterialDesign(.playArrow), size: iconSize, textColor: iconColor, backgroundColor: .clear)
@@ -61,8 +59,6 @@ open class UZTheme3: UZPlayerTheme {
 		controlView.playlistButton.setImage(playlistIcon, for: .normal)
 		controlView.helpButton.setImage(helpIcon, for: .normal)
 		controlView.ccButton.setImage(ccIcon, for: .normal)
-		controlView.volumeButton.setImage(volumeIcon, for: .normal)
-		controlView.volumeButton.setImage(muteIcon, for: .selected)
 		controlView.playpauseCenterButton.setImage(playBigIcon, for: .normal)
 		controlView.playpauseCenterButton.setImage(pauseBigIcon, for: .selected)
 		controlView.playpauseButton.setImage(playIcon, for: .normal)
@@ -77,8 +73,6 @@ open class UZTheme3: UZPlayerTheme {
 			controlView.pipButton.setImage(pipStopIcon, for: .selected)
 			controlView.pipButton.imageView?.contentMode = .scaleAspectFit
 			controlView.pipButton.isHidden = !AVPictureInPictureController.isPictureInPictureSupported()
-		} else {
-			// Fallback on earlier versions
 		}
 		
 		controlView.nextButton.isHidden = true
@@ -128,7 +122,7 @@ open class UZTheme3: UZPlayerTheme {
 		frameLayout + HStackLayout {
 			$0 + [controlView.backButton, controlView.titleLabel]
 			($0 + 0).flexible()
-			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton,  controlView.volumeButton]
+			$0 + [controlView.pipButton, controlView.castingButton, controlView.playlistButton,  controlView.settingsButton]
 			$0.spacing = 10
 		}
 		frameLayout + HStackLayout {
@@ -229,8 +223,8 @@ open class UZTheme3: UZPlayerTheme {
 		let isEmptyPlaylist = (playlist?.count ?? 0) < 2
 		controlView?.nextButton.isHidden = isEmptyPlaylist
 		controlView?.previousButton.isHidden = isEmptyPlaylist
-		controlView?.forwardButton.isHidden = !isEmptyPlaylist
-		controlView?.backwardButton.isHidden = !isEmptyPlaylist
+//		controlView?.forwardButton.isHidden = !isEmptyPlaylist
+//		controlView?.backwardButton.isHidden = !isEmptyPlaylist
 	}
 	
 	open func alignLogo() {

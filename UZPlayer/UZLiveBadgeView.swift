@@ -46,11 +46,9 @@ open class UZLiveBadgeView: UIView {
 		
 		let icon = UIImage.init(icon: .googleMaterialDesign(.removeRedEye), size: CGSize(width: 20, height: 20),
 								textColor: .white, backgroundColor: .clear)
-		if #available(iOS 8.2, *) {
-			viewBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-		} else {
-			viewBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-		}
+		
+        
+        viewBadge.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
 		viewBadge.setTitleColor(.white, for: .normal)
 		viewBadge.setTitle("0", for: .normal)
 		viewBadge.setImage(icon, for: .normal)

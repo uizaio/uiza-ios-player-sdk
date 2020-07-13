@@ -260,6 +260,9 @@ open class UZPlayerControlView: UIView {
 //        let thumbIcon = UIImage(named: "ic_thumb", in: imageBundle, compatibleWith: nil)
         let thumbIcon = UIImage(icon: .fontAwesomeSolid(.circle), size: CGSize(width: 18, height: 18), textColor: UIColor.red, backgroundColor: .clear)
         timeSlider.setThumbImage(thumbIcon, for: .normal)
+        // volume icon
+        volumeButton.setImage(UIImage(icon: .fontAwesomeSolid(.volumeUp), size: CGSize(width: 24, height: 24), textColor: UIColor.white, backgroundColor: .clear), for: .normal)
+        volumeButton.setImage(UIImage(icon: .icofont(.volumeMute), size: CGSize(width: 24, height: 24), textColor: UIColor.white, backgroundColor: .clear), for: .selected)
     }
 	
 	// MARK: - Skins

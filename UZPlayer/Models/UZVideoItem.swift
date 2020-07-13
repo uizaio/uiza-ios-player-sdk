@@ -8,6 +8,44 @@
 
 import UIKit
 import AVFoundation
+import M3U8Kit
+
+public enum UZResolution : Int64{
+    case UltraHD = 8_294_400 /// 3840 x 2160 == 4k
+    case QHD = 2_211_840 // 2048×1080 == 2k
+    case FullHD = 2_073_600 // 1920x1080
+    case HD = 921_600 // 1280 x720
+    case p544 = 526_108 // 1280 x720
+}
+
+extension MediaResoulution {
+    public var pixels : Int64 {
+        return Int64(width * height)
+    }
+}
+
+extension M3U8ExtXStreamInf {
+    open var shortDescription : String {
+        return "\(findRes(resolution: resolution))(\(Int(bandwidth/1000)) kps)"
+    }
+    
+    private func findRes(resolution: MediaResoulution) -> String {
+        let pixels = resolution.pixels
+        if pixels >= UZResolution.UltraHD.rawValue {
+            return "4K+"
+        } else if pixels >= UZResolution.QHD.rawValue {
+            return "4K"
+        } else if pixels >= UZResolution.FullHD.rawValue {
+            return "2K"
+        } else if pixels >= UZResolution.HD.rawValue {
+            return "FullHD"
+        } else if pixels >= UZResolution.p544.rawValue {
+            return "HD"
+        } else {
+            return "\(Int(resolution.width))x\(Int(resolution.height))"
+        }
+    }
+}
 
 /**
 Link Play info
@@ -65,10 +103,12 @@ public struct UZVideoItem {
     public var extLinkPlay: UZVideoLinkPlay?
     public fileprivate(set) var extIsTimeshift: Bool = false
     public fileprivate(set) var timeshiftSupport: Bool = false
+    public fileprivate(set) var streams: [M3U8ExtXStreamInf]?
     
 	public var linkPlay: UZVideoLinkPlay? {
 		didSet {
 			guard let url = linkPlay?.url else { return }
+            
             if url.absoluteString.contains(".m3u8") {
                 let manifest = MasterManifest().parse(url)
                 if let timeshift = manifest.timeshift {
@@ -97,6 +137,20 @@ public struct UZVideoItem {
                     isTimeshiftOn = !extIsTimeshift
                 } else {
                     timeshiftSupport = false
+                    // Not live == VOD
+                    do {
+                    let m3u8me = try M3U8PlaylistModel(url: url)
+                        let list = m3u8me.masterPlaylist.xStreamList
+                        list?.sortByBandwidth(inOrder: .orderedDescending)
+                        streams = [M3U8ExtXStreamInf]()
+                        for value in 0..<(list?.count ?? 0) {
+                            if let item = list?.xStreamInf(at: value) {
+                                streams?.append(item)
+                            }
+                        }
+                    } catch {
+                        DLog("Error when fetch m3u8")
+                    }
                 }
             }
             // parse cm
@@ -131,7 +185,6 @@ public struct UZVideoItem {
 			self.linkPlay = linkPlay
 		}
 	}
-	
 }
 
 extension UZVideoItem: Equatable {
