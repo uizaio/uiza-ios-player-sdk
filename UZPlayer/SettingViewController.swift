@@ -18,10 +18,10 @@ public class SettingViewController: UIViewController {
     private var tableView = UITableView()
     open weak var delegate: UZSettingViewDelegate?
 
-    init(withNavigationButton: Bool, text: String? = nil, settingItems: [SettingItem]? = nil, defaultValue: Any? = nil) {
-        self.withNavigationButton = withNavigationButton
+    init(text: String? = nil, settingItems: [SettingItem]? = nil, defaultValue: Any? = nil) {
         self.text = text
         self.settingItems = settingItems
+        self.withNavigationButton = true
         super.init(nibName: nil, bundle: nil)
         self.title = text
         self.defaultValue = defaultValue
@@ -39,9 +39,7 @@ public class SettingViewController: UIViewController {
         tableView = UITableView(frame: self.view.bounds, style: UITableView.Style.plain)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "setting_row")
-//        let contentView = UIView.makeView(withTitle: text)
-//        view.backgroundColor = tableView?.backgroundColor
+        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "setting_cell_identifier")
         view.addSubview(tableView)
         tableView.separatorColor = UIColor.clear
         tableView.estimatedRowHeight = 46.0
@@ -55,29 +53,9 @@ public class SettingViewController: UIViewController {
         ])
 
         preferredContentSize.height = contentHeight
-
-//        if withNavigationButton {
-//            let button = UIButton(type: .system)
-//            button.translatesAutoresizingMaskIntoConstraints = false
-//            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-//            button.setTitle("Next", for: .normal)
-//            button.setTitleColor(.white, for: .normal)
-//            button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
-//            view.addSubview(button)
-//
-//            NSLayoutConstraint.activate([
-//                button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                button.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
-//            ])
-//        }
     }
-//    @objc private func handleButtonTap() {
-//        let viewController = SettingViewController(withNavigationButton: false, contentHeight: contentHeight)
-//        viewController.title = "Step 2"
-//        navigationController?.pushViewController(viewController, animated: true)
-//    }
 }
-
+//
 extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,7 +63,9 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "setting_row", for: indexPath) as! SettingTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "setting_cell_identifier", for: indexPath) as? SettingTableViewCell else {
+            return UITableViewCell()
+        }
         if let settingItem = self.settingItems?[indexPath.row] {
             cell.titleLabel.text = settingItem.title
             switch settingItem.type {
@@ -172,7 +152,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
             case .array:
                 if settingItem.tag == .speedRate {
                     let settingRates = UZSpeedRate.allCases.map{ SettingItem(title: $0.description, tag: .speedRate, type: .number, initValue: $0.rawValue) }
-                    let viewController = SettingViewController(withNavigationButton: false, text: currentCell.textLabel?.text ?? "", settingItems: settingRates, defaultValue: settingItem.initValue)
+                    let viewController = SettingViewController(text: currentCell.textLabel?.text, settingItems: settingRates, defaultValue: settingItem.initValue)
                     viewController.delegate = self.delegate
                     viewController.title = currentCell.textLabel?.text ?? ""
                     navigationController?.pushViewController(viewController, animated: true)
@@ -182,7 +162,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                         if(settingItem.tag == .captions){
                             settingMedias.insert(SettingItem(title: "Off", tag: settingItem.tag, type: .number), at: 0)
                         }
-                        let viewController = SettingViewController(withNavigationButton: false, text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
+                        let viewController = SettingViewController(text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
                                 viewController.delegate = self.delegate
                                 viewController.title = settingItem.tag.description
                                 navigationController?.pushViewController(viewController, animated: true)
@@ -190,7 +170,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 } else if settingItem.tag == .quality {
                     if let itemOptions = settingItem.streamItems {
                         let settingMedias = itemOptions.map{ SettingItem(title: $0.shortDescription, tag: settingItem.tag, type: .number, initValue: Float($0.bandwidth)) }
-                        let viewController = SettingViewController(withNavigationButton: false, text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
+                        let viewController = SettingViewController(text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
                                 viewController.delegate = self.delegate
                                 viewController.title = settingItem.tag.description
                                 navigationController?.pushViewController(viewController, animated: true)

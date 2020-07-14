@@ -21,8 +21,8 @@ class ViewController: UIViewController {
 /// UserDefaults.standard.string(forKey: "last_url") ?? "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 	func askForURL() {
 //       let prefilled = "https://uz-test2live.uizacdn.net/865be795-836e-4f08-bbb6-34808374dced.smil/playlist.m3u8?cm=eyJlbnRpdHlfaWQiOiI4NjViZTc5NS04MzZlLTRmMDgtYmJiNi0zNDgwODM3NGRjZWQiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6Ijk2NTU4YWI0YTZiMTRlOTA5ZWVkOThjMWNlNTBkNWVmIn0="
-		let prefilled = "https://1775190502.rsc.cdn77.org/live/56dfc759-9cac-40ac-8417-7928f4dd84ad/extras/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI1NmRmYzc1OS05Y2FjLTQwYWMtODQxNy03OTI4ZjRkZDg0YWQiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6ImQ2YjBmNDk1OTk2NzRlMWRiOWFlYWMwMzAxNzU2ODhiIn0="
-//		let prefilled = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+//		let prefilled = "https://1775190502.rsc.cdn77.org/live/56dfc759-9cac-40ac-8417-7928f4dd84ad/extras/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI1NmRmYzc1OS05Y2FjLTQwYWMtODQxNy03OTI4ZjRkZDg0YWQiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6ImQ2YjBmNDk1OTk2NzRlMWRiOWFlYWMwMzAxNzU2ODhiIn0="
+		let prefilled = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
         
 		let alertController = UIAlertController(title: "", message: "Please enter videoURL", preferredStyle: .alert)
 		alertController.addTextField { (textField) in
@@ -49,12 +49,10 @@ class ViewController: UIViewController {
 	
 	func presentFloatingPlayer(urlPath: String) {
 		guard let url = URL(string: urlPath) else { return }
-		let floatingPlayerViewController = UZFloatingPlayerViewController()
-        let videoItem = UZVideoItem(name: nil, thumbnailURL: nil, linkPlay: UZVideoLinkPlay(definition: "", url: url), subtitleURLs: nil)
-		floatingPlayerViewController.present(with: videoItem, playlist: nil).player.controlView.theme = UZTheme4()
-		floatingPlayerViewController.onDismiss = { [weak self] in
-			self?.askForURL()
-		}
+		let playerViewController = UZPlayerViewController()
+        playerViewController.player.controlView.theme = UZTheme1()
+        playerViewController.player.loadVideo(url: url)
+        present(playerViewController, animated: true, completion: nil)
 	}
 	
 	override open var prefersStatusBarHidden: Bool {
