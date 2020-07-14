@@ -2,7 +2,7 @@ import UIKit
 
 extension UIImage {
 	
-	func colorize(with color: UIColor, blendMode: CGBlendMode = .multiply) -> UIImage {
+	open func colorize(with color: UIColor, blendMode: CGBlendMode = .multiply) -> UIImage {
 		UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
 		guard let context = UIGraphicsGetCurrentContext() else { return self }
 		

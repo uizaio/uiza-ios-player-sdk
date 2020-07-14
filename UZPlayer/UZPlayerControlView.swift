@@ -157,7 +157,7 @@ open class UZPlayerControlView: UIView {
 		return [titleLabel, currentTimeLabel, totalTimeLabel, remainTimeLabel]
 	}()
     
-	lazy var allControlViews: [UIView] = {
+	open lazy var allControlViews: [UIView] = {
 		return allButtons + allLabels + [airplayButton, timeSlider, liveBadgeView]
 	}()
 	
@@ -165,7 +165,6 @@ open class UZPlayerControlView: UIView {
 	
 	public init() {
 		super.init(frame: .zero)
-		
 		configUI()
 		setupGestures()
 	}
