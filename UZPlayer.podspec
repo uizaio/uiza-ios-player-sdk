@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = 'UZPlayer'
-    s.version = '1.1.6'
+    s.version = '1.1.7'
     s.summary = 'UZPlayer'
     s.homepage = 'https://uiza.io/'
     s.documentation_url = 'https://docs.uiza.io/v4'
@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
     s.ios.dependency "NKModalViewManager"
     s.ios.dependency "FrameLayoutKit"
     s.ios.dependency "Sentry"
-    s.ios.dependency "M3U8Kit"
+    s.ios.dependency "UZM3U8Kit"
     
 end

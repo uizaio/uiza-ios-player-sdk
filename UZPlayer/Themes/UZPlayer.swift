@@ -14,7 +14,7 @@ import CoreGraphics
 import NKModalViewManager
 import Sentry
 import FrameLayoutKit
-import M3U8Kit
+import UZM3U8Kit
 
 #if canImport(NHNetworkTime)
 import NHNetworkTime

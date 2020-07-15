@@ -9,7 +9,7 @@
 import UIKit
 import FrameLayoutKit
 import AVFoundation
-import M3U8Kit
+import UZM3U8Kit
 
 public enum UZSettingTag: Int, CaseIterable {
     case none = -1

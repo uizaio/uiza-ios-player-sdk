@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import M3U8Kit
+import UZM3U8Kit
 
 public enum UZResolution : Int64{
     case UltraHD = 8_294_400 /// 3840 x 2160 == 4k
