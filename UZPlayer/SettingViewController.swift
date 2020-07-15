@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import M3U8Kit
+import UZM3U8Kit
 
 public class SettingViewController: UIViewController {
     private let withNavigationButton: Bool

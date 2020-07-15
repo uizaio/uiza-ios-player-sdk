@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
     s.ios.dependency "NKModalViewManager"
     s.ios.dependency "FrameLayoutKit"
     s.ios.dependency "Sentry"
-    s.ios.dependency "M3U8Kit"
+    s.ios.dependency "UZM3U8Kit"
     
 end
