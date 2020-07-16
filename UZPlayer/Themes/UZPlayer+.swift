@@ -310,9 +310,9 @@ extension UZPlayer {
     }
     
     open func showSettings() {
+        
         if let window = UIApplication.shared.windows.first,
             let viewController = window.rootViewController {
-            let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
             // VOD
             if !isLive() {
@@ -343,8 +343,7 @@ extension UZPlayer {
             settingViewController.delegate = self
             let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
             navigationController.navigationBar.isTranslucent = false
-//            activeViewController.dismiss(animated: true)
-            activeViewController.present(navigationController, animated: true)
+            viewController.topPresented()?.present(navigationController, animated: true)
         }
     }
 }

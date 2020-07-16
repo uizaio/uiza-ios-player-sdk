@@ -10,18 +10,19 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-	
-	class func topPresented() -> UIViewController? {
-		if let window = UIApplication.shared.keyWindow, let viewController = window.rootViewController {
+    
+    func topPresented() -> UIViewController? {
+        
+		if let window = UIApplication.shared.keyWindow,
+            let viewController = window.rootViewController {
 			var result: UIViewController? = viewController
 			while result?.presentedViewController != nil {
 				result = result?.presentedViewController
 			}
-			
 			return result
 		}
 		
-		return nil
+		return self
 	}
 	
 	func topViewController() -> UIViewController? {

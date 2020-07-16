@@ -242,7 +242,7 @@ extension UZPlayerController: NKModalViewControllerProtocol {
 //		let window = UIWindow(frame: UIScreen.main.bounds)
 //		window.rootViewController = viewController
 //		window.makeKeyAndVisible()
-		return UIViewController.topPresented()
+		return topPresented()
 	}
 	
 	func shouldAllowDragToDismiss(for modalViewController: NKModalViewController!) -> Bool {
