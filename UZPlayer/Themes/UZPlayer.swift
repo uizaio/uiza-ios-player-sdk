@@ -173,7 +173,6 @@ open class UZPlayer: UIView {
     }
     
     open func changeBitrate(bitrate: Double) {
-        print("change = \(bitrate)")
         if let currentItem = self.avPlayer?.currentItem {
             currentItem.preferredPeakBitRate = bitrate
         }

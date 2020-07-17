@@ -42,6 +42,9 @@ extension M3U8ExtXStreamInf {
         } else if pixels >= UZResolution.p544.rawValue {
             return "HD"
         } else {
+            if(pixels == 0) {
+                return "Audio Only"
+            }
             return "\(Int(resolution.width))x\(Int(resolution.height))"
         }
     }
@@ -108,10 +111,9 @@ public struct UZVideoItem {
 	public var linkPlay: UZVideoLinkPlay? {
 		didSet {
 			guard let url = linkPlay?.url else { return }
-            
-            if url.absoluteString.contains(".m3u8") {
-                let manifest = MasterManifest().parse(url)
-                if let timeshift = manifest.timeshift {
+            do {
+                let manifest = try M3U8PlaylistModel(url: url)
+                if let timeshift = manifest.masterPlaylist.uzTimeshift {
                     timeshiftSupport = true
                     isLive = true
                     if timeshift.hasPrefix("extras/") {
@@ -138,20 +140,18 @@ public struct UZVideoItem {
                 } else {
                     timeshiftSupport = false
                     // Not live == VOD
-                    do {
-                    let m3u8me = try M3U8PlaylistModel(url: url)
-                        let list = m3u8me.masterPlaylist.xStreamList
-                        list?.sortByBandwidth(inOrder: .orderedDescending)
-                        streams = [M3U8ExtXStreamInf]()
-                        for value in 0..<(list?.count ?? 0) {
-                            if let item = list?.xStreamInf(at: value) {
-                                streams?.append(item)
-                            }
+                    let list = manifest.masterPlaylist.xStreamList
+                    list?.sortByBandwidth(inOrder: .orderedDescending)
+                    streams = [M3U8ExtXStreamInf]()
+                    for value in 0..<(list?.count ?? 0) {
+                        if let item = list?.xStreamInf(at: value),
+                            item.resolution.pixels > 0 {
+                            streams?.append(item)
                         }
-                    } catch {
-                        DLog("Error when fetch m3u8")
                     }
                 }
+            } catch {
+                print("Error when read content m3u8")
             }
             // parse cm
 			guard let cmParam = url.params()["cm"] as? String else { return }

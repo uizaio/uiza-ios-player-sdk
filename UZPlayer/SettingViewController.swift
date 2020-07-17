@@ -11,13 +11,16 @@ import AVFoundation
 import UZM3U8Kit
 
 public class SettingViewController: UIViewController {
+    private let MAX_HEIGHT =  UIScreen.main.bounds.height * 0.65
+    private let ROW_HEIGHT = CGFloat(46.0)
+    //
     private let withNavigationButton: Bool
     private var settingItems: [SettingItem]?
     private var defaultValue: Any? = nil
     private let text: String?
     private var tableView = UITableView()
     open weak var delegate: UZSettingViewDelegate?
-
+    
     init(text: String? = nil, settingItems: [SettingItem]? = nil, defaultValue: Any? = nil) {
         self.text = text
         self.settingItems = settingItems
@@ -33,26 +36,25 @@ public class SettingViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .light
-        }
-        tableView = UITableView(frame: self.view.bounds, style: UITableView.Style.plain)
+        let contentHeight: CGFloat = ROW_HEIGHT + ROW_HEIGHT * CGFloat(self.settingItems?.count ?? 0 + 1)
+        var rect = self.view.bounds
+        rect.size.height = min(contentHeight, MAX_HEIGHT)
+        tableView = UITableView(frame: rect, style: UITableView.Style.plain)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "setting_cell_identifier")
+        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.IDENTIFIER)
         view.addSubview(tableView)
         tableView.separatorColor = UIColor.clear
-        tableView.estimatedRowHeight = 46.0
-        let contentHeight: CGFloat = 46.0 + 46.0 * CGFloat(self.settingItems?.count ?? 0 + 1)
-        tableView.isScrollEnabled = (tableView.contentSize.height >= contentHeight)
+        tableView.estimatedRowHeight = ROW_HEIGHT
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: contentHeight),
+            tableView.heightAnchor.constraint(equalToConstant: min(contentHeight, MAX_HEIGHT))
         ])
-
-        preferredContentSize.height = contentHeight
+        tableView.contentSize.height = contentHeight
+        tableView.isScrollEnabled = contentHeight >= MAX_HEIGHT
+        preferredContentSize.height = min(contentHeight, MAX_HEIGHT)
     }
 }
 //
@@ -63,7 +65,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "setting_cell_identifier", for: indexPath) as? SettingTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.IDENTIFIER, for: indexPath) as? SettingTableViewCell else {
             return UITableViewCell()
         }
         if let settingItem = self.settingItems?[indexPath.row] {
@@ -89,6 +91,13 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                     } else {
                         checked = (self.defaultValue == nil) && (settingItem.initValue == nil)
                     }
+                } else if settingItem.tag == .quality {
+                    let dv = self.defaultValue as? Float ?? 0.0
+                    if let iv = settingItem.initValue as? M3U8ExtXStreamInf {
+                        checked = (dv == Float(iv.bandwidth))
+                    } else {
+                        checked = (dv == 0.0) && (settingItem.initValue == nil)
+                    }
                 }
                 let checkIcon = UIImage(icon:  checked ? .fontAwesomeSolid(.dotCircle) : .fontAwesomeRegular(.circle), size: CGSize(width: 22, height: 22), textColor: checked ? UIColor.red : UIColor.gray, backgroundColor: .clear)
                             let accessorCheckView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
@@ -111,6 +120,11 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                         settingItem.initValue == nil {
                             cell.summaryLabel.text = "Off"
                         }
+                    }
+                } else if settingItem.tag == .quality {
+                    let currentBW = settingItem.initValue as? Float
+                    if currentBW == 0.0 {
+                        cell.summaryLabel.text = "Auto"
                     }
                 }
                 break
@@ -140,8 +154,10 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                 } else if settingItem.tag == .audio || settingItem.tag == .captions {
                     self.delegate?.settingRow(didSelected: settingItem.tag, value: settingItem.initValue as? AVMediaSelectionOption)
                 } else if settingItem.tag == .quality {
-                    if let initValue = settingItem.initValue as? Float {
-                        self.delegate?.settingRow(didSelected: .quality, value: initValue)
+                    if let initValue = settingItem.initValue as? M3U8ExtXStreamInf {
+                        self.delegate?.settingRow(didSelected: .quality, value: Float(initValue.bandwidth))
+                    } else {
+                        self.delegate?.settingRow(didSelected: .quality, value: 0.0)
                     }
                 }
                 setNeedsFocusUpdate()
@@ -169,7 +185,8 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
                     }
                 } else if settingItem.tag == .quality {
                     if let itemOptions = settingItem.streamItems {
-                        let settingMedias = itemOptions.map{ SettingItem(title: $0.shortDescription, tag: settingItem.tag, type: .number, initValue: Float($0.bandwidth)) }
+                        var settingMedias = itemOptions.map{ SettingItem(title: $0.shortDescription, tag: settingItem.tag, type: .number, initValue: $0) }
+                        settingMedias.insert(SettingItem(title: "Auto", tag: settingItem.tag, type: .number), at: 0)
                         let viewController = SettingViewController(text: settingItem.tag.description, settingItems: settingMedias, defaultValue: settingItem.initValue)
                                 viewController.delegate = self.delegate
                                 viewController.title = settingItem.tag.description

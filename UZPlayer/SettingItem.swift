@@ -72,6 +72,8 @@ class SettingItem: NSObject {
 }
 
 class SettingTableViewCell: UITableViewCell {
+    
+    public static let IDENTIFIER = "setting_cell_identifier"
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

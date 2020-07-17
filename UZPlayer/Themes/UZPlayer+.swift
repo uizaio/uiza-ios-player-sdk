@@ -310,15 +310,17 @@ extension UZPlayer {
     }
     
     open func showSettings() {
+        
         if let window = UIApplication.shared.windows.first,
             let viewController = window.rootViewController {
-            let activeViewController: UIViewController = viewController.presentedViewController ?? viewController
             var settingItems = [SettingItem]()
             // VOD
             if !isLive() {
+                print("currentBitrate = \(currentBitrate())")
                 if let videoStreams = currentVideo?.streams,
                     videoStreams.count > 0 {
-                      settingItems.append(SettingItem(tag: .quality, type: .array, initValue: currentBitrate(), streamItems: videoStreams))
+                      settingItems.append(SettingItem(tag: .quality, type: .array, initValue:
+                        Float(currentBitrate()), streamItems: videoStreams))
                 }
                 // audio
                 if let audioOptions = audioOptions,
@@ -343,8 +345,7 @@ extension UZPlayer {
             settingViewController.delegate = self
             let navigationController = BottomSheetNavigationController(rootViewController: settingViewController)
             navigationController.navigationBar.isTranslucent = false
-//            activeViewController.dismiss(animated: true)
-            activeViewController.present(navigationController, animated: true)
+            viewController.topPresented()?.present(navigationController, animated: true)
         }
     }
 }

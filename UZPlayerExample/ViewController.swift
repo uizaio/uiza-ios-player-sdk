@@ -20,9 +20,9 @@ class ViewController: UIViewController {
 	}
 /// UserDefaults.standard.string(forKey: "last_url") ?? "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 	func askForURL() {
-//       let prefilled = "https://uz-test2live.uizacdn.net/865be795-836e-4f08-bbb6-34808374dced.smil/playlist.m3u8?cm=eyJlbnRpdHlfaWQiOiI4NjViZTc5NS04MzZlLTRmMDgtYmJiNi0zNDgwODM3NGRjZWQiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6Ijk2NTU4YWI0YTZiMTRlOTA5ZWVkOThjMWNlNTBkNWVmIn0="
-//		let prefilled = "https://1775190502.rsc.cdn77.org/live/56dfc759-9cac-40ac-8417-7928f4dd84ad/extras/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI1NmRmYzc1OS05Y2FjLTQwYWMtODQxNy03OTI4ZjRkZDg0YWQiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6ImQ2YjBmNDk1OTk2NzRlMWRiOWFlYWMwMzAxNzU2ODhiIn0="
-		let prefilled = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+//       let prefilled = "https://1955897154.rsc.cdn77.org/live/8dee8601-931e-409a-b2e8-aa84761add1e/master.m3u8?cm=eyJlbnRpdHlfaWQiOiI4ZGVlODYwMS05MzFlLTQwOWEtYjJlOC1hYTg0NzYxYWRkMWUiLCJlbnRpdHlfc291cmNlIjoibGl2ZSIsImFwcF9pZCI6IjhhZTY3ZDlmM2EyNzQyODVhMTUwNmUzZjc3Njc5MmVhIn0="
+//		let prefilled = "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+        let prefilled = "https://hls.ted.com/talks/2639.m3u8?preroll=Thousands"
         
 		let alertController = UIAlertController(title: "", message: "Please enter videoURL", preferredStyle: .alert)
 		alertController.addTextField { (textField) in
