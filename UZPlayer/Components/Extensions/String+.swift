@@ -12,7 +12,7 @@ import Foundation
 extension String {
 
     // String.replace(); similar to JavaScript's String.replace() and Ruby's String.gsub()
-    func replace(_ pattern: String, replacement: String) throws -> String {
+    public func replace(_ pattern: String, replacement: String) throws -> String {
 
         let regex = try NSRegularExpression(pattern: pattern, options: [.caseInsensitive])
 
@@ -24,7 +24,7 @@ extension String {
         )
     }
     
-    func capitalizingFirstLetter() -> String {
+    public func capitalizingFirstLetter() -> String {
            return prefix(1).capitalized + dropFirst()
     }
 

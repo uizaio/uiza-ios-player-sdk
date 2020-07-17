@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
     s.name = 'UZPlayer'
-    s.version = '1.1.8'
+    s.version = '1.1.9'
     s.summary = 'UZPlayer'
     s.homepage = 'https://uiza.io/'
-    s.documentation_url = 'https://docs.uiza.io/v4'
-    s.author = { 'Uiza' => 'developer@uiza.io' }
+    s.documentation_url = 'https://docs.uiza.io'
+    s.author = { 'UIZA' => 'developer@uiza.io' }
     s.license = { :type => "BSD", :file => "LICENSE" }
     s.source = { :git => "https://github.com/uizaio/uiza-ios-player-sdk.git", :tag => "v" + s.version.to_s }
     s.source_files = 'UZPlayer/**/*.swift'
