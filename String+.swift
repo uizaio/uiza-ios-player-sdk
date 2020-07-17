@@ -1,6 +1,9 @@
 //
-// Created by Thomas Christensen on 24/08/16.
-// Copyright (c) 2016 Nordija A/S. All rights reserved.
+//  String+.swift
+//  UZPlayerExample
+//
+//  Created by Nam Nguyen on 7/17/20.
+//  Copyright © 2020 namndev. All rights reserved.
 //
 
 import Foundation

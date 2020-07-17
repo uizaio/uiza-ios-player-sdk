@@ -12,6 +12,7 @@
 		63FD933D2420DA32001B7A48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63FD933C2420DA32001B7A48 /* Assets.xcassets */; };
 		63FD93402420DA32001B7A48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63FD933E2420DA32001B7A48 /* LaunchScreen.storyboard */; };
 		63FD93472420DD25001B7A48 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FD93462420DD25001B7A48 /* ExternalAccessory.framework */; };
+		8B22183224C160F8008CE055 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22183124C160F8008CE055 /* String+.swift */; };
 		8BA9CD2024BC242B00047B8E /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA9CD1F24BC242B00047B8E /* Bundle+.swift */; };
 		8BC84AA024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift */; };
 		8BC84AA124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift */; };
@@ -82,16 +83,6 @@
 		8BC84B2024B70E3C002906F6 /* AVAsset+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B1824B70E3C002906F6 /* AVAsset+Selection.swift */; };
 		8BC84B2124B70E3C002906F6 /* Number+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B1924B70E3C002906F6 /* Number+Extentions.swift */; };
 		8BC84B2224B70E3C002906F6 /* AVAudioSession+Airplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B1A24B70E3C002906F6 /* AVAudioSession+Airplay.swift */; };
-		8BC84B2E24B70E5B002906F6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2424B70E5A002906F6 /* StringExtensions.swift */; };
-		8BC84B2F24B70E5B002906F6 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2524B70E5A002906F6 /* StreamReader.swift */; };
-		8BC84B3024B70E5B002906F6 /* StringBufferedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2624B70E5A002906F6 /* StringBufferedReader.swift */; };
-		8BC84B3124B70E5B002906F6 /* FileBufferedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2724B70E5B002906F6 /* FileBufferedReader.swift */; };
-		8BC84B3224B70E5B002906F6 /* ReaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2824B70E5B002906F6 /* ReaderBuilder.swift */; };
-		8BC84B3324B70E5B002906F6 /* BufferedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2924B70E5B002906F6 /* BufferedReader.swift */; };
-		8BC84B3424B70E5B002906F6 /* MasterManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2A24B70E5B002906F6 /* MasterManifest.swift */; };
-		8BC84B3524B70E5B002906F6 /* MasterPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2B24B70E5B002906F6 /* MasterPlaylist.swift */; };
-		8BC84B3624B70E5B002906F6 /* URLBufferedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2C24B70E5B002906F6 /* URLBufferedReader.swift */; };
-		8BC84B3724B70E5B002906F6 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B2D24B70E5B002906F6 /* NSURLExtension.swift */; };
 		8BC84B5024B70E75002906F6 /* ActionScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B3924B70E74002906F6 /* ActionScheduler.swift */; };
 		8BC84B5124B70E75002906F6 /* RunBlockAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B3A24B70E74002906F6 /* RunBlockAction.swift */; };
 		8BC84B5224B70E75002906F6 /* Tweenable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84B3B24B70E74002906F6 /* Tweenable.swift */; };
@@ -148,6 +139,7 @@
 		63FD93412420DA32001B7A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63FD93452420DD25001B7A48 /* UZPlayerExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UZPlayerExample.entitlements; sourceTree = "<group>"; };
 		63FD93462420DD25001B7A48 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		8B22183124C160F8008CE055 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		8B2347BC24AC70400065B426 /* Pods_UZPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_UZPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA9CD1F24BC242B00047B8E /* Bundle+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Bundle+.swift"; path = "UZPlayer/Components/Extensions/Bundle+.swift"; sourceTree = "<group>"; };
 		8BC84A9024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZVideoQualitySettingsViewController.swift; path = UZPlayer/UZVideoQualitySettingsViewController.swift; sourceTree = "<group>"; };
@@ -220,16 +212,6 @@
 		8BC84B1824B70E3C002906F6 /* AVAsset+Selection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AVAsset+Selection.swift"; path = "UZPlayer/Components/Extensions/AVAsset+Selection.swift"; sourceTree = "<group>"; };
 		8BC84B1924B70E3C002906F6 /* Number+Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Number+Extentions.swift"; path = "UZPlayer/Components/Extensions/Number+Extentions.swift"; sourceTree = "<group>"; };
 		8BC84B1A24B70E3C002906F6 /* AVAudioSession+Airplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AVAudioSession+Airplay.swift"; path = "UZPlayer/Components/Extensions/AVAudioSession+Airplay.swift"; sourceTree = "<group>"; };
-		8BC84B2424B70E5A002906F6 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = UZPlayer/Components/m3u8/StringExtensions.swift; sourceTree = "<group>"; };
-		8BC84B2524B70E5A002906F6 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamReader.swift; path = UZPlayer/Components/m3u8/StreamReader.swift; sourceTree = "<group>"; };
-		8BC84B2624B70E5A002906F6 /* StringBufferedReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringBufferedReader.swift; path = UZPlayer/Components/m3u8/StringBufferedReader.swift; sourceTree = "<group>"; };
-		8BC84B2724B70E5B002906F6 /* FileBufferedReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileBufferedReader.swift; path = UZPlayer/Components/m3u8/FileBufferedReader.swift; sourceTree = "<group>"; };
-		8BC84B2824B70E5B002906F6 /* ReaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReaderBuilder.swift; path = UZPlayer/Components/m3u8/ReaderBuilder.swift; sourceTree = "<group>"; };
-		8BC84B2924B70E5B002906F6 /* BufferedReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferedReader.swift; path = UZPlayer/Components/m3u8/BufferedReader.swift; sourceTree = "<group>"; };
-		8BC84B2A24B70E5B002906F6 /* MasterManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MasterManifest.swift; path = UZPlayer/Components/m3u8/MasterManifest.swift; sourceTree = "<group>"; };
-		8BC84B2B24B70E5B002906F6 /* MasterPlaylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MasterPlaylist.swift; path = UZPlayer/Components/m3u8/MasterPlaylist.swift; sourceTree = "<group>"; };
-		8BC84B2C24B70E5B002906F6 /* URLBufferedReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLBufferedReader.swift; path = UZPlayer/Components/m3u8/URLBufferedReader.swift; sourceTree = "<group>"; };
-		8BC84B2D24B70E5B002906F6 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSURLExtension.swift; path = UZPlayer/Components/m3u8/NSURLExtension.swift; sourceTree = "<group>"; };
 		8BC84B3924B70E74002906F6 /* ActionScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionScheduler.swift; path = UZPlayer/Components/TweenKit/ActionScheduler.swift; sourceTree = "<group>"; };
 		8BC84B3A24B70E74002906F6 /* RunBlockAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunBlockAction.swift; path = UZPlayer/Components/TweenKit/RunBlockAction.swift; sourceTree = "<group>"; };
 		8BC84B3B24B70E74002906F6 /* Tweenable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tweenable.swift; path = UZPlayer/Components/TweenKit/Tweenable.swift; sourceTree = "<group>"; };
@@ -400,7 +382,6 @@
 			isa = PBXGroup;
 			children = (
 				8BC84B3824B70E65002906F6 /* TweenKit */,
-				8BC84B2324B70E49002906F6 /* m3u8 */,
 				8BC84B1224B70E2E002906F6 /* Extensions */,
 				8BC84B0324B70E18002906F6 /* Controls */,
 				8BC84AF424B70DFF002906F6 /* BottomSheet */,
@@ -454,25 +435,9 @@
 				8BC84B1724B70E3C002906F6 /* UIImage+Colorize.swift */,
 				8BC84B1624B70E3C002906F6 /* UIView+.swift */,
 				8BC84B1324B70E3C002906F6 /* UIViewController+TopPresented.swift */,
+				8B22183124C160F8008CE055 /* String+.swift */,
 			);
 			name = Extensions;
-			sourceTree = "<group>";
-		};
-		8BC84B2324B70E49002906F6 /* m3u8 */ = {
-			isa = PBXGroup;
-			children = (
-				8BC84B2924B70E5B002906F6 /* BufferedReader.swift */,
-				8BC84B2724B70E5B002906F6 /* FileBufferedReader.swift */,
-				8BC84B2A24B70E5B002906F6 /* MasterManifest.swift */,
-				8BC84B2B24B70E5B002906F6 /* MasterPlaylist.swift */,
-				8BC84B2D24B70E5B002906F6 /* NSURLExtension.swift */,
-				8BC84B2824B70E5B002906F6 /* ReaderBuilder.swift */,
-				8BC84B2524B70E5A002906F6 /* StreamReader.swift */,
-				8BC84B2624B70E5A002906F6 /* StringBufferedReader.swift */,
-				8BC84B2424B70E5A002906F6 /* StringExtensions.swift */,
-				8BC84B2C24B70E5B002906F6 /* URLBufferedReader.swift */,
-			);
-			name = m3u8;
 			sourceTree = "<group>";
 		};
 		8BC84B3824B70E65002906F6 /* TweenKit */ = {
@@ -560,7 +525,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = "Nam Kennic";
+				ORGANIZATIONNAME = namndev;
 				TargetAttributes = {
 					63FD93302420DA30001B7A48 = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -668,7 +633,6 @@
 				8BC84B1024B70E25002906F6 /* NKFloatingViewHandler.swift in Sources */,
 				8BC84AA824B70D8E002906F6 /* SettingViewController.swift in Sources */,
 				8BC84B0F24B70E25002906F6 /* UZCastButton.swift in Sources */,
-				8BC84B3324B70E5B002906F6 /* BufferedReader.swift in Sources */,
 				8BC84B2124B70E3C002906F6 /* Number+Extentions.swift in Sources */,
 				8BC84B6424B70E75002906F6 /* ActionScrubber.swift in Sources */,
 				8BC84B6224B70E75002906F6 /* RepeatForeverAction.swift in Sources */,
@@ -685,9 +649,7 @@
 				8BC84AEF24B70DF5002906F6 /* UZAPIConnector.swift in Sources */,
 				8BC84AF324B70DF5002906F6 /* UZPlayerSDK.swift in Sources */,
 				8BC84AC024B70DA4002906F6 /* UZTheme1.swift in Sources */,
-				8BC84B2E24B70E5B002906F6 /* StringExtensions.swift in Sources */,
 				8BC84AF224B70DF5002906F6 /* UZSentry.swift in Sources */,
-				8BC84B2F24B70E5B002906F6 /* StreamReader.swift in Sources */,
 				8BC84B0D24B70E25002906F6 /* UZButton.swift in Sources */,
 				8BC84AEE24B70DF5002906F6 /* UZLiveServices.swift in Sources */,
 				8BC84B6F24B70E93002906F6 /* UZVideoItem.swift in Sources */,
@@ -698,7 +660,6 @@
 				8BC84B6624B70E75002906F6 /* UIKit+Tweenable.swift in Sources */,
 				63FD93382420DA30001B7A48 /* ViewController.swift in Sources */,
 				8BC84B5C24B70E75002906F6 /* ActionSequence.swift in Sources */,
-				8BC84B3224B70E5B002906F6 /* ReaderBuilder.swift in Sources */,
 				8BC84AA124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift in Sources */,
 				8BC84B2224B70E3C002906F6 /* AVAudioSession+Airplay.swift in Sources */,
 				8BC84B6E24B70E93002906F6 /* UZVideoSubtitle.swift in Sources */,
@@ -708,6 +669,7 @@
 				8BC84B1D24B70E3C002906F6 /* NSTimeInterval+ToString.swift in Sources */,
 				8BC84B0C24B70E25002906F6 /* UZSlider.swift in Sources */,
 				8BC84AFD24B70E0E002906F6 /* BottomSheetTransitioningDelegate.swift in Sources */,
+				8B22183224C160F8008CE055 /* String+.swift in Sources */,
 				8BC84B1F24B70E3C002906F6 /* UIImage+Colorize.swift in Sources */,
 				8BC84B0B24B70E25002906F6 /* NKProgressView.swift in Sources */,
 				8BC84AC724B70DA4002906F6 /* UZPlayer+.swift in Sources */,
@@ -715,14 +677,11 @@
 				8BC84AC324B70DA4002906F6 /* UZPlayer++.swift in Sources */,
 				8BC84B7324B70E93002906F6 /* UZSubtitles.swift in Sources */,
 				8BC84B5324B70E75002906F6 /* InterpolateAction.swift in Sources */,
-				8BC84B3124B70E5B002906F6 /* FileBufferedReader.swift in Sources */,
 				8BC84B0124B70E0E002906F6 /* TranslationTarget.swift in Sources */,
 				8BC84B0E24B70E25002906F6 /* UZVisualizeInformationView.swift in Sources */,
 				8BC84B1B24B70E3C002906F6 /* UIViewController+TopPresented.swift in Sources */,
 				8BC84AC624B70DA4002906F6 /* UZTheme2.swift in Sources */,
 				8BC84B5024B70E75002906F6 /* ActionScheduler.swift in Sources */,
-				8BC84B3524B70E5B002906F6 /* MasterPlaylist.swift in Sources */,
-				8BC84B3724B70E5B002906F6 /* NSURLExtension.swift in Sources */,
 				8BC84B1E24B70E3C002906F6 /* UIView+.swift in Sources */,
 				8BA9CD2024BC242B00047B8E /* Bundle+.swift in Sources */,
 				8BC84AA624B70D8E002906F6 /* UZPlayerLayerView.swift in Sources */,
@@ -731,9 +690,7 @@
 				8BC84AFE24B70E0E002906F6 /* BottomSheetNavigationController.swift in Sources */,
 				8BC84B6124B70E75002906F6 /* RepeatAction.swift in Sources */,
 				8BC84B5F24B70E75002906F6 /* Animation.swift in Sources */,
-				8BC84B3424B70E5B002906F6 /* MasterManifest.swift in Sources */,
 				8BC84B5224B70E75002906F6 /* Tweenable.swift in Sources */,
-				8BC84B3624B70E5B002906F6 /* URLBufferedReader.swift in Sources */,
 				8BC84B0024B70E0E002906F6 /* SpringAnimator.swift in Sources */,
 				8BC84B5624B70E75002906F6 /* ReverseAction.swift in Sources */,
 				8BC84AC124B70DA4002906F6 /* UZTheme4.swift in Sources */,
@@ -748,7 +705,6 @@
 				8BC84AC424B70DA4002906F6 /* UZTheme6.swift in Sources */,
 				8BC84AAB24B70D8E002906F6 /* UZPlayerControlView+.swift in Sources */,
 				8BC84B1124B70E25002906F6 /* UZAirPlayButton.swift in Sources */,
-				8BC84B3024B70E5B002906F6 /* StringBufferedReader.swift in Sources */,
 				8BC84ABC24B70DA4002906F6 /* UZTheme3.swift in Sources */,
 				8BC84AAA24B70D8E002906F6 /* UZPlayerControlView.swift in Sources */,
 				8BC84B5D24B70E75002906F6 /* ArcAction.swift in Sources */,

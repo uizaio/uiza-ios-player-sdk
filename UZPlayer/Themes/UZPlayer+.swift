@@ -316,9 +316,11 @@ extension UZPlayer {
             var settingItems = [SettingItem]()
             // VOD
             if !isLive() {
+                print("currentBitrate = \(currentBitrate())")
                 if let videoStreams = currentVideo?.streams,
                     videoStreams.count > 0 {
-                      settingItems.append(SettingItem(tag: .quality, type: .array, initValue: currentBitrate(), streamItems: videoStreams))
+                      settingItems.append(SettingItem(tag: .quality, type: .array, initValue:
+                        Float(currentBitrate()), streamItems: videoStreams))
                 }
                 // audio
                 if let audioOptions = audioOptions,

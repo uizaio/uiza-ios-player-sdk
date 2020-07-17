@@ -388,7 +388,6 @@ public final class BottomSheetView: UIView {
             } else {
                 animateToTranslationTarget()
             }
-
         default:
             break
         }
