@@ -12,7 +12,7 @@
 		63FD933D2420DA32001B7A48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63FD933C2420DA32001B7A48 /* Assets.xcassets */; };
 		63FD93402420DA32001B7A48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63FD933E2420DA32001B7A48 /* LaunchScreen.storyboard */; };
 		63FD93472420DD25001B7A48 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FD93462420DD25001B7A48 /* ExternalAccessory.framework */; };
-		8B22183224C160F8008CE055 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22183124C160F8008CE055 /* String+.swift */; };
+		8B22183424C189A9008CE055 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22183324C189A9008CE055 /* String+.swift */; };
 		8BA9CD2024BC242B00047B8E /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA9CD1F24BC242B00047B8E /* Bundle+.swift */; };
 		8BC84AA024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift */; };
 		8BC84AA124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC84A9124B70D8E002906F6 /* UZMediaOptionSelectionViewController.swift */; };
@@ -139,7 +139,7 @@
 		63FD93412420DA32001B7A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63FD93452420DD25001B7A48 /* UZPlayerExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UZPlayerExample.entitlements; sourceTree = "<group>"; };
 		63FD93462420DD25001B7A48 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		8B22183124C160F8008CE055 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		8B22183324C189A9008CE055 /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+.swift"; path = "UZPlayer/Components/Extensions/String+.swift"; sourceTree = "<group>"; };
 		8B2347BC24AC70400065B426 /* Pods_UZPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_UZPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA9CD1F24BC242B00047B8E /* Bundle+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Bundle+.swift"; path = "UZPlayer/Components/Extensions/Bundle+.swift"; sourceTree = "<group>"; };
 		8BC84A9024B70D8E002906F6 /* UZVideoQualitySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UZVideoQualitySettingsViewController.swift; path = UZPlayer/UZVideoQualitySettingsViewController.swift; sourceTree = "<group>"; };
@@ -426,6 +426,7 @@
 		8BC84B1224B70E2E002906F6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8B22183324C189A9008CE055 /* String+.swift */,
 				8BA9CD1F24BC242B00047B8E /* Bundle+.swift */,
 				8BC84B1824B70E3C002906F6 /* AVAsset+Selection.swift */,
 				8BC84B1A24B70E3C002906F6 /* AVAudioSession+Airplay.swift */,
@@ -435,7 +436,6 @@
 				8BC84B1724B70E3C002906F6 /* UIImage+Colorize.swift */,
 				8BC84B1624B70E3C002906F6 /* UIView+.swift */,
 				8BC84B1324B70E3C002906F6 /* UIViewController+TopPresented.swift */,
-				8B22183124C160F8008CE055 /* String+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -669,7 +669,7 @@
 				8BC84B1D24B70E3C002906F6 /* NSTimeInterval+ToString.swift in Sources */,
 				8BC84B0C24B70E25002906F6 /* UZSlider.swift in Sources */,
 				8BC84AFD24B70E0E002906F6 /* BottomSheetTransitioningDelegate.swift in Sources */,
-				8B22183224C160F8008CE055 /* String+.swift in Sources */,
+				8B22183424C189A9008CE055 /* String+.swift in Sources */,
 				8BC84B1F24B70E3C002906F6 /* UIImage+Colorize.swift in Sources */,
 				8BC84B0B24B70E25002906F6 /* NKProgressView.swift in Sources */,
 				8BC84AC724B70DA4002906F6 /* UZPlayer+.swift in Sources */,
