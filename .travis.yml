@@ -1,10 +1,11 @@
 language: swift
+osx_image: xcode11.5
 xcode_project: UZPlayerExample.xcodeproj
 xcode_scheme: UZPlayerExample
 
 env:
     global:
-        - FRAMEWORK_NAME=UZPlayerExample
+    - FRAMEWORK_NAME=UZPlayerExample
 
 before_install:
     - gem install xcpretty
