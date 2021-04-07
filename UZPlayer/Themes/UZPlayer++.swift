@@ -12,7 +12,6 @@ import AVFoundation
 import Foundation
 import CoreGraphics
 import NKModalViewManager
-import Sentry
 import FrameLayoutKit
 
 #if canImport(NHNetworkTime)

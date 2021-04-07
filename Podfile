@@ -5,7 +5,6 @@ use_frameworks!
 target 'UZPlayerExample' do
   pod 'NKModalViewManager'
   pod 'FrameLayoutKit'
-  pod 'Sentry'
   pod 'NHNetworkTime'
   pod 'UZM3U8Kit'
 #  pod 'UZPlayer', :path => '.'
