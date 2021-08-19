@@ -30,9 +30,11 @@ public enum UZPlayerState: Int {
 public enum UZPlayerAspectRatio {
 	/// Default aspect
 	case `default`
+	/// Aspect Fill
+	case aspectFill
 	/// 16:9
 	case sixteen2Nine
-    ///16:10
+    /// 16:10
     case sixteen2Ten
 	/// 4:3
 	case four2Three
@@ -40,6 +42,7 @@ public enum UZPlayerAspectRatio {
     var description : String {
       switch self {
           case .default: return "Default"
+          case .aspectFill: return "Aspect Fill"
           case .sixteen2Nine: return "16:9"
           case .sixteen2Ten: return "16:10"
           case .four2Three: return "4:3"
@@ -258,6 +261,10 @@ open class UZPlayerLayerView: UIView {
                 playerLayer?.videoGravity = .resizeAspect
                 playerLayer?.frame  = bounds
                 break
+			case .aspectFill:
+				playerLayer?.videoGravity = .resizeAspectFill
+				playerLayer?.frame  = bounds
+				break
             case .sixteen2Nine:
                 let height = bounds.width/(16/9)
                 playerLayer?.videoGravity = .resize
